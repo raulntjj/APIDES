@@ -37,22 +37,11 @@ class ScoreService{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () use ($id){
                 //Retornando pontuação encontrado com suas informações e o código de respostas
-                $score = Score::find($id);
-                $participant = $score->participant;
-                $evaluation = $score->evaluation;
+                $score = $this->findScore($id);
                 return response()->json([
                     $score,
-                    $participant
-                        ->with('team')
-                        ->with('institution')
-                        ->with('modality')->get(),
-                    $evaluation
-                        ->with('event')
-                        ->with('modality')
-                        ->with('criterion')
-                        ->with('sub_criterion')
-                        ->with('item')
-                        ->with('judgment')->get()
+                    $score->participant->load('team', 'institution', 'modality'),
+                    $score->evaluation->load('event', 'modality', 'criterion', 'sub_criterion', 'item', 'judgment')
                 ], 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo

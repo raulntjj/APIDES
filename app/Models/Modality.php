@@ -13,6 +13,14 @@ class Modality extends Model{
         'type' //Tipo de modalidade
     ];
 
+    /*
+    Descomente caso queria retirar as datas de criação e edição do retorno dos dados em Json
+    protected $hidden = [
+        //'created_at',
+        //'updated_at'
+    ];
+    */
+
     //Relacionamentos eloquent
     public function participants(){
         return $this->hasMany(Participant::class);

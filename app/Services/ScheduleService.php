@@ -37,7 +37,12 @@ class ScheduleService{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () use ($id){
                 //Retornanda agenda encontrado com suas informações de endereço e o código de respostas
-                return response()->json(Schedule::with('sub_criterion')->with('judge')->whereId($id)->get(), 200);
+                $schedule = $this->findSchedule($id);
+                return response()->json([
+                    $schedule,
+                    $schedule->sub_criterion,
+                    $schedule->judge
+                ], 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){

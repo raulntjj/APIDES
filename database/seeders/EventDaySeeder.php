@@ -1,0 +1,47 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+use App\Models\EventDay;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class EventDaySeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void{
+        EventDay::create([
+            "event_id" => "1",
+            "date" => "2024-04-11",
+            "index" => "1"
+        ]);
+
+        EventDay::create([
+            "event_id" => "2",
+            "date" => "2024-05-20",
+            "index" => "1"
+        ]);
+
+        EventDay::create([
+            "event_id" => "3",
+            "date" => "2024-07-05",
+            "index" => "1"
+        ]);
+
+        EventDay::create([
+            "event_id" => "4",
+            "date" => "2024-06-15",
+            "index" => "1"
+        ]);
+
+        EventDay::create([
+            "event_id" => "5",
+            "date" => "2024-08-08",
+            "index" => "1"
+        ]);
+    }
+}

@@ -37,12 +37,16 @@ class EvaluationService{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () use ($id){
                 //Retornanda avaliação encontrado com suas informações de endereço e o código de respostas
-                return response()->json(Evaluation::with('item')
-                    ->with('event')
-                    ->with('modality')
-                    ->with('criterion')
-                    ->with('sub_criterion')
-                    ->with('judgment')->whereId($id)->get(), 200);
+                $evaluation = $this->findEvaluation($id);
+                return response()->json([
+                    $evaluation,
+                    $evaluation->item,
+                    $evaluation->event,
+                    $evaluation->modality,
+                    $evaluation->criterion,
+                    $evaluation->sub_criterion,
+                    $evaluation->judgment
+                ], 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){

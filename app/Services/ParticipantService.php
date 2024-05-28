@@ -37,10 +37,13 @@ class ParticipantService{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () use ($id){
                 //Retornando participante encontrado com suas informações de endereço e o código de respostas
-                return response()->json(Participant::whereId($id)
-                    ->with('team')
-                    ->with('institution')
-                    ->with('modality')->get(), 200);
+                $participant = $this->findParticipant($id);
+                return response()->json([
+                    $participant,
+                    $participant->team,
+                    $participant->institution,
+                    $participant->modality
+                ], 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){

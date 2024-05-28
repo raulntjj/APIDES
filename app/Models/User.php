@@ -34,6 +34,9 @@ class User extends Authenticatable{
     protected $hidden = [
         'password',
         'remember_token',
+        //Descomente caso queria retirar as datas de criação e edição do retorno dos dados em Json
+        //'created_at',
+        //'updated_at'
     ];
 
     /**

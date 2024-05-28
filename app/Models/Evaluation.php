@@ -24,6 +24,14 @@ class Evaluation extends Model{
         'judgment_id' //id do Julgamento
     ];
 
+    /*
+    Descomente caso queria retirar as datas de criação e edição do retorno dos dados em Json
+    protected $hidden = [
+        //'created_at',
+        //'updated_at'
+    ];
+    */
+
     //Relações Eloquent
     public function event(){
         return $this->belongsTo(Event::class);

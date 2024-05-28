@@ -17,6 +17,14 @@ class Schedule extends Model{
         'judge_id' //Id o usário jurado
     ];
 
+    /*
+    Descomente caso queria retirar as datas de criação e edição do retorno dos dados em Json
+    protected $hidden = [
+        //'created_at',
+        //'updated_at'
+    ];
+    */
+
     //Relações eloquent
     public function sub_criterion(){
         return $this->belongsTo(SubCriterion::class);
