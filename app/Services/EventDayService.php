@@ -8,7 +8,7 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 
 class EventDayService{
-    //Função privada utilizada para encontrar os dias de eventos ao logo do serviço
+    //Função privada utilizada para encontrar os dias de eventos ao longo do serviço
     private function findDayEvent(int $id){
         //Busca e retorna o dia de evento
         return EventDay::findOrFail($id);
@@ -26,7 +26,7 @@ class EventDayService{
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){
             //Retorna mensagem de erro com flag e mensagem captada pelo exception
-            return response()->json(['Error' => 'Failed to get all events', 'Details' => $e->getMessage()], 400);
+            return response()->json(['Error' => 'Failed to get all event days', 'Details' => $e->getMessage()], 400);
         }
     }
 
@@ -37,12 +37,12 @@ class EventDayService{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () use ($id){
                 //Retornando dia de evento encontrado com suas informações de endereço e o código de respostas
-                return response()->json($this->findDayEvent($id), 200);
+                return response()->json(EventDay::whereId($id)->with('event')->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){
             //Retorna mensagem de erro com flag e mensagem captada pelo exception
-            return response()->json(['Error' => 'Failed to get event', 'Details' => $e->getMessage()], 400);
+            return response()->json(['Error' => 'Failed to get event day', 'Details' => $e->getMessage()], 400);
         }
     }
 
@@ -65,7 +65,7 @@ class EventDayService{
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){
             //Retorna mensagem de erro com flag e mensagem captada pelo exception
-            return response()->json(['Error' => 'Failed to get event', 'Details' => $e->getMessage()], 400);
+            return response()->json(['Error' => 'Failed to add event day', 'Details' => $e->getMessage()], 400);
         }
         }
 
@@ -91,7 +91,7 @@ class EventDayService{
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){
             //Retorna mensagem de erro com flag e mensagem captada pelo exception
-            return response()->json(['Error' => 'Failed to get event', 'Details' => $e->getMessage()], 400);
+            return response()->json(['Error' => 'Failed to update event day', 'Details' => $e->getMessage()], 400);
         }
     }
 
@@ -112,7 +112,7 @@ class EventDayService{
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){
             //Retorna mensagem de erro com flag e mensagem captada pelo exception
-            return response()->json(['Error' => 'Failed to delete event', 'Details' => $e->getMessage()], 404);
+            return response()->json(['Error' => 'Failed to delete event day', 'Details' => $e->getMessage()], 404);
         }
     }
 }

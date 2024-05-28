@@ -12,4 +12,13 @@ class Modality extends Model{
         'name', //Nome da modalidade
         'type' //Tipo de modalidade
     ];
+
+    //Relacionamentos eloquent
+    public function participants(){
+        return $this->hasMany(Participant::class);
+    }
+
+    public function evaluation(){
+        return $this->hasMany(Evaluation::class);
+    }
 }

@@ -14,4 +14,7 @@ class Institution extends Model{
     ];
 
     //Relacionamentos eloquent
+    public function participant(){
+        return $this->hasMany(Participant::class);
+    }
 }

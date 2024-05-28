@@ -8,7 +8,7 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 
 class EventService{
-    //Função privada utilizada para encontrar os eventos ao logo do serviço
+    //Função privada utilizada para encontrar os eventos ao longo do serviço
     private function findEvent(int $id){
         //Busca e retorna o evento
         return Event::findOrFail($id);
@@ -84,7 +84,7 @@ class EventService{
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){
             //Retorna mensagem de erro com flag e mensagem captada pelo exception
-            return response()->json(['Error' => 'Failed to get event', 'Details' => $e->getMessage()], 400);
+            return response()->json(['Error' => 'Failed to add event', 'Details' => $e->getMessage()], 400);
         }
         }
 
@@ -123,7 +123,7 @@ class EventService{
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){
             //Retorna mensagem de erro com flag e mensagem captada pelo exception
-            return response()->json(['Error' => 'Failed to get event', 'Details' => $e->getMessage()], 400);
+            return response()->json(['Error' => 'Failed to update event', 'Details' => $e->getMessage()], 400);
         }
     }
 
@@ -150,6 +150,7 @@ class EventService{
         }
     }
 
+    /*
     //Função pública utilizada para retornar endereço do evento
     public function getAddress(int $id){
         //Tratativa de erros
@@ -164,4 +165,5 @@ class EventService{
             return response()->json(['Error' => 'Failed to get event', 'Details' => $e->getMessage()], 400);
         }
     }
+    */
 }

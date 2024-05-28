@@ -12,7 +12,7 @@ class InstitutionController{
         $this->institutionService = $institutionService;
     }
 
-    //Função para obter todas instituição
+    //Função para obter todas instituições
     public function index(){
         return $this->institutionService->getInstitutions();
     }

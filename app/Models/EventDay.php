@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Models\Event;
 
-
 class EventDay extends Model{
     use HasFactory;
     protected $fillable = [
@@ -19,6 +18,6 @@ class EventDay extends Model{
     //Relacionamentos eloquent
     public function event(){
         //Declarando pertencença a entidade evento
-        return $this->belongTo(Event::class);
+        return $this->belongsTo(Event::class);
     }
 }

@@ -37,9 +37,11 @@ class EventController{
         return $this->eventService->deleteEvent($id);
     }
 
+    /*
     //Função para exibir endereço referenciado para o evento
     public function address(int $id){
         return $this->eventService->getAddress($id);
     }
+    */
 
 }

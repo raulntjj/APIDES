@@ -15,13 +15,13 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('event_id');
             $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade')->onUpdate('cascade');
-            $table->string('address');
+            $table->string('address', 128);
             $table->integer('number');
-            $table->string('neighborhood');
-            $table->string('city');
-            $table->string('state');
-            $table->string('country');
-            $table->string('cep');
+            $table->string('neighborhood', 64);
+            $table->string('city', 32);
+            $table->string('state', 32);
+            $table->string('country', 32);
+            $table->string('cep', 16);
             $table->timestamps();
         });
     }

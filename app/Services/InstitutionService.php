@@ -8,7 +8,7 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 
 class InstitutionService{
-    //Função privada utilizada para encontrar as instituições ao logo do serviço
+    //Função privada utilizada para encontrar as instituições ao longo do serviço
     private function findInstitution(int $id){
         //Busca e retorna a instituição
         return Institution::findOrFail($id);
@@ -66,7 +66,7 @@ class InstitutionService{
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){
             //Retorna mensagem de erro com flag e mensagem captada pelo exception
-            return response()->json(['Error' => 'Failed to get institution', 'Details' => $e->getMessage()], 400);
+            return response()->json(['Error' => 'Failed to add institution', 'Details' => $e->getMessage()], 400);
         }
         }
 
@@ -92,7 +92,7 @@ class InstitutionService{
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){
             //Retorna mensagem de erro com flag e mensagem captada pelo exception
-            return response()->json(['Error' => 'Failed to get institution', 'Details' => $e->getMessage()], 400);
+            return response()->json(['Error' => 'Failed to update institution', 'Details' => $e->getMessage()], 400);
         }
     }
 

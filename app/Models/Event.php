@@ -30,4 +30,8 @@ class Event extends Model{
     public function days(){
         return $this->hasMany(EventDay::class);
     }
+
+    public function avaliations(){
+        return $this->hasMany(Avaliation::class);
+    }
 }

@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+use App\Models\Schedule;
+
 class User extends Authenticatable{
     use HasFactory, Notifiable;
 
@@ -16,9 +18,12 @@ class User extends Authenticatable{
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'name', //Nome do usuário
+        'email', //Email do usuário
+        'password', //Senha do usuário
+        'group', //Grupo do usuário
+        'interfaceLanguage', //Idioma da interface
+        'photo' //Caminho para foto do usuário
     ];
 
     /**
@@ -42,5 +47,10 @@ class User extends Authenticatable{
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    //Relações eloquent
+    public function schedules(){
+        return $this->hasMany(Schedule::class);
     }
 }

@@ -23,6 +23,6 @@ class EventAddress extends Model{
     //Relacionamentos eloquent
     public function event(){
         //Declarando pertencença a entidade evento
-        return $this->belongTo(Event::class);
+        return $this->belongsTo(Event::class);
     }
 }

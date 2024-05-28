@@ -8,7 +8,7 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 
 class ModalityService{
-    //Função privada utilizada para encontrar as modalidades ao logo do serviço
+    //Função privada utilizada para encontrar as modalidades ao longo do serviço
     private function findModality(int $id){
         //Busca e retorna a modalidade
         return Modality::findOrFail($id);
@@ -66,7 +66,7 @@ class ModalityService{
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){
             //Retorna mensagem de erro com flag e mensagem captada pelo exception
-            return response()->json(['Error' => 'Failed to get modality', 'Details' => $e->getMessage()], 400);
+            return response()->json(['Error' => 'Failed to add modality', 'Details' => $e->getMessage()], 400);
         }
         }
 
@@ -92,7 +92,7 @@ class ModalityService{
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){
             //Retorna mensagem de erro com flag e mensagem captada pelo exception
-            return response()->json(['Error' => 'Failed to get modality', 'Details' => $e->getMessage()], 400);
+            return response()->json(['Error' => 'Failed to update modality', 'Details' => $e->getMessage()], 400);
         }
     }
 

@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('institutions', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('logo');
+            $table->string('name', 128);
+            $table->string('logo', 256)->nullable();
             $table->timestamps();
         });
     }
