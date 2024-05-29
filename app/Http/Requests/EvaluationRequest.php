@@ -26,7 +26,7 @@ class EvaluationRequest extends FormRequest{
             'event_id',
             'modality_id',
             'criterion_id',
-            'sub_criterion_id',
+            'subCriterion_id',
             'item_id' => ['required'],
             'judgment' => ['nullable']
         ];

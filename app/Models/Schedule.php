@@ -12,7 +12,7 @@ class Schedule extends Model{
     use HasFactory;
     protected $table = 'schedules';
     protected $fillable = [
-        'sub_criterion_id', //Sub critério
+        'subCriterion_id', //Sub critério
         'date', //Data da avaliação
         'judge_id' //Id o usário jurado
     ];
@@ -26,8 +26,8 @@ class Schedule extends Model{
     */
 
     //Relações eloquent
-    public function sub_criterion(){
-        return $this->belongsTo(SubCriterion::class);
+    public function subCriterion(){
+        return $this->belongsTo(SubCriterion::class, 'subCriterion_id');
     }
 
     public function judge(){

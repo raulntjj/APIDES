@@ -22,8 +22,8 @@ return new class extends Migration
             $table->unsignedBigInteger('criterion_id');
             $table->foreign('criterion_id')->references('id')->on('criteria')->onDelete('cascade')->onUpdate('cascade');
 
-            $table->unsignedBigInteger('sub_criterion_id');
-            $table->foreign('sub_criterion_id')->references('id')->on('sub_criteria')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedBigInteger('subCriterion_id');
+            $table->foreign('subCriterion_id')->references('id')->on('sub_criteria')->onDelete('cascade')->onUpdate('cascade');
 
             $table->unsignedBigInteger('item_id');
             $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade')->onUpdate('cascade');

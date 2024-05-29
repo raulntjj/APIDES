@@ -19,7 +19,7 @@ class Evaluation extends Model{
         'event_id', //Id do evento
         'modality_id', //Id da modalidade
         'criterion_id', //id do critério
-        'sub_criterion_id', //id do sub-critério
+        'subCriterion_id', //id do sub-critério
         'item_id', //id dos itens
         'judgment_id' //id do Julgamento
     ];
@@ -34,27 +34,27 @@ class Evaluation extends Model{
 
     //Relações Eloquent
     public function event(){
-        return $this->belongsTo(Event::class);
+        return $this->belongsTo(Event::class, 'event_id');
     }
 
     public function modality(){
-        return $this->belongsTo(Modality::class);
+        return $this->belongsTo(Modality::class, 'modality_id');
     }
 
     public function criterion(){
-        return $this->belongsTo(Criterion::class);
+        return $this->belongsTo(Criterion::class, 'criterion_id');
     }
 
-    public function sub_criterion(){
-        return $this->belongsTo(SubCriterion::class);
+    public function subCriterion(){
+        return $this->belongsTo(SubCriterion::class, 'subCriterion_id');
     }
 
     public function item(){
-        return $this->belongsTo(Item::class);
+        return $this->belongsTo(Item::class, 'item_id');
     }
 
     public function judgment(){
-        return $this->belongsTo(Judgment::class);
+        return $this->belongsTo(Judgment::class, 'judgment_id');
     }
 
     public function scores(){

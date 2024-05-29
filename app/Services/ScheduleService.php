@@ -40,7 +40,7 @@ class ScheduleService{
                 $schedule = $this->findSchedule($id);
                 return response()->json([
                     $schedule,
-                    $schedule->sub_criterion,
+                    $schedule->subCriterion,
                     $schedule->judge
                 ], 200);
             });
@@ -61,7 +61,7 @@ class ScheduleService{
                 $schedule = Schedule::create($request->only(
                     //Foi deixado o request->only() no lugar do request->all()
                     //Para deixar mais explícito e descritivo em relação as variavéis que estão sendo utilizadas etc..
-                    'sub_criterion_id',
+                    'subCriterion_id',
                     'judge_id',
                     'date'
                 ));

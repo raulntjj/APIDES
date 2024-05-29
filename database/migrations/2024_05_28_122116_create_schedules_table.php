@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('schedules', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('sub_criterion_id');
-            $table->foreign('sub_criterion_id')->references('id')->on('sub_criteria')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedBigInteger('subCriterion_id');
+            $table->foreign('subCriterion_id')->references('id')->on('sub_criteria')->onDelete('cascade')->onUpdate('cascade');
 
             $table->unsignedBigInteger('judge_id');
             $table->foreign('judge_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');

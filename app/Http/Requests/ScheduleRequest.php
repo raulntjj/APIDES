@@ -23,7 +23,7 @@ class ScheduleRequest extends FormRequest{
             Request definido apenas como campos obrigatórios por enquanto.
         */
         return [
-            'sub_criterion_id',
+            'subCriterion_id',
             'judge_id',
             'date' => ['required']
         ];

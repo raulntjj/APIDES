@@ -44,7 +44,7 @@ class EvaluationService{
                     $evaluation->event,
                     $evaluation->modality,
                     $evaluation->criterion,
-                    $evaluation->sub_criterion,
+                    $evaluation->subCriterion,
                     $evaluation->judgment
                 ], 200);
             });
@@ -68,7 +68,7 @@ class EvaluationService{
                     'event_id',
                     'modality_id',
                     'criterion_id',
-                    'sub_criterion_id',
+                    'subCriterion_id',
                     'item_id',
                     'judgment_id'
                 ));
