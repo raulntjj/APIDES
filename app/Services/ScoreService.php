@@ -41,7 +41,7 @@ class ScoreService{
                 return response()->json([
                     $score,
                     $score->participant->load('team', 'institution', 'modality'),
-                    $score->evaluation->load('event', 'modality', 'criterion', 'sub_criterion', 'item', 'judgment')
+                    $score->evaluation->load('event', 'modality', 'criterion', 'subCriterion', 'item', 'judgment')
                 ], 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo

@@ -1,14 +1,54 @@
 openapi: 3.0.0
 info:
-  title: CRUD de Usuário API
-  description: API para operações CRUD em usuários
+  title: Desempenho Esportivo
+  description: Documentação da API Rest para desempenho esportivo
   version: 1.0.0
+  contact:
+    name: Suporte para DEVs
+    email: raul.oliveira@versatecnologia.com.br
+    url: https://versatecnologia.com.br
+  license:
+      name : License GLPv3
+      url : https://gnu.org/licenses/gpl-3.0.html
+  termsOfService : https://versatecnologia.com.br
 servers:
   - description: Localhost
     url: http://127.0.0.1:8000/api/
+tags:
+  - name: User
+    description: Rotas para controle de usuário
+  - name: Evento
+    description: Rotas para controle de eventos
+  - name: Dia de Evento
+    description: Rotas para controle de dias de evento
+  - name: Instituição
+    description: Rotas para controle de instituições
+  - name: Modalidade
+    description: Rotas para controle de modalidades
+  - name: Equipe
+    description: Rotas para controle de equipes
+  - name: Participante
+    description: Rotas para controle de participantes
+  - name: Critério
+    description: Rotas para controle de critérios
+  - name: Sub Critério
+    description: Rotas para controle de sub-critérios
+  - name: Item
+    description: Rotas para controle de itens
+  - name: Julgamento
+    description: Rotas para controle de julgamentos
+  - name: Avaliação
+    description: Rotas para controle de avaliações
+  - name: Agenda
+    description: Rotas para controle de agendamentos
+  - name: Pontuação
+    description: Rotas para controle de pontuações
+
 paths:
   /usuarios:
     get:
+      tags:
+        - User
       summary: Lista todos os usuários
       responses:
         '200':
@@ -22,6 +62,8 @@ paths:
         '400':
           description: Erro ao buscar usuário
     post:
+      tags:
+        - User
       summary: Cria um novo usuário
       requestBody:
         required: true
@@ -40,6 +82,8 @@ paths:
           description: Falha ao adicionar usuário
   /usuarios/{id}:
     get:
+      tags:
+        - User
       summary: Obtém um usuário pelo ID
       parameters:
         - in: path
@@ -60,6 +104,8 @@ paths:
           description: Usuário não encontrado
 
     put:
+      tags:
+        - User
       summary: Atualiza um usuário existente pelo ID
       parameters:
         - in: path
@@ -88,6 +134,8 @@ paths:
           description: Falha ao atualizar usuário
 
     delete:
+      tags:
+        - User
       summary: Remove um usuário pelo ID
       parameters:
         - in: path
@@ -102,6 +150,1393 @@ paths:
           description: Usuário removido com sucesso
         '404':
           description: Usuário não encontrado
+
+  /eventos:
+    get:
+      tags:
+        - Evento
+      summary: Lista todos os eventos
+      responses:
+        '200':
+          description: Lista de eventos recuperada com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Event'
+        '400':
+          description: Erro ao buscar evento
+    post:
+      tags:
+        - Evento
+      summary: Cria um novo evento
+      description: Esta requisição irá preecher as tabelas EventDay, e EventAddress. Então será obrigatório o envio dos atributos das mesmas. Como a data e index 1 para Event Day e dados de endereço para EventAddress, em caso de dúvida, verificar no EventRequest. Abaixo também foi deixado o exemplo de requisição
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/Event'
+                - $ref: '#/components/schemas/EventAddress'
+                - $ref: '#/components/schemas/EventDay'
+      responses:
+        '201':
+          description: evento criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        '400':
+          description: Falha ao adicionar evento
+  /eventos/{id}:
+    get:
+      tags:
+        - Evento
+      summary: Obtém um evento pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID do evento a ser obtido
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: evento recuperado com sucesso
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Event'
+                  - $ref: '#/components/schemas/EventAddress'
+                  - $ref: '#/components/schemas/EventDay'
+        '404':
+          description: evento não encontrado
+
+    put:
+      tags:
+        - Evento
+      summary: Atualiza um evento existente pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID do evento a ser atualizado
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventDay'
+      responses:
+        '200':
+          description: evento atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventDay'
+        '404':
+          description: evento não encontrado
+        '400':
+          description: Falha ao atualizar evento
+
+    delete:
+      tags:
+        - Evento
+      summary: Remove um evento pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID do evento a ser removido
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: evento removido com sucesso
+        '404':
+          description: evento não encontrado
+
+  /dias:
+    get:
+      tags:
+        - Dia de Evento
+      summary: Lista todos os dias
+      responses:
+        '200':
+          description: Lista de dias recuperada com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EventDay'
+        '400':
+          description: Erro ao buscar dia
+    post:
+      tags:
+        - Dia de Evento
+      summary: Cria um novo dia
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventDay'
+      responses:
+        '201':
+          description: dia criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventDay'
+        '400':
+          description: Falha ao adicionar dia
+  /dias/{id}:
+    get:
+      tags:
+        - Dia de Evento
+      summary: Obtém um dia pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID do dia a ser obtido
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: dia recuperado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventDay'
+        '404':
+          description: dia não encontrado
+
+    put:
+      tags:
+        - Dia de Evento
+      summary: Atualiza um dia existente pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID do dia a ser atualizado
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventDay'
+      responses:
+        '200':
+          description: dia atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventDay'
+        '404':
+          description: dia não encontrado
+        '400':
+          description: Falha ao atualizar dia
+
+    delete:
+      tags:
+        - Dia de Evento
+      summary: Remove um dia pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID do dia a ser removido
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: dia removido com sucesso
+        '404':
+          description: dia não encontrado
+
+  /instituicoes:
+    get:
+      tags:
+        - Instituição
+      summary: Lista todos as Instituições
+      responses:
+        '200':
+          description: Lista de Instituições recuperada com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Institution'
+        '400':
+          description: Erro ao buscar Instituição
+    post:
+      tags:
+        - Instituição
+      summary: Cria uma nova Instituição
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Institution'
+      responses:
+        '201':
+          description: Instituição criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Institution'
+        '400':
+          description: Falha ao adicionar Instituição
+  /instituicoes/{id}:
+    get:
+      tags:
+        - Instituição
+      summary: Obtém uma Instituição pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID da Instituição a ser obtido
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Instituição recuperado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Institution'
+        '404':
+          description: Instituição não encontrada
+
+    put:
+      tags:
+        - Instituição
+      summary: Atualiza uma Instituição existente pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID da Instituição a ser atualizada
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Institution'
+      responses:
+        '200':
+          description: Instituição atualizada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Institution'
+        '404':
+          description: Instituição não encontrada
+        '400':
+          description: Falha ao atualizar Instituição
+
+    delete:
+      tags:
+        - Instituição
+      summary: Remove uma Instituição pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID da Instituição a ser removida
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Instituição removida com sucesso
+        '404':
+          description: Instituição não encontrada
+
+  /modalidades:
+    get:
+      tags:
+        - Modalidade
+      summary: Lista todos as modalidades
+      responses:
+        '200':
+          description: Lista de modalidades recuperada com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Modality'
+        '400':
+          description: Erro ao buscar modalidade
+    post:
+      tags:
+        - Modalidade
+      summary: Cria uma nova modalidade
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Modality'
+      responses:
+        '201':
+          description: modalidade criada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Modality'
+        '400':
+          description: Falha ao adicionar modalidade
+  /modalidades/{id}:
+    get:
+      tags:
+        - Modalidade
+      summary: Obtém uma modalidade pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID da modalidade a ser obtida
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: modalidade recuperada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Modality'
+        '404':
+          description: modalidade não encontrada
+
+    put:
+      tags:
+        - Modalidade
+      summary: Atualiza uma modalidade existente pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID da modalidade a ser atualizada
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Modality'
+      responses:
+        '200':
+          description: modalidade atualizada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Modality'
+        '404':
+          description: modalidade não encontrado
+        '400':
+          description: Falha ao atualizar modalidade
+
+    delete:
+      tags:
+        - Modalidade
+      summary: Remove uma modalidade pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID da modalidade a ser removida
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: modalidade removida com sucesso
+        '404':
+          description: modalidade não encontrada
+
+  /equipes:
+    get:
+      tags:
+        - Equipe
+      summary: Lista todos as Equipes
+      responses:
+        '200':
+          description: Lista de Equipes recuperada com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Team'
+        '400':
+          description: Erro ao buscar Equipe
+    post:
+      tags:
+        - Equipe
+      summary: Cria uma nova Equipe
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Team'
+      responses:
+        '201':
+          description: Equipe criada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+        '400':
+          description: Falha ao adicionar Equipe
+  /equipes/{id}:
+    get:
+      tags:
+        - Equipe
+      summary: Obtém uma Equipe pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID da Equipe a ser obtida
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Equipe recuperada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+        '404':
+          description: Equipe não encontrada
+
+    put:
+      tags:
+        - Equipe
+      summary: Atualiza uma Equipe existente pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID da Equipe a ser atualizada
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Team'
+      responses:
+        '200':
+          description: Equipe atualizada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+        '404':
+          description: Equipe não encontrado
+        '400':
+          description: Falha ao atualizar Equipe
+
+    delete:
+      tags:
+        - Equipe
+      summary: Remove uma Equipe pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID da Equipe a ser removida
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Equipe removida com sucesso
+        '404':
+          description: Equipe não encontrada
+
+  /participantes:
+    get:
+      tags:
+        - Participante
+      summary: Lista todos os participantes
+      responses:
+        '200':
+          description: Lista de participantes recuperada com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Participant'
+        '400':
+          description: Erro ao buscar Participante
+    post:
+      tags:
+        - Participante
+      summary: Cria um novo Participante
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Participant'
+      responses:
+        '201':
+          description: Participante criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Participant'
+        '400':
+          description: Falha ao adicionar Participante
+  /participantes/{id}:
+    get:
+      tags:
+        - Participante
+      summary: Obtém um Participante pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID do Participante a ser obtido
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Participante recuperado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Participant'
+        '404':
+          description: Participante não encontrado
+
+    put:
+      tags:
+        - Participante
+      summary: Atualiza um Participante existente pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID do Participante a ser atualizado
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Participant'
+      responses:
+        '200':
+          description: Participante atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Participant'
+        '404':
+          description: Participante não encontrado
+        '400':
+          description: Falha ao atualizar Participante
+
+    delete:
+      tags:
+        - Participante
+      summary: Remove um Participante pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID do Participante a ser removido
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Participante removido com sucesso
+        '404':
+          description: Participante não encontrado
+
+  /criterios:
+    get:
+      tags:
+        - Critério
+      summary: Lista todos os Criterios
+      responses:
+        '200':
+          description: Lista de Criterios recuperada com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Criterion'
+        '400':
+          description: Erro ao buscar Criterio
+    post:
+      tags:
+        - Critério
+      summary: Cria um novo Criterio
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Criterion'
+      responses:
+        '201':
+          description: Criterio criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Criterion'
+        '400':
+          description: Falha ao adicionar Criterio
+  /criterios/{id}:
+    get:
+      tags:
+        - Critério
+      summary: Obtém um Criterio pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID do Criterio a ser obtido
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Criterio recuperado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Criterion'
+        '404':
+          description: Criterio não encontrado
+
+    put:
+      tags:
+        - Critério
+      summary: Atualiza um Criterio existente pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID do Criterio a ser atualizado
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Criterion'
+      responses:
+        '200':
+          description: Criterio atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Criterion'
+        '404':
+          description: Criterio não encontrado
+        '400':
+          description: Falha ao atualizar Criterio
+
+    delete:
+      tags:
+        - Critério
+      summary: Remove um Criterio pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID do Criterio a ser removido
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Criterio removido com sucesso
+        '404':
+          description: Criterio não encontrado
+
+  /subcriterios:
+    get:
+      tags:
+        - Sub Critério
+      summary: Lista todos os Sub Critérios
+      responses:
+        '200':
+          description: Lista de Sub Critérios recuperada com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SubCriterion'
+        '400':
+          description: Erro ao buscar Sub Critério
+    post:
+      tags:
+        - Sub Critério
+      summary: Cria um novo Sub Critério
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubCriterion'
+      responses:
+        '201':
+          description: Sub Critério criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubCriterion'
+        '400':
+          description: Falha ao adicionar Sub Critério
+  /subcriterios/{id}:
+    get:
+      tags:
+        - Sub Critério
+      summary: Obtém um Sub Critério pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID do Sub Critério a ser obtido
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Sub Critério recuperado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubCriterion'
+        '404':
+          description: Sub Critério não encontrado
+
+    put:
+      tags:
+        - Sub Critério
+      summary: Atualiza um Sub Critério existente pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID do Sub Critério a ser atualizado
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubCriterion'
+      responses:
+        '200':
+          description: Sub Critério atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubCriterion'
+        '404':
+          description: Sub Critério não encontrado
+        '400':
+          description: Falha ao atualizar Sub Critério
+
+    delete:
+      tags:
+        - Sub Critério
+      summary: Remove um Sub Critério pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID do Sub Critério a ser removido
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Sub Critério removido com sucesso
+        '404':
+          description: Sub Critério não encontrado
+
+  /itens:
+    get:
+      tags:
+        - Item
+      summary: Lista todos os Items
+      responses:
+        '200':
+          description: Lista de Items recuperada com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Item'
+        '400':
+          description: Erro ao buscar Item
+    post:
+      tags:
+        - Item
+      summary: Cria um novo Item
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Item'
+      responses:
+        '201':
+          description: Item criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '400':
+          description: Falha ao adicionar Item
+  /itens/{id}:
+    get:
+      tags:
+        - Item
+      summary: Obtém um Item pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID do Item a ser obtido
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Item recuperado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '404':
+          description: Item não encontrado
+
+    put:
+      tags:
+        - Item
+      summary: Atualiza um Item existente pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID do Item a ser atualizado
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Item'
+      responses:
+        '200':
+          description: Item atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '404':
+          description: Item não encontrado
+        '400':
+          description: Falha ao atualizar Item
+
+    delete:
+      tags:
+        - Item
+      summary: Remove um Item pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID do Item a ser removido
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Item removido com sucesso
+        '404':
+          description: Item não encontrado
+
+  /julgamentos:
+    get:
+      tags:
+        - Julgamento
+      summary: Lista todos os Julgamentos
+      responses:
+        '200':
+          description: Lista de Julgamentos recuperada com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Judgment'
+        '400':
+          description: Erro ao buscar Julgamento
+    post:
+      tags:
+        - Julgamento
+      summary: Cria um novo Julgamento
+      description: O atributo scores é em formato JSON, favor verificar antes de enviar. Dentro do mesmo possui um ou mais score
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Judgment'
+      responses:
+        '201':
+          description: Julgamento criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Judgment'
+        '400':
+          description: Falha ao adicionar Julgamento
+  /julgamentos/{id}:
+    get:
+      tags:
+        - Julgamento
+      summary: Obtém um Julgamento pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID do Julgamento a ser obtido
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Julgamento recuperado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Judgment'
+        '404':
+          description: Julgamento não encontrado
+
+    put:
+      tags:
+        - Julgamento
+      summary: Atualiza um Julgamento existente pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID do Julgamento a ser atualizado
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Judgment'
+      responses:
+        '200':
+          description: Julgamento atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Judgment'
+        '404':
+          description: Julgamento não encontrado
+        '400':
+          description: Falha ao atualizar Julgamento
+
+    delete:
+      tags:
+        - Julgamento
+      summary: Remove um Julgamento pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID do Julgamento a ser removido
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Julgamento removido com sucesso
+        '404':
+          description: Julgamento não encontrado
+
+  /availiacoes:
+    get:
+      tags:
+        - Avaliação
+      summary: Lista todos as availiações
+      responses:
+        '200':
+          description: Lista de availiações recuperada com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Evaluation'
+        '400':
+          description: Erro ao buscar Avaliação
+    post:
+      tags:
+        - Avaliação
+      summary: Cria uma nova Avaliação
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Evaluation'
+      responses:
+        '201':
+          description: Avaliação criada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Evaluation'
+        '400':
+          description: Falha ao adicionar Avaliação
+  /availiacoes/{id}:
+    get:
+      tags:
+        - Avaliação
+      summary: Obtém uma Avaliação pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID da Avaliação a ser obtida
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Avaliação recuperada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Evaluation'
+        '404':
+          description: Avaliação não encontrada
+
+    put:
+      tags:
+        - Avaliação
+      summary: Atualiza uma Avaliação existente pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID da Avaliação a ser atualizada
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Evaluation'
+      responses:
+        '200':
+          description: Avaliação atualizada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Evaluation'
+        '404':
+          description: Avaliação não encontrado
+        '400':
+          description: Falha ao atualizar Avaliação
+
+    delete:
+      tags:
+        - Avaliação
+      summary: Remove uma Avaliação pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID da Avaliação a ser removida
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Avaliação removida com sucesso
+        '404':
+          description: Avaliação não encontrada
+
+  /agendas:
+    get:
+      tags:
+        - Agenda
+      summary: Lista todos as agendas
+      responses:
+        '200':
+          description: Lista de agendas recuperada com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Schedule'
+        '400':
+          description: Erro ao buscar agenda
+    post:
+      tags:
+        - Agenda
+      summary: Cria uma nova agenda
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Schedule'
+      responses:
+        '201':
+          description: agenda criada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schedule'
+        '400':
+          description: Falha ao adicionar agenda
+  /agendas/{id}:
+    get:
+      tags:
+        - Agenda
+      summary: Obtém uma agenda pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID da agenda a ser obtida
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: agenda recuperada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schedule'
+        '404':
+          description: agenda não encontrada
+
+    put:
+      tags:
+        - Agenda
+      summary: Atualiza uma agenda existente pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID da agenda a ser atualizada
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Schedule'
+      responses:
+        '200':
+          description: agenda atualizada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schedule'
+        '404':
+          description: agenda não encontrado
+        '400':
+          description: Falha ao atualizar agenda
+
+    delete:
+      tags:
+        - Agenda
+      summary: Remove uma agenda pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID da agenda a ser removida
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: agenda removida com sucesso
+        '404':
+          description: agenda não encontrada
+
+  /pontuacoes:
+    get:
+      tags:
+        - Pontuação
+      summary: Lista todos as pontuações
+      responses:
+        '200':
+          description: Lista de pontuações recuperada com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Score'
+        '400':
+          description: Erro ao buscar pontuação
+    post:
+      tags:
+        - Pontuação
+      summary: Cria uma nova pontuação
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Score'
+      responses:
+        '201':
+          description: pontuação criada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Score'
+        '400':
+          description: Falha ao adicionar pontuação
+  /pontuacoes/{id}:
+    get:
+      tags:
+        - Pontuação
+      summary: Obtém uma pontuação pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID da pontuação a ser obtida
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: pontuação recuperada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Score'
+        '404':
+          description: pontuação não encontrada
+
+    put:
+      tags:
+        - Pontuação
+      summary: Atualiza uma pontuação existente pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID da pontuação a ser atualizada
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Score'
+      responses:
+        '200':
+          description: pontuação atualizada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Score'
+        '404':
+          description: pontuação não encontrado
+        '400':
+          description: Falha ao atualizar pontuação
+
+    delete:
+      tags:
+        - Pontuação
+      summary: Remove uma pontuação pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID da pontuação a ser removida
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: pontuação removida com sucesso
+        '404':
+          description: pontuação não encontrada
+
 components:
   schemas:
     User:
@@ -133,3 +1568,289 @@ components:
       required:
         - name
         - email
+
+    Event:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID do evento
+        name:
+          type: string
+          description: Nome do usuário
+        dateTime:
+          type: string
+          description: Data e hora do evento
+        eventLogo:
+          type: integer
+          description: Caminho para logo do evento
+
+    EventAddress:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID do endereço
+        event_id:
+          type: integer
+          format: int64
+          description: ID do evento
+        address:
+          type: string
+          description: Rua, avenida, etc..
+        number:
+          type: integer
+          format: int64
+          description: Número do imovel
+        neighborhood:
+          type: string
+          description: Bairro, destrito, etc..
+        city:
+          type: string
+          description: Cidade
+        state:
+          type: string
+          description: Estado
+        country:
+          type: string
+          description: País
+        cep:
+          type: string
+          description: Códdigo Postal (CEP)
+
+    EventDay:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID do dia de evento
+        event_id:
+          type: integer
+          format: int64
+          description: ID do evento
+        date:
+          type: string
+          format: date
+          description: Data
+        index:
+          type: integer
+          format: int64
+          description: Índice ordinário
+
+    Institution:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID da instutição
+        name:
+          type: string
+          description: nome da instutição
+        logo:
+          type: string
+          description: Caminho para logo
+
+    Modality:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID da instutição
+        name:
+          type: string
+          description: nome da instutição
+        type:
+          type: string
+          description: Tipo de modalidade
+
+    Team:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID da instutição
+        name:
+          type: string
+          description: nome da instutição
+        logo:
+          type: string
+          description: Caminho para logo
+
+    Participant:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID do participante
+        team_id:
+          type: integer
+          format: int64
+          description: ID do time do participante
+        institution_id:
+          type: integer
+          format: int64
+          description: ID da instituição do participante
+        modality_id:
+          type: integer
+          format: int64
+          description: ID da modalidade do participante
+        firstName:
+          type: string
+          description: Nome da participante
+        lastName:
+          type: string
+          description: Sobrenome do participante
+        gender:
+          type: string
+          description: Gênero do participante
+        position:
+          type: string
+          description: Posição do participante
+        photo:
+          type: string
+          description: Caminho para foto do participante
+
+    Criterion:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID do critério
+        name:
+          type: string
+          description: nome do critério
+        points:
+          type: string
+          description: pontos do critério
+
+    SubCriterion:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID do sub-critério
+        name:
+          type: string
+          description: nome do sub-critério
+        points:
+          type: string
+          description: pontos do sub-critério
+
+    Item:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID do item
+        name:
+          type: string
+          description: nome do item
+        aspect:
+          type: string
+          description: aspecto do item
+        points:
+          type: integer
+          format: int64
+          description: pontos do item
+
+    Judgment:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID do julgamento
+        item_id:
+          type: integer
+          format: int64
+          description: ID do item de julgamento
+        aspect:
+          type: string
+          description: aspecto do item
+        scores:
+          type: string
+          format: json
+          description: scores do julgamento
+
+    Evaluation:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID da avaliação
+        event_id:
+          type: integer
+          format: int64
+          description: ID do evento da avaliação
+        modality_id:
+          type: integer
+          format: int64
+          description: ID da modalidade da avaliação
+        criterion_id:
+          type: integer
+          format: int64
+          description: ID do critério da avaliação
+        subCriterion_id:
+          type: integer
+          format: int64
+          description: ID do sub critério da avaliação
+        item_id:
+          type: integer
+          format: int64
+          description: ID do item da avaliação
+        judgment_id:
+          type: integer
+          format: int64
+          description: ID do julgamento da avaliação
+
+    Schedule:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID da agenda
+        item_id:
+          type: integer
+          format: int64
+          description: ID do sub-critério do agendamento
+        date:
+          type: string
+          format: date
+          description: data do agendamento
+        judge_id:
+          type: integer
+          format: int64
+          description: ID do jurado
+
+    Score:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID da pontuação
+        evaluation_id:
+          type: integer
+          format: int64
+          description: ID da avaliação
+        participant_id:
+          type: integer
+          format: int64
+          description: ID do participant
+        points:
+          type: integer
+          format: int64
+          description: Pontos do participante
+
