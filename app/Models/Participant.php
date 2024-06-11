@@ -20,9 +20,15 @@ class Participant extends Model{
         'modality_id', //Id da modalidade
         'firstName', //Nome
         'lastName', //Sobrenome
+        'birthday', //Data de aniversário
         'gender', //Gênero
         'position', //Posição
+        'achievements', //Conquistas individuais do participante
         'photo' //Caminho para foto do participant
+    ];
+
+    protected $casts = [
+        'achievements' => 'json',
     ];
 
     /*

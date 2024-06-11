@@ -67,8 +67,10 @@ class ParticipantService{
                     'modality_id',
                     'firstName',
                     'lastName',
+                    'birthday',
                     'gender',
                     'position',
+                    'achievements',
                     'photo'
                 ));
 
@@ -99,8 +101,10 @@ class ParticipantService{
                     'modality_id',
                     'firstName',
                     'lastName',
+                    'birthday',
                     'gender',
                     'position',
+                    'achievements',
                     'photo'
                 ))->save();
 

@@ -22,7 +22,9 @@ return new class extends Migration
             $table->string('firstName', 64);
             $table->string('lastName', 128);
             $table->string('gender', 16);
+            $table->date('birthday');
             $table->string('position', 128);
+            $table->json('achievements');
             $table->string('photo', 256)->nullable();
             $table->timestamps();
         });
