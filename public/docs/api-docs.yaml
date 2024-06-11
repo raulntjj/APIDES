@@ -1713,6 +1713,14 @@ components:
         position:
           type: string
           description: Posição do participante
+        birthday:
+          type: string
+          format: date
+          description: data de nascimento do participante
+        achievements:
+          type: string
+          format: json
+          description: Neste JSON deve conter as conquistas individuais do participante
         photo:
           type: string
           description: Caminho para foto do participante
