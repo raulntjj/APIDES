@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('participants', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger('team_id');
             $table->foreign('team_id')->references('id')->on('teams')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger('institution_id');
@@ -24,7 +26,6 @@ return new class extends Migration
             $table->string('gender', 16);
             $table->date('birthday');
             $table->string('position', 128);
-            $table->json('achievements');
             $table->string('photo', 256)->nullable();
             $table->timestamps();
         });

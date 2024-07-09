@@ -15,6 +15,7 @@ class Participant extends Model{
 
     protected $table = 'participants';
     protected $fillable = [
+        'user_id', //ID do usuário
         'team_id', //Id do time
         'institution_id', //Id da instituição
         'modality_id', //Id da modalidade
@@ -23,12 +24,7 @@ class Participant extends Model{
         'birthday', //Data de aniversário
         'gender', //Gênero
         'position', //Posição
-        'achievements', //Conquistas individuais do participante
         'photo' //Caminho para foto do participant
-    ];
-
-    protected $casts = [
-        'achievements' => 'json',
     ];
 
     /*
@@ -40,6 +36,10 @@ class Participant extends Model{
     */
 
     //Relações Eloquent
+    public function user(){
+        return $this->belongsTo(User::class, 'participant_id');
+    }
+
     public function team(){
         return $this->belongsTo(Team::class);
     }
@@ -54,5 +54,9 @@ class Participant extends Model{
 
     public function scores(){
         return $this->belongsTo(Score::class);
+    }
+
+    public function achievements(){
+        return $this->hasMany(Achievement::class, 'participant_id');
     }
 }

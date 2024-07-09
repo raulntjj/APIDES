@@ -53,13 +53,21 @@ class ParticipantService{
     }
 
     //Função pública utilizada para atualizar e retornar um participante
-    public function addParticipant(ParticipantRequest $request){
+    public function addParticipant(StoreParticipantRequest $request){
         //Tratativa de erros
         try{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () use ($request){
-                //Criando participante
-                $participant = Participant::create($request->only(
+                $user = User::create($request->only(
+                    'name',
+                    'lastname',
+                    'group',
+                    'interfaceLanguage',
+                    'email',
+                    'password',
+                    'photo'
+                ));
+                $user->participant()->create($request->only(
                     //Foi deixado o request->only() no lugar do request->all()
                     //Para deixar mais explícito e descritivo em relação as variavéis que estão sendo utilizadas etc..
                     'team_id',
