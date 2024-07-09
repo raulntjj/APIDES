@@ -21,7 +21,7 @@ return new class extends Migration
             $table->foreign('institution_id')->references('id')->on('institutions')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger('modality_id');
             $table->foreign('modality_id')->references('id')->on('modalities')->onDelete('cascade')->onUpdate('cascade');
-            $table->string('firstName', 64);
+            $table->string('name', 64);
             $table->string('lastName', 128);
             $table->string('gender', 16);
             $table->date('birthday');

@@ -19,7 +19,7 @@ class Participant extends Model{
         'team_id', //Id do time
         'institution_id', //Id da instituição
         'modality_id', //Id da modalidade
-        'firstName', //Nome
+        'name', //Nome
         'lastName', //Sobrenome
         'birthday', //Data de aniversário
         'gender', //Gênero

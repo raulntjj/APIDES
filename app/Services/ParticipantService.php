@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Http\Requests\ParticipantRequest;
 use App\Models\Participant;
+use Illuminate\Http\Request;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
@@ -15,14 +16,21 @@ class ParticipantService{
     }
 
     //Função pública utilizada para retornar todos os participantes
-    public function getParticipants(){
+    public function getParticipants(Request $request){
         //Tratativa de erros
-        try{
-            //DB transaction para lidar com transações de dados com o banco de dados
-            return DB::transaction(function () {
-                //Retornando todos participantes e o código de respostas
-                return response()->json(Participant::all(), 200);
-            });
+        try {
+            $search = $request->input('search');
+            if(empty($search)){
+                //caso contrário retornará todo(s) participante(s) ordenado(s) por ordem alfabética
+                return Participant::orderBy('name')->get();
+            } else{
+                //Se search não estiver vazio será retornado o(s) participante(s) da busca ordenado(s) por ordem alfabética
+                return Participant::where('name', 'like', '%' . $search . '%')
+                            ->orWhere('lastname', 'like', '%' . $search . '%')
+                            ->orWhere('user_id', $search)
+                            ->orderBy('name')
+                            ->get();
+            }
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){
             //Retorna mensagem de erro com flag e mensagem captada pelo exception
@@ -73,7 +81,7 @@ class ParticipantService{
                     'team_id',
                     'institution_id',
                     'modality_id',
-                    'firstName',
+                    'name',
                     'lastName',
                     'birthday',
                     'gender',

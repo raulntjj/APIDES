@@ -15,6 +15,8 @@ servers:
   - description: Localhost
     url: http://127.0.0.1:8000/api/
 tags:
+  - name: Sessão
+    description: Rotas para controle de sessões, senhas, etc...
   - name: User
     description: Rotas para controle de usuário
   - name: Evento
@@ -45,7 +47,38 @@ tags:
     description: Rotas para controle de pontuações
 
 paths:
-  /usuarios:
+  /login:
+    post:
+      tags:
+        - Sessão
+      summary: Autenticar usuário com credenciais
+      responses:
+        '201':
+          description: Token para autenticar usuários
+        '400':
+          description: Falha ao autenticar usuário
+  /logout:
+    post:
+      tags:
+        - Sessão
+      summary: Deslogar usuário
+      responses:
+        '201':
+          description: Usuário deslogado com sucesso
+        '400':
+          description: Falha ao autenticar usuário
+  /password/change:
+    post:
+      tags:
+        - Sessão
+      summary: Deslogar usuário
+      responses:
+        '201':
+          description: Senha alterada com sucesso
+        '400':
+          description: Falha ao alterar senha
+
+  /users:
     get:
       tags:
         - User
@@ -80,7 +113,7 @@ paths:
                 $ref: '#/components/schemas/User'
         '400':
           description: Falha ao adicionar usuário
-  /usuarios/{id}:
+  /users/{id}:
     get:
       tags:
         - User
@@ -151,7 +184,7 @@ paths:
         '404':
           description: Usuário não encontrado
 
-  /eventos:
+  /events:
     get:
       tags:
         - Evento
@@ -190,7 +223,7 @@ paths:
                 $ref: '#/components/schemas/Event'
         '400':
           description: Falha ao adicionar evento
-  /eventos/{id}:
+  /events/{id}:
     get:
       tags:
         - Evento
@@ -264,7 +297,7 @@ paths:
         '404':
           description: evento não encontrado
 
-  /dias:
+  /days:
     get:
       tags:
         - Dia de Evento
@@ -299,7 +332,7 @@ paths:
                 $ref: '#/components/schemas/EventDay'
         '400':
           description: Falha ao adicionar dia
-  /dias/{id}:
+  /days/{id}:
     get:
       tags:
         - Dia de Evento
@@ -370,7 +403,7 @@ paths:
         '404':
           description: dia não encontrado
 
-  /instituicoes:
+  /institutions:
     get:
       tags:
         - Instituição
@@ -405,7 +438,7 @@ paths:
                 $ref: '#/components/schemas/Institution'
         '400':
           description: Falha ao adicionar Instituição
-  /instituicoes/{id}:
+  /institutions/{id}:
     get:
       tags:
         - Instituição
@@ -476,7 +509,7 @@ paths:
         '404':
           description: Instituição não encontrada
 
-  /modalidades:
+  /modalities:
     get:
       tags:
         - Modalidade
@@ -511,7 +544,7 @@ paths:
                 $ref: '#/components/schemas/Modality'
         '400':
           description: Falha ao adicionar modalidade
-  /modalidades/{id}:
+  /modalities/{id}:
     get:
       tags:
         - Modalidade
@@ -582,7 +615,7 @@ paths:
         '404':
           description: modalidade não encontrada
 
-  /equipes:
+  /teams:
     get:
       tags:
         - Equipe
@@ -617,7 +650,7 @@ paths:
                 $ref: '#/components/schemas/Team'
         '400':
           description: Falha ao adicionar Equipe
-  /equipes/{id}:
+  /teams/{id}:
     get:
       tags:
         - Equipe
@@ -688,7 +721,7 @@ paths:
         '404':
           description: Equipe não encontrada
 
-  /participantes:
+  /participants:
     get:
       tags:
         - Participante
@@ -723,7 +756,7 @@ paths:
                 $ref: '#/components/schemas/Participant'
         '400':
           description: Falha ao adicionar Participante
-  /participantes/{id}:
+  /participants/{id}:
     get:
       tags:
         - Participante
@@ -794,7 +827,7 @@ paths:
         '404':
           description: Participante não encontrado
 
-  /criterios:
+  /criteria:
     get:
       tags:
         - Critério
@@ -829,7 +862,7 @@ paths:
                 $ref: '#/components/schemas/Criterion'
         '400':
           description: Falha ao adicionar Criterio
-  /criterios/{id}:
+  /criteria/{id}:
     get:
       tags:
         - Critério
@@ -900,7 +933,7 @@ paths:
         '404':
           description: Criterio não encontrado
 
-  /subcriterios:
+  /subcriteria:
     get:
       tags:
         - Sub Critério
@@ -935,7 +968,7 @@ paths:
                 $ref: '#/components/schemas/SubCriterion'
         '400':
           description: Falha ao adicionar Sub Critério
-  /subcriterios/{id}:
+  /subcriteria/{id}:
     get:
       tags:
         - Sub Critério
@@ -1006,7 +1039,7 @@ paths:
         '404':
           description: Sub Critério não encontrado
 
-  /itens:
+  /items:
     get:
       tags:
         - Item
@@ -1041,7 +1074,7 @@ paths:
                 $ref: '#/components/schemas/Item'
         '400':
           description: Falha ao adicionar Item
-  /itens/{id}:
+  /items/{id}:
     get:
       tags:
         - Item
@@ -1112,7 +1145,7 @@ paths:
         '404':
           description: Item não encontrado
 
-  /julgamentos:
+  /judgments:
     get:
       tags:
         - Julgamento
@@ -1148,7 +1181,7 @@ paths:
                 $ref: '#/components/schemas/Judgment'
         '400':
           description: Falha ao adicionar Julgamento
-  /julgamentos/{id}:
+  /judgments/{id}:
     get:
       tags:
         - Julgamento
@@ -1219,7 +1252,7 @@ paths:
         '404':
           description: Julgamento não encontrado
 
-  /availiacoes:
+  /evaluations:
     get:
       tags:
         - Avaliação
@@ -1254,7 +1287,7 @@ paths:
                 $ref: '#/components/schemas/Evaluation'
         '400':
           description: Falha ao adicionar Avaliação
-  /availiacoes/{id}:
+  /evaluations/{id}:
     get:
       tags:
         - Avaliação
@@ -1325,7 +1358,7 @@ paths:
         '404':
           description: Avaliação não encontrada
 
-  /agendas:
+  /schedules:
     get:
       tags:
         - Agenda
@@ -1360,7 +1393,7 @@ paths:
                 $ref: '#/components/schemas/Schedule'
         '400':
           description: Falha ao adicionar agenda
-  /agendas/{id}:
+  /schedules/{id}:
     get:
       tags:
         - Agenda
@@ -1431,7 +1464,7 @@ paths:
         '404':
           description: agenda não encontrada
 
-  /pontuacoes:
+  /scores:
     get:
       tags:
         - Pontuação
@@ -1466,7 +1499,7 @@ paths:
                 $ref: '#/components/schemas/Score'
         '400':
           description: Falha ao adicionar pontuação
-  /pontuacoes/{id}:
+  /scores/{id}:
     get:
       tags:
         - Pontuação

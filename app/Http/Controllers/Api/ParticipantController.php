@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\ParticipantRequest;
 use App\Services\ParticipantService;
+use Illuminate\Http\Request;
 
 class ParticipantController{
     //Instanciando serviço
@@ -13,8 +14,8 @@ class ParticipantController{
     }
 
     //Função para obter todos participantes
-    public function index(){
-        return $this->participantService->getParticipants();
+    public function index(Request $request){
+        return $this->participantService->getParticipants($request);
     }
 
     //Função para obter um participante
