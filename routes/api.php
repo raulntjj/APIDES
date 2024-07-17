@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Controllers\Api;
-namespace App\Http\Controllers\Api\Auth;
+
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\PasswordController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -25,7 +27,7 @@ Route::apiResource('days', EventDayController::class)->except(['create', 'edit']
 
 Route::apiResource('institutions', InstitutionController::class)->except(['create', 'edit']);
 
-Route::apiResource('modalitiues', ModalityController::class)->except(['create', 'edit']);
+Route::apiResource('modalities', ModalityController::class)->except(['create', 'edit']);
 
 Route::apiResource('participants', ParticipantController::class)->except(['create', 'edit']);
 

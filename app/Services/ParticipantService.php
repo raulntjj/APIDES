@@ -19,20 +19,36 @@ class ParticipantService{
     public function getParticipants(Request $request){
         //Tratativa de erros
         try {
-            $search = $request->input('search');
-            if(empty($search)){
-                //caso contrário retornará todo(s) participante(s) ordenado(s) por ordem alfabética
-                return Participant::orderBy('name')->get();
-            } else{
-                //Se search não estiver vazio será retornado o(s) participante(s) da busca ordenado(s) por ordem alfabética
-                return Participant::where('name', 'like', '%' . $search . '%')
-                            ->orWhere('lastname', 'like', '%' . $search . '%')
-                            ->orWhere('user_id', $search)
-                            ->orderBy('name')
-                            ->get();
+            $participants = Participant::with('team', 'institution', 'modality', 'user');
+
+            if ($request->has('search')) {
+                $participants->where(function($query) use ($request) {
+                    $query->where('name', 'like', '%' . $request->search . '%')
+                          ->orWhere('lastName', 'like', '%' . $request->search . '%');
+                });
             }
+
+            if ($request->has('team_id')) {
+                $participants->where('team_id', $request->team_id);
+            }
+            if ($request->has('institution_id')) {
+                $participants->where('institution_id', $request->institution_id);
+            }
+            if ($request->has('modality_id')) {
+                $participants->where('modality_id', $request->modality_id);
+            }
+            if ($request->has('gender')) {
+                $participants->where('gender', $request->gender);
+            }
+            if ($request->has('position')) {
+                $participants->where('position', $request->position);
+            }
+
+            $result = $participants->orderBy('name')->get();
+            return $result;
+        }
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
-        } catch(Exception $e){
+        catch(Exception $e){
             //Retorna mensagem de erro com flag e mensagem captada pelo exception
             return response()->json(['Error' => 'Failed to get all Participants', 'Details' => $e->getMessage()], 400);
         }
