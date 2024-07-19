@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Exception;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 
 class UserService{
@@ -53,26 +54,27 @@ class UserService{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () use ($request){
                 //Criando usuário
-                $user = User::create($request->only(
-                    //Foi deixado o request->only() no lugar do request->all()
-                    //Para deixar mais explícito e descritivo em relação as variavéis que estão sendo utilizadas etc..
-                    'name',
-                    'email',
-                    'password',
-                    'group',
-                    'interfaceLanguage',
-                    'photo'
-                ));
-
+                $passwordHashed = Hash::make($request->password);
+                $user = User::create(
+                    array_merge(
+                        $request->only(
+                            'name',
+                            'email',
+                            'group',
+                            'interfaceLanguage',
+                            'photo'
+                        ),
+                        ['password' => $passwordHashed]
+                    )
+                );
                 //Retornando usuário criado com suas informações de endereço e o código de respostas
                 return response()->json($user, 201);
             });
-        //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){
             //Retorna mensagem de erro com flag e mensagem captada pelo exception
             return response()->json(['Error' => 'Failed to add User', 'Details' => $e->getMessage()], 400);
         }
-        }
+    }
 
     //Função pública utilizada para atualizar e retornar um usuário
     public function updateUser(UserRequest $request, int $id){
@@ -88,7 +90,6 @@ class UserService{
                     //Explicitando váriaveis
                     'name',
                     'email',
-                    'password',
                     'group',
                     'interfaceLanguage',
                     'photo'

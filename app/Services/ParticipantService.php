@@ -82,28 +82,14 @@ class ParticipantService{
         try{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () use ($request){
-                $user = User::create($request->only(
-                    'name',
-                    'lastname',
-                    'group',
-                    'interfaceLanguage',
-                    'email',
-                    'password',
-                    'photo'
-                ));
                 $user->participant()->create($request->only(
                     //Foi deixado o request->only() no lugar do request->all()
                     //Para deixar mais explícito e descritivo em relação as variavéis que estão sendo utilizadas etc..
+                    'user_id',
                     'team_id',
                     'institution_id',
                     'modality_id',
-                    'name',
-                    'lastName',
-                    'birthday',
-                    'gender',
                     'position',
-                    'achievements',
-                    'photo'
                 ));
 
                 //Retornando participante criado com suas informações de endereço e o código de respostas
@@ -128,16 +114,11 @@ class ParticipantService{
                 //Atualizando dados do participante e salvando utilizando o método fill
                 $participant->fill($request->only(
                     //Explicitando váriaveis
+                    'user_id',
                     'team_id',
                     'institution_id',
                     'modality_id',
-                    'firstName',
-                    'lastName',
-                    'birthday',
-                    'gender',
                     'position',
-                    'achievements',
-                    'photo'
                 ))->save();
 
                 //Retornando participante atualizado com suas informações de endereço e o código de respostas

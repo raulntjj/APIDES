@@ -15,18 +15,13 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedBigInteger('team_id');
+            $table->unsignedBigInteger('team_id')->nullable();
             $table->foreign('team_id')->references('id')->on('teams')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedBigInteger('institution_id');
+            $table->unsignedBigInteger('institution_id')->nullable();
             $table->foreign('institution_id')->references('id')->on('institutions')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedBigInteger('modality_id');
+            $table->unsignedBigInteger('modality_id')->nullable();
             $table->foreign('modality_id')->references('id')->on('modalities')->onDelete('cascade')->onUpdate('cascade');
-            $table->string('name', 64);
-            $table->string('lastName', 128);
-            $table->string('gender', 16);
-            $table->date('birthday');
-            $table->string('position', 128);
-            $table->string('photo', 256)->nullable();
+            $table->string('position', 128)->nullable();
             $table->timestamps();
         });
     }

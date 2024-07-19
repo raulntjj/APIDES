@@ -13,11 +13,11 @@ class RegisterController {
     // Método de registro
     public function registerAccount(UserRequest $request){
         if(!$request){
-            return response()->json(['error' => 'dados ausente', 400]);
+            return response()->json(['error' => 'data not exists', 400]);
         }
 
         if(!$this->registerService->register($request)){
-            return response()->json(['error' => 'Server Error', 500]);
+            return response()->json(['error' => 'server error', 500]);
         }
 
         return $this->sendTokenVerification($request->email);
@@ -25,27 +25,29 @@ class RegisterController {
 
     // Método de registro
     private function sendTokenVerification($email){
-        if(!$email){
-            return response()->json(['error' => 'Email ausente', 400]);
-        }
-
         if(!$this->registerService->sendToken($email)){
-            return response()->json(['error' => 'Server Error', 500]);
+            return response()->json(['error' => 'server error', 500]);
         }
 
-        return response()->json(['message' => 'Token enviado com sucesso', 400]);
+        return response()->json(['success' => 'token submitted', 400]);
     }
 
     public function confirmTokenVerification(Request $request){
+        //Verificando usuário autenticado com o token recebido
+        if (!$user = JWTAuth::parseToken()->authenticate()) {
+            return response()->json(['error' => 'user not exists'], 404);
+        }
+
         if(!$request->token){
-            return response()->json(['error' => 'Token ausente', 400]);
+            return response()->json(['error' => 'token not exists', 400]);
         }
 
-        if(!$this->registerService->confirmToken($email)){
-            return response()->json(['error' => 'Server Error', 500]);
+
+        if(!$this->registerService->confirmToken($request->email, $request->token)){
+            return response()->json(['error' => 'token does not match', 500]);
         }
 
-        return response()->json(['message' => 'Token confirmado', 400]);
+        return response()->json(['success' => 'token confirmed', 400]);
     }
 
 }

@@ -4,12 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserRequest extends FormRequest{
+class AchievementRequest extends FormRequest
+{
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool{
-        return true;
+    public function authorize(): bool
+    {
+        return false;
     }
 
     /**
@@ -19,16 +21,9 @@ class UserRequest extends FormRequest{
      */
     public function rules(): array
     {
-        /*
-            Request definido apenas como campos obrigatórios por enquanto.
-        */
         return [
-            'name',
-            'email',
-            'password',
-            'group',
-            'interfaceLanguage',
-            'photo' => ['required']
+            'user_id' => ['required'],
+            'name' => ['required'],
         ];
     }
 }

@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Models\PasswordResetToken;
+use App\Events\PasswordResetRequest;
 use Carbon\Carbon;
 use Exception;
 
@@ -15,6 +16,11 @@ class PasswordService{
     public function __construct(){
         $this->deleteExpiredTokens();
     }
+
+    private function deleteExpiredTokens(){
+        PasswordResetToken::where('expires_at', '<', Carbon::now())->delete();
+    }
+
     //Função para validar se possui email
     public function emailValidation(Request $request){
         try {
@@ -27,10 +33,6 @@ class PasswordService{
         } catch (Exception $e) {
             return false;
         }
-    }
-
-    private function deleteExpiredTokens(){
-        PasswordResetToken::where('expires_at', '<', Carbon::now())->delete();
     }
 
     public function createResetToken($email, $token){
@@ -48,23 +50,20 @@ class PasswordService{
     public function sendResetToken($email){
         try{
             $token = substr(str_shuffle('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 6);
-            Mail::send('emails.password_reset', ['token' => $token], function($message) use ($email) {
-                $message->to($email);
-                $message->subject('Código de Redefinição de Senha');
-            });
-            return true;
+            //Enviando token de redifinição
+            PasswordResetRequest::dispatch($email, $token);
+            return response()->json(['success' => 'token submitted']);
         } catch (Exception $e){
-            return false;
+            return response()->json(['error' => 'failed to submit token', ['details' => $e->getMessage()]]);
         }
     }
 
     public function findResetToken($request){
         try{
-            if(PasswordResetToken::where('email', $request->email)->where('token', $request->token)->first()){
-                return true;
-            }
+            PasswordResetToken::where('email', $request->email)->where('token', $request->token)->first();
+            return response()->json(['success' => 'token confirmated']);
         } catch (Exception $e){
-            return false;
+            return response()->json(['error' => 'failed to confirmate token', ['details' => $e->getMessage()]]);
         }
     }
 
@@ -72,9 +71,9 @@ class PasswordService{
         try{
             $user->password = Hash::make($request->password);
             $user->save();
-            return true;
+            return response()->json(['success' => 'password changed']);
         } catch (Exception $e){
-            return false;
+            return response()->json(['error' => 'failed to change password', ['details' => $e->getMessage()]]);
         }
     }
 
@@ -84,9 +83,9 @@ class PasswordService{
             $user->save();
             //Deletando token
             PasswordResetToken::where('email', $user->email)->delete();
-            return true;
+            return response()->json(['success' => 'password changed']);
         } catch (Exception $e){
-            return false;
+            return response()->json(['error' => 'failed to change password', ['details' => $e->getMessage()]]);
         }
     }
 }

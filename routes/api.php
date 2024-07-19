@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Route;
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::post('logout', [AuthController::class, 'logout']);
 Route::post('password/change', [PasswordController::class, 'changePassword']);
+Route::post('password/forgot', [PasswordController::class, 'forgotPassword']);
+//Route::post('account/confirmation', [RegisterController::class, 'confirmTokenVerification']);
 
 Route::group(['middleware' => ['jwt.auth']], function() {
     Route::get('user', [AuthController::class, 'getAuthenticatedUser']);

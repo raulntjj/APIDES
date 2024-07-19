@@ -17,7 +17,7 @@ servers:
 tags:
   - name: Sessão
     description: Rotas para controle de sessões, senhas, etc...
-  - name: User
+  - name: Usuário
     description: Rotas para controle de usuário
   - name: Evento
     description: Rotas para controle de eventos
@@ -81,7 +81,7 @@ paths:
   /users:
     get:
       tags:
-        - User
+        - Usuário
       summary: Lista todos os usuários
       responses:
         '200':
@@ -96,7 +96,7 @@ paths:
           description: Erro ao buscar usuário
     post:
       tags:
-        - User
+        - Usuário
       summary: Cria um novo usuário
       requestBody:
         required: true
@@ -116,7 +116,7 @@ paths:
   /users/{id}:
     get:
       tags:
-        - User
+        - Usuário
       summary: Obtém um usuário pelo ID
       parameters:
         - in: path
@@ -138,7 +138,7 @@ paths:
 
     put:
       tags:
-        - User
+        - Usuário
       summary: Atualiza um usuário existente pelo ID
       parameters:
         - in: path
@@ -168,7 +168,7 @@ paths:
 
     delete:
       tags:
-        - User
+        - Usuário
       summary: Remove um usuário pelo ID
       parameters:
         - in: path
