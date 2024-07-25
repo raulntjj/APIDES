@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ParticipantRequest extends FormRequest{
+class UpdateParticipantRequest extends FormRequest{
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -23,8 +23,9 @@ class ParticipantRequest extends FormRequest{
             Request definido apenas como campos obrigatórios por enquanto.
         */
         return [
+            //For participant table
             'team_id' => ['required'],
-            'institution_id' => ['required'],
+            'institution_id' => ['nullable'],
             'modality_id' => ['required'],
             'position' => ['required'],
         ];

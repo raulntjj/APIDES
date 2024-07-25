@@ -2,7 +2,8 @@
 
 namespace App\Services;
 
-use App\Http\Requests\ParticipantRequest;
+use App\Http\Requests\StoreParticipantRequest;
+use App\Http\Requests\UpdateParticipantRequest;
 use App\Models\Participant;
 use Illuminate\Http\Request;
 use Exception;
@@ -17,17 +18,24 @@ class ParticipantService{
 
     //Função pública utilizada para retornar todos os participantes
     public function getParticipants(Request $request){
-        //Tratativa de erros
+        // Tratativa de erros
         try {
-            $participants = Participant::with('team', 'institution', 'modality', 'user');
+            // Inicia a consulta com os relacionamentos necessários
+            $participants = Participant::with('team', 'institution', 'modality', 'user')
+                                    ->join('users', 'participants.user_id', '=', 'users.id')
+                                    ->select('participants.*');
 
+            // Filtro de busca
             if ($request->has('search')) {
-                $participants->where(function($query) use ($request) {
-                    $query->where('name', 'like', '%' . $request->search . '%')
-                          ->orWhere('lastName', 'like', '%' . $request->search . '%');
+                $participants->where(function ($query) use ($request) {
+                    $query->where('users.name', 'like', '%' . $request->search . '%')
+                        ->orWhere('users.lastname', 'like', '%' . $request->search . '%')
+                        ->orWhere('users.gender', 'like', '%' . $request->search . '%')
+                        ->orWhere('users.birthday', 'like', '%' . $request->search . '%');
                 });
             }
 
+            // Filtros adicionais
             if ($request->has('team_id')) {
                 $participants->where('team_id', $request->team_id);
             }
@@ -37,19 +45,19 @@ class ParticipantService{
             if ($request->has('modality_id')) {
                 $participants->where('modality_id', $request->modality_id);
             }
-            if ($request->has('gender')) {
-                $participants->where('gender', $request->gender);
-            }
             if ($request->has('position')) {
                 $participants->where('position', $request->position);
             }
 
+            // Obter resultados ordenados por nome
             $result = $participants->orderBy('name')->get();
-            return $result;
+
+            // Retorna o resultado em formato JSON
+            return response()->json($result, 200);
         }
-        //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
-        catch(Exception $e){
-            //Retorna mensagem de erro com flag e mensagem captada pelo exception
+        // Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
+        catch (Exception $e) {
+            // Retorna mensagem de erro com flag e mensagem captada pelo exception
             return response()->json(['Error' => 'Failed to get all Participants', 'Details' => $e->getMessage()], 400);
         }
     }
@@ -64,6 +72,7 @@ class ParticipantService{
                 $participant = $this->findParticipant($id);
                 return response()->json([
                     $participant,
+                    $participant->user,
                     $participant->team,
                     $participant->institution,
                     $participant->modality
@@ -82,7 +91,7 @@ class ParticipantService{
         try{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () use ($request){
-                $user->participant()->create($request->only(
+                $participant = Participant::create($request->only(
                     //Foi deixado o request->only() no lugar do request->all()
                     //Para deixar mais explícito e descritivo em relação as variavéis que estão sendo utilizadas etc..
                     'user_id',
@@ -103,7 +112,7 @@ class ParticipantService{
         }
 
     //Função pública utilizada para atualizar e retornar um participante
-    public function updateParticipant(ParticipantRequest $request, int $id){
+    public function updateParticipant(UpdateParticipantRequest $request, int $id){
         //Tratativa de erros
         try{
             //DB transaction para lidar com transações de dados com o banco de dados

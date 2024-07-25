@@ -18,28 +18,28 @@ class ScoreSeeder extends Seeder
             "points" => 78
         ]);
 
-        Score::create([
-            "evaluation_id" => 2,
-            "participant_id" => 2,
-            "points" => 85
-        ]);
+        // Score::create([
+        //     "evaluation_id" => 2,
+        //     "participant_id" => 2,
+        //     "points" => 85
+        // ]);
 
-        Score::create([
-            "evaluation_id" => 3,
-            "participant_id" => 3,
-            "points" => 92
-        ]);
+        // Score::create([
+        //     "evaluation_id" => 3,
+        //     "participant_id" => 3,
+        //     "points" => 92
+        // ]);
 
-        Score::create([
-            "evaluation_id" => 4,
-            "participant_id" => 4,
-            "points" => 79
-        ]);
+        // Score::create([
+        //     "evaluation_id" => 4,
+        //     "participant_id" => 4,
+        //     "points" => 79
+        // ]);
 
-        Score::create([
-            "evaluation_id" => 5,
-            "participant_id" => 5,
-            "points" => 88
-        ]);
+        // Score::create([
+        //     "evaluation_id" => 5,
+        //     "participant_id" => 5,
+        //     "points" => 88
+        // ]);
     }
 }

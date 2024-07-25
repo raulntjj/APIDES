@@ -23,7 +23,7 @@ class CriterionRequest extends FormRequest{
             Request definido apenas como campos obrigatórios por enquanto.
         */
         return [
-            'name',
+            'name' => ['required'],
             'points' => ['required']
         ];
     }

@@ -21,7 +21,7 @@ class SubCriterionService{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () {
                 //Retornando todos criterios e o código de respostas
-                return response()->json(SubCriterion::all(), 200);
+                return response()->json(SubCriterion::with('criterion')->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){
@@ -56,8 +56,9 @@ class SubCriterionService{
                 $subCriterion = SubCriterion::create($request->only(
                     //Foi deixado o request->only() no lugar do request->all()
                     //Para deixar mais explícito e descritivo em relação as variavéis que estão sendo utilizadas etc..
+                    'criterion_id',
                     'name',
-                    'points'
+                    'points',
                 ));
 
                 //Retornando criterio criado com suas informações de endereço e o código de respostas
@@ -82,8 +83,9 @@ class SubCriterionService{
                 //Atualizando dados do criterio e salvando utilizando o método fill
                 $subCriterion->fill($request->only(
                     //Explicitando váriaveis
+                    'criterion_id',
                     'name',
-                    'points'
+                    'points',
                 ))->save();
 
                 //Retornando criterio atualizado com suas informações de endereço e o código de respostas

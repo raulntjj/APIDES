@@ -17,13 +17,15 @@ class User extends Authenticatable implements JWTSubject{
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'lastname',
+        'name', //Nome
+        'lastname', //Sobrenome
+        'birthday', //Data de aniversário
+        'gender', //Gênero
+        'photo', //Caminho para foto do participant
         'email',
         'password',
         'group',
         'interfaceLanguage',
-        'photo'
     ];
 
     /**
@@ -50,7 +52,11 @@ class User extends Authenticatable implements JWTSubject{
     }
 
     public function participant(){
-        return $this->HasOne(Participant::class, 'participant_id');
+        return $this->HasOne(Participant::class);
+    }
+
+    public function achievements(){
+        return $this->HasMany(Achievement::class);
     }
 
     public function getJWTIdentifier(){

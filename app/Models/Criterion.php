@@ -27,4 +27,8 @@ class Criterion extends Model{
     public function evaluations(){
         return $this->hasMany(Evaluation::class);
     }
+
+    public function subcriteria(){
+        return $this->hasMany(SubCriterion::class, 'criterion_id');
+    }
 }

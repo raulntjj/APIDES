@@ -35,35 +35,19 @@ class ParticipantSeeder extends Seeder{
             'G',
         ];
 
-        $firstNames = ['Lucas', 'Pedro', 'Tiago', 'João', 'Ana', 'Maria', 'Carla', 'Raquel'];
-        $lastNames = ['Silva', 'Santos', 'Oliveira', 'Souza', 'Costa', 'Pereira', 'Rodrigues', 'Almeida'];
 
-        for ($i = 1; $i <= 30; $i++) {
-            $team_id = ($i % 5) + 1;
-            $user_id = ($i % 5) + 1;
-            $institution_id = ($i % 5) + 1;
-            $modality_id = ($i % 5) + 1;
-
+        for ($i = 1; $i <= 5; $i++) {
             $position = $positions[$i % count($positions)];
 
-            $firstName = $firstNames[array_rand($firstNames)];
-            $lastName = $lastNames[array_rand($lastNames)];
-
             Participant::create([
-                "team_id" => $team_id,
-                "user_id" => $user_id,
-                "institution_id" => $institution_id,
-                "modality_id" => $modality_id,
-                "name" => $firstName,
-                "lastName" => $lastName,
-                "gender" => ($i % 2 == 0) ? "Male" : "Female",
-                "position" => $position,
-                "photo" => "path/participant" . $i . ".jpg",
-                "birthday" => "2000-01-01",
+                "user_id" => $i,
+                "team_id" => $i,
+                "institution_id" => $i,
+                "modality_id" => $i,
             ]);
 
             Achievement::create([
-                "participant_id" => $i,
+                "user_id" => $i,
                 "name" => "MVP"
             ]);
         }

@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('items', function (Blueprint $table) {
-            $table->id(); //Exemple id : 1
-            $table->string('name', 64); //Exemple: Physic
-            $table->integer('score'); //Exemple: 100 points
-            $table->string('aspect', 64); //Exemple: measurable
+            $table->id();
+            $table->unsignedBigInteger('subCriterion_id');
+            $table->foreign('subCriterion_id')->references('id')->on('sub_criteria')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('name', 64);
             $table->timestamps();
         });
     }

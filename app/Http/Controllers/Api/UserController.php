@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\UserRequest;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Services\UserService;
+use Illuminate\Http\Request;
 
 class UserController{
     //Instanciando serviço
@@ -23,12 +25,12 @@ class UserController{
     }
 
     //Função para criar um usuário
-    public function store(UserRequest $request){
+    public function store(StoreUserRequest $request){
         return $this->userService->addUser($request);
     }
 
     //Função para editar um usuário
-    public function update(UserRequest $request, int $id){
+    public function update(UpdateUserRequest $request, int $id){
         return $this->userService->updateUser($request, $id);
     }
 

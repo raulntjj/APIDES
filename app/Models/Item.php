@@ -12,9 +12,8 @@ class Item extends Model{
     use HasFactory;
     protected $table = 'items';
     protected $fillable = [
+        'subCriterion_id',
         'name', //Nome do item
-        'score', //Pontuação do item
-        'aspect' //Aspecto do item
     ];
 
     /*
@@ -28,6 +27,10 @@ class Item extends Model{
     //Relações Eloquent
     public function evaluation(){
         return $this->hasMany(Evaluation::class);
+    }
+
+    public function subCriterion(){
+        return $this->belongsTo(SubCriterion::class, 'subCriterion_id');
     }
 
     public function judgments(){

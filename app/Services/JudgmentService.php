@@ -21,7 +21,7 @@ class JudgmentService{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () {
                 //Retornando todos julgamentos e o código de respostas
-                return response()->json(Judgment::all(), 200);
+                return response()->json(Judgment::with('item')->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){
@@ -57,8 +57,8 @@ class JudgmentService{
                     //Foi deixado o request->only() no lugar do request->all()
                     //Para deixar mais explícito e descritivo em relação as variavéis que estão sendo utilizadas etc..
                     'item_id',
-                    'aspect',
-                    'scores'
+                    'scores',
+                    'aspect'
                 ));
 
                 //Retornando julgamento criado com suas informações de endereço e o código de respostas
@@ -84,8 +84,8 @@ class JudgmentService{
                 $Judgment->fill($request->only(
                     //Explicitando váriaveis
                     'item_id',
-                    'aspect',
-                    'scores'
+                    'scores',
+                    'aspect'
                 ))->save();
 
                 //Retornando julgamento atualizado com suas informações de endereço e o código de respostas

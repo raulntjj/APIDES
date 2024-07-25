@@ -13,33 +13,23 @@ class ItemSeeder extends Seeder
      */
     public function run(): void{
         Item::create([
-            "name" => "Physic",
-            "score" => 100,
-            "aspect" => "Mensurável"
+            "subCriterion_id" => 1,
+            "name" => "Chutes dentro da área",
         ]);
 
         Item::create([
-            "name" => "Creativity",
-            "score" => 90,
-            "aspect" => "Mensurável"
+            "subCriterion_id" => 1,
+            "name" => "Chutes fora da área",
         ]);
 
         Item::create([
-            "name" => "Communication",
-            "score" => 95,
-            "aspect" => "Mensurável"
+            "subCriterion_id" => 1,
+            "name" => "Pênalti",
         ]);
 
         Item::create([
-            "name" => "Teamwork",
-            "score" => 85,
-            "aspect" => "Mensurável"
-        ]);
-
-        Item::create([
-            "name" => "Problem-solving",
-            "score" => 80,
-            "aspect" => "Mensurável"
+            "subCriterion_id" => 1,
+            "name" => "Cabeçeio",
         ]);
     }
 }

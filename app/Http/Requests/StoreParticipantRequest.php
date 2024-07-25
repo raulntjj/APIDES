@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SubCriterionRequest extends FormRequest{
+class StoreParticipantRequest extends FormRequest{
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -23,9 +23,10 @@ class SubCriterionRequest extends FormRequest{
             Request definido apenas como campos obrigatórios por enquanto.
         */
         return [
-            'criterion_id' => ['required'],
-            'name' => ['required'],
-            'points' => ['required'],
+            'team_id' => ['required'],
+            'institution_id' => ['nullable'],
+            'modality_id' => ['required'],
+            'position' => ['required'],
         ];
     }
 }

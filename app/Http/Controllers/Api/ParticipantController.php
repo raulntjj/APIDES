@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\ParticipantRequest;
+use App\Http\Requests\StoreParticipantRequest;
+use App\Http\Requests\UpdateParticipantRequest;
 use App\Services\ParticipantService;
 use Illuminate\Http\Request;
 
@@ -24,12 +25,12 @@ class ParticipantController{
     }
 
     //Função para criar um participante
-    public function store(ParticipantRequest $request){
+    public function store(StoreParticipantRequest $request){
         return $this->participantService->addParticipant($request);
     }
 
     //Função para editar um participante
-    public function update(ParticipantRequest $request, int $id){
+    public function update(UpdateParticipantRequest $request, int $id){
         return $this->participantService->updateParticipant($request, $id);
     }
 

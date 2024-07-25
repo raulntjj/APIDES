@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
-use App\Http\Requests\UserRequest;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Exception;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
@@ -48,7 +50,7 @@ class UserService{
     }
 
     //Função pública utilizada para atualizar e retornar um usuário
-    public function addUser(UserRequest $request){
+    public function addUser(StoreUserRequest $request){
         //Tratativa de erros
         try{
             //DB transaction para lidar com transações de dados com o banco de dados
@@ -59,6 +61,9 @@ class UserService{
                     array_merge(
                         $request->only(
                             'name',
+                            'lastname',
+                            'birthday',
+                            'gender',
                             'email',
                             'group',
                             'interfaceLanguage',
@@ -77,7 +82,7 @@ class UserService{
     }
 
     //Função pública utilizada para atualizar e retornar um usuário
-    public function updateUser(UserRequest $request, int $id){
+    public function updateUser(UpdateUserRequest $request, int $id){
         //Tratativa de erros
         try{
             //DB transaction para lidar com transações de dados com o banco de dados
@@ -89,6 +94,9 @@ class UserService{
                 $user->fill($request->only(
                     //Explicitando váriaveis
                     'name',
+                    'lastname',
+                    'birthday',
+                    'gender',
                     'email',
                     'group',
                     'interfaceLanguage',

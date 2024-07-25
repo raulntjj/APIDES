@@ -13,28 +13,126 @@ class SubCriterionSeeder extends Seeder
      */
     public function run(): void{
         SubCriterion::create([
-            "name" => "SoftSkills",
-            "points" => 25
+            "criterion_id" => 1,
+            "name" => "Finalização",
+            "points" => 20
         ]);
 
         SubCriterion::create([
-            "name" => "Leadership",
-            "points" => 10
+            "criterion_id" => 1,
+            "name" => "Passes",
+            "points" => 20
         ]);
 
         SubCriterion::create([
-            "name" => "Adaptability",
-            "points" => 8
+            "criterion_id" => 1,
+            "name" => "Controle de bola",
+            "points" => 20
         ]);
 
         SubCriterion::create([
-            "name" => "Time Management",
-            "points" => 7
+            "criterion_id" => 1,
+            "name" => "Dribles",
+            "points" => 20
         ]);
 
         SubCriterion::create([
-            "name" => "Problem Solving",
-            "points" => 10
+            "criterion_id" => 1,
+            "name" => "Interceptação",
+            "points" => 20
+        ]);
+
+
+        SubCriterion::create([
+            "criterion_id" => 2,
+            "name" => "Foco",
+            "points" => 20
+        ]);
+
+        SubCriterion::create([
+            "criterion_id" => 2,
+            "name" => "Confiança",
+            "points" => 20
+        ]);
+
+        SubCriterion::create([
+            "criterion_id" => 2,
+            "name" => "Resiliência",
+            "points" => 20
+        ]);
+
+        SubCriterion::create([
+            "criterion_id" => 2,
+            "name" => "Respeito",
+            "points" => 20
+        ]);
+
+        SubCriterion::create([
+            "criterion_id" => 2,
+            "name" => "Humildade",
+            "points" => 20
+        ]);
+
+
+        SubCriterion::create([
+            "criterion_id" => 3,
+            "name" => "Condição física",
+            "points" => 20
+        ]);
+
+        SubCriterion::create([
+            "criterion_id" => 3,
+            "name" => "Velocidade",
+            "points" => 20
+        ]);
+
+        SubCriterion::create([
+            "criterion_id" => 3,
+            "name" => "Força",
+            "points" => 20
+        ]);
+
+        SubCriterion::create([
+            "criterion_id" => 3,
+            "name" => "Mobilidade",
+            "points" => 20
+        ]);
+
+        SubCriterion::create([
+            "criterion_id" => 3,
+            "name" => "Equilíbrio",
+            "points" => 20
+        ]);
+
+
+        SubCriterion::create([
+            "criterion_id" => 4,
+            "name" => "Leitura de jogo",
+            "points" => 20
+        ]);
+
+        SubCriterion::create([
+            "criterion_id" => 4,
+            "name" => "Tomada de decição",
+            "points" => 20
+        ]);
+
+        SubCriterion::create([
+            "criterion_id" => 4,
+            "name" => "Versatilidade",
+            "points" => 20
+        ]);
+
+        SubCriterion::create([
+            "criterion_id" => 4,
+            "name" => "Comunicação",
+            "points" => 20
+        ]);
+
+        SubCriterion::create([
+            "criterion_id" => 4,
+            "name" => "Recuperação de bola",
+            "points" => 20
         ]);
     }
 }

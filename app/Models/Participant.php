@@ -19,12 +19,7 @@ class Participant extends Model{
         'team_id', //Id do time
         'institution_id', //Id da instituição
         'modality_id', //Id da modalidade
-        'name', //Nome
-        'lastName', //Sobrenome
-        'birthday', //Data de aniversário
-        'gender', //Gênero
-        'position', //Posição
-        'photo' //Caminho para foto do participant
+        'position'
     ];
 
     /*
@@ -37,7 +32,7 @@ class Participant extends Model{
 
     //Relações Eloquent
     public function user(){
-        return $this->belongsTo(User::class, 'participant_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function team(){

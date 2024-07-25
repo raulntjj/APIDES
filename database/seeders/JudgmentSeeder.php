@@ -16,10 +16,10 @@ class JudgmentSeeder extends Seeder
             "item_id" => 1,
             "aspect" => "Julgamento",
             "scores" => [
-                "1" => "power",
-                "2" => "resistence",
-                "3" => "speed",
-                "4" => "recovery"
+                "Chutes feitos",
+                "Chutes certos",
+                "Chutes errados",
+                "Nota",
             ]
         ]);
 
@@ -27,9 +27,10 @@ class JudgmentSeeder extends Seeder
             "item_id" => 2,
             "aspect" => "Julgamento",
             "scores" => [
-                "1" => "creativity",
-                "2" => "originality",
-                "3" => "innovation"
+                "Chutes feitos",
+                "Chutes certos",
+                "Chutes errados",
+                "Nota",
             ]
         ]);
 
@@ -37,31 +38,18 @@ class JudgmentSeeder extends Seeder
             "item_id" => 3,
             "aspect" => "Julgamento",
             "scores" => [
-                "1" => "clarity",
-                "2" => "engagement",
-                "3" => "persuasiveness",
-                "4" => "organization",
-                "5" => "professionalism"
+                "Chutes feitos",
+                "Chutes certos",
+                "Chutes errados",
+                "Nota"
             ]
         ]);
 
         Judgment::create([
             "item_id" => 4,
-            "aspect" => "Julgamento",
+            "aspect" => "Mensurável",
             "scores" => [
-                "1" => "collaboration",
-                "2" => "communication",
-                "3" => "cooperation"
-            ]
-        ]);
-
-        Judgment::create([
-            "item_id" => 5,
-            "aspect" => "Julgamento",
-            "scores" => [
-                "1" => "analytical",
-                "2" => "creative",
-                "3" => "critical"
+                "Nota"
             ]
         ]);
     }

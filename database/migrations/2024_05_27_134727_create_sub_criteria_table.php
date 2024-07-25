@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('sub_criteria', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('criterion_id');
+            $table->foreign('criterion_id')->references('id')->on('criteria')->onDelete('cascade')->onUpdate('cascade');
             $table->string('name', 64);
             $table->integer('points');
             $table->timestamps();

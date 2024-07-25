@@ -12,6 +12,7 @@ class SubCriterion extends Model{
     use HasFactory;
     protected $table = 'sub_criteria';
     protected $fillable = [
+        'criterion_id',
         'name', //Nome do subcritério
         'points' //Pontos do subcritério
     ];
@@ -31,5 +32,13 @@ class SubCriterion extends Model{
 
     public function schedules(){
         return $this->hasMany(User::class);
+    }
+
+    public function criterion(){
+        return $this->belongsTo(Criterion::class, 'criterion_id');
+    }
+
+    public function items(){
+        return $this->belongsTo(Item::class, 'subCriterion_id');
     }
 }

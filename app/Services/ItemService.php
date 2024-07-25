@@ -21,7 +21,7 @@ class ItemService{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () {
                 //Retornando todos itenss e o código de respostas
-                return response()->json(Item::all(), 200);
+                return response()->json(Item::with('subCriterion', 'judgments')->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){
@@ -57,8 +57,6 @@ class ItemService{
                     //Foi deixado o request->only() no lugar do request->all()
                     //Para deixar mais explícito e descritivo em relação as variavéis que estão sendo utilizadas etc..
                     'name',
-                    'score',
-                    'aspect'
                 ));
 
                 //Retornando itens criado com suas informações de endereço e o código de respostas
@@ -84,8 +82,6 @@ class ItemService{
                 $item->fill($request->only(
                     //Explicitando váriaveis
                     'name',
-                    'score',
-                    'aspect'
                 ))->save();
 
                 //Retornando itens atualizado com suas informações de endereço e o código de respostas

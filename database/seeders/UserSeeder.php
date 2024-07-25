@@ -16,6 +16,9 @@ class UserSeeder extends Seeder
     public function run(): void{
         User::create([
             'name' => 'Glauco',
+            'lastname' => 'Silva',
+            'gender' => 'Male',
+            'birthday' => '2000-01-01',
             'email' => 'glauco@gmail.com',
             'password' => '12345678',
             'group' => 'Avaliador',
@@ -25,6 +28,9 @@ class UserSeeder extends Seeder
 
         User::create([
             'name' => 'Joana',
+            'lastname' => 'Silva',
+            'gender' => 'Female',
+            'birthday' => '2000-01-01',
             'email' => 'joana@example.com',
             'password' => 'senha123',
             'group' => 'Usuário',
@@ -34,6 +40,9 @@ class UserSeeder extends Seeder
 
         User::create([
             'name' => 'Ricardo',
+            'lastname' => 'Silva',
+            'gender' => 'Male',
+            'birthday' => '2000-01-01',
             'email' => 'ricardo@hotmail.com',
             'password' => 'senha1234',
             'group' => 'Administrador',
@@ -43,6 +52,9 @@ class UserSeeder extends Seeder
 
         User::create([
             'name' => 'Camila',
+            'lastname' => 'Silva',
+            'gender' => 'Female',
+            'birthday' => '2000-01-01',
             'email' => 'camila@example.com',
             'password' => 'senha12345',
             'group' => 'Moderador',
@@ -52,6 +64,9 @@ class UserSeeder extends Seeder
 
         User::create([
             'name' => 'Pedro',
+            'lastname' => 'Silva',
+            'gender' => 'Male',
+            'birthday' => '2000-01-01',
             'email' => 'pedro@example.com',
             'password' => 'senha123456',
             'group' => 'Cliente',
