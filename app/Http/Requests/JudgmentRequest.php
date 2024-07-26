@@ -23,9 +23,12 @@ class JudgmentRequest extends FormRequest{
             Request definido apenas como campos obrigatórios por enquanto.
         */
         return [
+            'evaluation_id' => ['required'],
             'item_id' => ['required'],
-            'aspect' => ['required'],
-            'scores' => ['required']
+            'attempt' => ['nullable'],
+            'correctAttempt' => ['nullable'],
+            'failAttempt' => ['nullable'],
+            'score' => ['nullable'],
         ];
     }
 }

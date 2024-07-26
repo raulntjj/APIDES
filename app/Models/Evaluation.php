@@ -16,12 +16,11 @@ class Evaluation extends Model{
     use HasFactory;
     protected $table = 'evaluations';
     protected $fillable = [
-        'event_id', //Id do evento
-        'modality_id', //Id da modalidade
-        'criterion_id', //id do critério
-        'subCriterion_id', //id do sub-critério
-        'item_id', //id dos itens
-        'judgment_id' //id do Julgamento
+        'participant_id',
+        'event_id',
+        'modality_id',
+        'judge_id',
+        'date',
     ];
 
     /*
@@ -33,6 +32,14 @@ class Evaluation extends Model{
     */
 
     //Relações Eloquent
+    public function participant(){
+        return $this->belongsTo(Participant::class, 'participant_id');
+    }
+
+    public function judge(){
+        return $this->belongsTo(User::class, 'judge_id');
+    }
+
     public function event(){
         return $this->belongsTo(Event::class, 'event_id');
     }
@@ -41,23 +48,23 @@ class Evaluation extends Model{
         return $this->belongsTo(Modality::class, 'modality_id');
     }
 
-    public function criterion(){
-        return $this->belongsTo(Criterion::class, 'criterion_id');
-    }
-
-    public function subCriterion(){
-        return $this->belongsTo(SubCriterion::class, 'subCriterion_id');
-    }
-
-    public function item(){
-        return $this->belongsTo(Item::class, 'item_id');
-    }
-
-    public function judgment(){
-        return $this->belongsTo(Judgment::class, 'judgment_id');
+    public function judgments(){
+        return $this->hasMany(Judgment::class, 'evaluation_id');
     }
 
     public function scores(){
         return $this->hasMany(Score::class);
     }
+
+    // public function criterion(){
+    //     return $this->belongsTo(Criterion::class, 'criterion_id');
+    // }
+
+    // public function subCriterion(){
+    //     return $this->belongsTo(SubCriterion::class, 'subCriterion_id');
+    // }
+
+    // public function item(){
+    //     return $this->belongsTo(Item::class, 'item_id');
+    // }
 }

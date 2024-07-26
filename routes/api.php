@@ -8,6 +8,10 @@ use App\Http\Controllers\Api\PasswordController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+Route::get('database', function(){
+    return view('database');
+});
+
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::post('logout', [AuthController::class, 'logout']);
 Route::post('password/change', [PasswordController::class, 'changePassword']);

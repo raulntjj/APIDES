@@ -16,6 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('subCriterion_id');
             $table->foreign('subCriterion_id')->references('id')->on('sub_criteria')->onDelete('cascade')->onUpdate('cascade');
             $table->string('name', 64);
+            $table->enum('aspect', ['quantitativo', 'mensuravel']);
+            $table->decimal('weight', 4, 2)->nullable(); // Permitindo valores de 0.01 a 10.00
             $table->timestamps();
         });
     }

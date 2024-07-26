@@ -57,6 +57,8 @@ class ItemService{
                     //Foi deixado o request->only() no lugar do request->all()
                     //Para deixar mais explícito e descritivo em relação as variavéis que estão sendo utilizadas etc..
                     'name',
+                    'aspect',
+                    'weight',
                 ));
 
                 //Retornando itens criado com suas informações de endereço e o código de respostas
@@ -82,6 +84,8 @@ class ItemService{
                 $item->fill($request->only(
                     //Explicitando váriaveis
                     'name',
+                    'aspect',
+                    'weight',
                 ))->save();
 
                 //Retornando itens atualizado com suas informações de endereço e o código de respostas

@@ -43,8 +43,6 @@ tags:
     description: Rotas para controle de avaliações
   - name: Agenda
     description: Rotas para controle de agendamentos
-  - name: Pontuação
-    description: Rotas para controle de pontuações
 
 paths:
   /login:

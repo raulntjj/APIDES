@@ -25,6 +25,8 @@ class ItemRequest extends FormRequest{
         return [
             'subCriterion_id' => ['required'],
             'name' => ['required'],
+            'aspect' => ['required'],
+            'weight' => ['nullable'],
         ];
     }
 }

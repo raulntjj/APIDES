@@ -13,23 +13,16 @@ return new class extends Migration
     {
         Schema::create('evaluations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('event_id');
+            $table->unsignedBigInteger('participant_id')->nullable();
+            $table->foreign('participant_id')->references('id')->on('participants')->onDelete('cascade')->onUpdate('cascade');
+
+            $table->unsignedBigInteger('event_id')->nullable();
             $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade')->onUpdate('cascade');
 
             $table->unsignedBigInteger('modality_id');
             $table->foreign('modality_id')->references('id')->on('modalities')->onDelete('cascade')->onUpdate('cascade');
 
-            $table->unsignedBigInteger('criterion_id');
-            $table->foreign('criterion_id')->references('id')->on('criteria')->onDelete('cascade')->onUpdate('cascade');
-
-            $table->unsignedBigInteger('subCriterion_id');
-            $table->foreign('subCriterion_id')->references('id')->on('sub_criteria')->onDelete('cascade')->onUpdate('cascade');
-
-            $table->unsignedBigInteger('item_id');
-            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade')->onUpdate('cascade');
-
-            $table->unsignedBigInteger('judgment_id')->nullable();
-            $table->foreign('judgment_id')->references('id')->on('judgments')->onDelete('cascade')->onUpdate('cascade');
+            $table->date('date');
             $table->timestamps();
         });
     }

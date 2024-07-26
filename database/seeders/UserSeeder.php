@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
             'birthday' => '2000-01-01',
             'email' => 'glauco@gmail.com',
             'password' => '12345678',
-            'group' => 'Avaliador',
+            'role' => 'Avaliador',
             'interfaceLanguage' => 'PT-BR',
             'photo' => 'path/perfil.jpg'
         ]);
@@ -33,7 +33,7 @@ class UserSeeder extends Seeder
             'birthday' => '2000-01-01',
             'email' => 'joana@example.com',
             'password' => 'senha123',
-            'group' => 'Usuário',
+            'role' => 'Usuário',
             'interfaceLanguage' => 'EN',
             'photo' => 'path/joana.jpg'
         ]);
@@ -45,7 +45,7 @@ class UserSeeder extends Seeder
             'birthday' => '2000-01-01',
             'email' => 'ricardo@hotmail.com',
             'password' => 'senha1234',
-            'group' => 'Administrador',
+            'role' => 'Administrador',
             'interfaceLanguage' => 'ES',
             'photo' => 'path/ricardo.jpg'
         ]);
@@ -57,7 +57,7 @@ class UserSeeder extends Seeder
             'birthday' => '2000-01-01',
             'email' => 'camila@example.com',
             'password' => 'senha12345',
-            'group' => 'Moderador',
+            'role' => 'Moderador',
             'interfaceLanguage' => 'PT-BR',
             'photo' => 'path/camila.jpg'
         ]);
@@ -69,7 +69,7 @@ class UserSeeder extends Seeder
             'birthday' => '2000-01-01',
             'email' => 'pedro@example.com',
             'password' => 'senha123456',
-            'group' => 'Cliente',
+            'role' => 'Cliente',
             'interfaceLanguage' => 'PT-BR',
             'photo' => 'path/pedro.jpg'
         ]);

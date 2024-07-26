@@ -21,7 +21,7 @@ class EvaluationService{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () {
                 //Retornando todas avaliações e o código de respostas
-                return response()->json(Evaluation::all(), 200);
+                return response()->json(Evaluation::with('judgments', 'participant', 'modality', 'event')->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){
@@ -39,13 +39,7 @@ class EvaluationService{
                 //Retornanda avaliação encontrado com suas informações de endereço e o código de respostas
                 $evaluation = $this->findEvaluation($id);
                 return response()->json([
-                    $evaluation,
-                    $evaluation->item,
-                    $evaluation->event,
-                    $evaluation->modality,
-                    $evaluation->criterion,
-                    $evaluation->subCriterion,
-                    $evaluation->judgment
+                    $evaluation
                 ], 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
@@ -65,12 +59,10 @@ class EvaluationService{
                 $evaluation = Evaluation::create($request->only(
                     //Foi deixado o request->only() no lugar do request->all()
                     //Para deixar mais explícito e descritivo em relação as variavéis que estão sendo utilizadas etc..
+                    'participant_id',
                     'event_id',
                     'modality_id',
-                    'criterion_id',
-                    'subCriterion_id',
-                    'item_id',
-                    'judgment_id'
+                    'date'
                 ));
 
                 //Retornanda avaliação criado com suas informações de endereço e o código de respostas
@@ -95,12 +87,10 @@ class EvaluationService{
                 //Atualizando dados da avaliação e salvando utilizando o método fill
                 $evaluation->fill($request->only(
                     //Explicitando váriaveis
+                    'participant_id',
                     'event_id',
                     'modality_id',
-                    'criterion_id',
-                    'sub_criterion_id',
-                    'item_id',
-                    'judgment_id'
+                    'date'
                 ))->save();
 
                 //Retornanda avaliação atualizado com suas informações de endereço e o código de respostas

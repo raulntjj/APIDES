@@ -21,7 +21,7 @@ return new class extends Migration
             $table->date('birthday');
             $table->string('photo', 256)->nullable();
             $table->string('interfaceLanguage', 16)->default('pt-BR');
-            $table->string('group', 32)->default('default');
+            $table->string('role', 32)->default('default');
             $table->rememberToken();
             $table->timestamps();
         });

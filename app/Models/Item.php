@@ -13,7 +13,9 @@ class Item extends Model{
     protected $table = 'items';
     protected $fillable = [
         'subCriterion_id',
-        'name', //Nome do item
+        'name',
+        'aspect',
+        'weight'
     ];
 
     /*
@@ -25,10 +27,6 @@ class Item extends Model{
     */
 
     //Relações Eloquent
-    public function evaluation(){
-        return $this->hasMany(Evaluation::class);
-    }
-
     public function subCriterion(){
         return $this->belongsTo(SubCriterion::class, 'subCriterion_id');
     }

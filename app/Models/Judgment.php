@@ -12,13 +12,12 @@ class Judgment extends Model{
     use HasFactory;
     protected $table = 'judgments';
     protected $fillable = [
+        'evaluation_id',
         'item_id',
-        'aspect',
-        'scores'
-    ];
-
-    protected $casts = [
-        'scores' => 'json'
+        'attempt',
+        'correctAttempt',
+        'failAttempt',
+        'score',
     ];
 
     /*
@@ -31,7 +30,7 @@ class Judgment extends Model{
 
     //Relações eloquent
     public function evaluation(){
-        return $this->belongsTo(Evaluation::class);
+        return $this->belongsTo(Evaluation::class, 'evaluation_id');
     }
 
     public function item(){

@@ -23,12 +23,10 @@ class EvaluationRequest extends FormRequest{
             Request definido apenas como campos obrigatórios por enquanto.
         */
         return [
-            'event_id',
-            'modality_id',
-            'criterion_id',
-            'subCriterion_id',
-            'item_id' => ['required'],
-            'judgment' => ['nullable']
+            'participant_id' => ['required'],
+            'event_id' => ['nullable'],
+            'modality_id' => ['required'],
+            'date' => ['required'],
         ];
     }
 }
