@@ -12,6 +12,7 @@ class EventDay extends Model{
     protected $fillable = [
         'event_id', //índice do event
         'date', //'date' faz referência a data do evento
+        'startHour', //Hora de inicio do evento
         'index' //'Index' faz alusão ao índice da data acima ex: primeiro dia, segunda dia, etc...
     ];
 

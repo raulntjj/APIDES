@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ScoreRequest extends FormRequest{
+class UpdateEventDayRequest extends FormRequest{
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -23,9 +23,10 @@ class ScoreRequest extends FormRequest{
             Request definido apenas como campos obrigatórios por enquanto.
         */
         return [
-            'participant_id',
-            'evaluation_id',
-            'points' => ['required']
+            'event_id' => ['required'],
+            'date' => ['required'],
+            'startHour' => ['required'],
+            'index' => ['required'],
         ];
     }
 }

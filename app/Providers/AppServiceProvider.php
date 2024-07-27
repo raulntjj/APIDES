@@ -70,14 +70,6 @@ class AppServiceProvider extends ServiceProvider{
             return new EvaluationService();
         });
 
-        $this->app->singleton(ScheduleService::class, function ($app){
-            return new ScheduleService();
-        });
-
-        $this->app->singleton(ScoreService::class, function ($app){
-            return new ScoreService();
-        });
-
     }
 
     public function boot(): void{

@@ -47,7 +47,7 @@ class ParticipantSeeder extends Seeder{
             ]);
 
             Achievement::create([
-                "user_id" => $i,
+                "participant_id" => $i,
                 "name" => "MVP"
             ]);
         }

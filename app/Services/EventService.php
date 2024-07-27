@@ -57,8 +57,7 @@ class EventService{
                     //Foi deixado o request->only() no lugar do request->all()
                     //Para deixar mais explícito e descritivo em relação as variavéis que estão sendo utilizadas etc..
                     'name',
-                    'dateTime',
-                    'eventLogo'
+                    'logo',
                 ));
 
                 //Criando endereço do evento
@@ -73,10 +72,11 @@ class EventService{
                     'cep'
                 ));
 
-                $event->days()->create($request->only(
-                    'date',
-                    'index'
-                ));
+                $event->days()->create([
+                    'date' => $request->date,
+                    'startHour' => $request->startHour,
+                    'index' => 1
+                ]);
 
                 //Retornando evento criado com suas informações de endereço e o código de respostas
                 return response()->json($event->load('address', 'days'), 201);

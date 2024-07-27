@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ScheduleRequest extends FormRequest{
+class StoreEventDayRequest extends FormRequest{
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -23,9 +23,9 @@ class ScheduleRequest extends FormRequest{
             Request definido apenas como campos obrigatórios por enquanto.
         */
         return [
-            'subCriterion_id',
-            'judge_id',
-            'date' => ['required']
+            'event_id' => ['required'],
+            'date' => ['required'],
+            'startHour' => ['required'],
         ];
     }
 }

@@ -23,18 +23,17 @@ class EventRequest extends FormRequest{
             Request definido apenas como campos obrigatórios por enquanto.
         */
         return [
-            'name',
-            'dateTime',
-            'eventLogo',
-            'address',
-            'number',
-            'neighborhood',
-            'city',
-            'state',
-            'country',
-            'cep',
-            'day',
-            'index' => ['required']
+            'name' => ['required'],
+            'logo' => ['nullable'],
+            'address' => ['required'],
+            'number' => ['required'],
+            'neighborhood' => ['required'],
+            'city' => ['required'],
+            'state' => ['required'],
+            'country' => ['required'],
+            'cep' => ['required'],
+            'date' => ['required'],
+            'startHour' => ['required']
         ];
     }
 }

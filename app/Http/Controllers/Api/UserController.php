@@ -34,8 +34,15 @@ class UserController{
         return $this->userService->updateUser($request, $id);
     }
 
-    //Função para excluir um usuário
-    public function destroy(int $id){
-        return $this->userService->deleteUser($id);
+    public function getJudges(){
+        return $this->userService->getJudges();
+    }
+
+    public function getAdmins(){
+        return $this->userService->getAdmins();
+    }
+
+    public function getDefaults(){
+        return $this->userService->getDefaults();
     }
 }

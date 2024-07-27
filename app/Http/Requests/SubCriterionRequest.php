@@ -25,7 +25,7 @@ class SubCriterionRequest extends FormRequest{
         return [
             'criterion_id' => ['required'],
             'name' => ['required'],
-            'points' => ['required'],
+            'points' => ['nullable'],
         ];
     }
 }

@@ -24,10 +24,11 @@ class UpdateParticipantRequest extends FormRequest{
         */
         return [
             //For participant table
+            'user_id' => ['required'],
             'team_id' => ['required'],
             'institution_id' => ['nullable'],
             'modality_id' => ['required'],
-            'position' => ['required'],
+            'position' => ['nullable'],
         ];
     }
 }

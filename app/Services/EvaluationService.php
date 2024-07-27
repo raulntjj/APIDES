@@ -62,7 +62,8 @@ class EvaluationService{
                     'participant_id',
                     'event_id',
                     'modality_id',
-                    'date'
+                    'judge_id',
+                    'date',
                 ));
 
                 //Retornanda avaliação criado com suas informações de endereço e o código de respostas
@@ -90,7 +91,8 @@ class EvaluationService{
                     'participant_id',
                     'event_id',
                     'modality_id',
-                    'date'
+                    'judge_id',
+                    'date',
                 ))->save();
 
                 //Retornanda avaliação atualizado com suas informações de endereço e o código de respostas

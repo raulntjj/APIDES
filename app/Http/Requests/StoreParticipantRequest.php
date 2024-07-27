@@ -23,10 +23,11 @@ class StoreParticipantRequest extends FormRequest{
             Request definido apenas como campos obrigatórios por enquanto.
         */
         return [
+            'user_id' => ['required'],
             'team_id' => ['required'],
             'institution_id' => ['nullable'],
             'modality_id' => ['required'],
-            'position' => ['required'],
+            'position' => ['nullable'],
         ];
     }
 }

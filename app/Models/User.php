@@ -24,7 +24,7 @@ class User extends Authenticatable implements JWTSubject{
         'photo', //Caminho para foto do participant
         'email',
         'password',
-        'group',
+        'role',
         'interfaceLanguage',
     ];
 

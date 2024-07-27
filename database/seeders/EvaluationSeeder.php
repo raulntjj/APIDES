@@ -15,7 +15,15 @@ class EvaluationSeeder extends Seeder
         Evaluation::create([
             "participant_id" => 1,
             "modality_id" => 1,
-            "date" => "2024-07-26",
+            "judge_id" => 1,
+            "date" => "2024-09-10"
+        ]);
+
+        Evaluation::create([
+            "participant_id" => 1,
+            "modality_id" => 1,
+            "judge_id" => 1,
+            "event_id" => 1
         ]);
 
         // Evaluation::create([

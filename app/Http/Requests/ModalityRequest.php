@@ -23,8 +23,8 @@ class ModalityRequest extends FormRequest{
             Request definido apenas como campos obrigatórios por enquanto.
         */
         return [
-            'name',
-            'type' => ['required']
+            'name' => ['required'],
+            'logo' => ['required'],
         ];
     }
 }

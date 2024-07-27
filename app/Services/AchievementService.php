@@ -56,7 +56,7 @@ class AchievementService{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () use ($request){
                 $achivement = Achievement::create($request->only(
-                    'user_id',
+                    'participant_id',
                     'name',
                 ));
                 //Retornando Achievemente criado com suas informações de endereço e o código de respostas
@@ -81,7 +81,7 @@ class AchievementService{
                 //Atualizando dados do Achievemente e salvando utilizando o método fill
                 $achivement->fill($request->only(
                     //Explicitando váriaveis
-                    'user_id',
+                    'participant_id',
                     'name',
                 ))->save();
 

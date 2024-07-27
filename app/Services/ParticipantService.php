@@ -21,7 +21,7 @@ class ParticipantService{
         // Tratativa de erros
         try {
             // Inicia a consulta com os relacionamentos necessários
-            $participants = Participant::with('team', 'institution', 'modality', 'user')
+            $participants = Participant::with('team', 'institution', 'modality', 'user', 'achievements')
                                     ->join('users', 'participants.user_id', '=', 'users.id')
                                     ->select('participants.*');
 
@@ -75,7 +75,8 @@ class ParticipantService{
                     $participant->user,
                     $participant->team,
                     $participant->institution,
-                    $participant->modality
+                    $participant->modality,
+                    $participant->achievements
                 ], 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo

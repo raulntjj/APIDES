@@ -22,7 +22,7 @@ class AchievementRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => ['required'],
+            'participant_id' => ['required'],
             'name' => ['required'],
         ];
     }

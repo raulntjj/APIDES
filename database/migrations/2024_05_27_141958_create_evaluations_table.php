@@ -14,6 +14,10 @@ return new class extends Migration
         Schema::create('evaluations', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('participant_id')->nullable();
+
+            $table->unsignedBigInteger('judge_id')->nullable();
+            $table->foreign('judge_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+
             $table->foreign('participant_id')->references('id')->on('participants')->onDelete('cascade')->onUpdate('cascade');
 
             $table->unsignedBigInteger('event_id')->nullable();
@@ -22,7 +26,7 @@ return new class extends Migration
             $table->unsignedBigInteger('modality_id');
             $table->foreign('modality_id')->references('id')->on('modalities')->onDelete('cascade')->onUpdate('cascade');
 
-            $table->date('date');
+            $table->date('date')->nullable();
             $table->timestamps();
         });
     }

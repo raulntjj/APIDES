@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('criterion_id');
             $table->foreign('criterion_id')->references('id')->on('criteria')->onDelete('cascade')->onUpdate('cascade');
             $table->string('name', 64);
-            $table->integer('points');
+            $table->integer('points')->nullable();
             $table->timestamps();
         });
     }

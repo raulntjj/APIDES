@@ -24,7 +24,5 @@ class DatabaseSeeder extends Seeder
         $this->call(ItemSeeder::class);
         $this->call(EvaluationSeeder::class);
         $this->call(JudgmentSeeder::class);
-        $this->call(ScheduleSeeder::class);
-        $this->call(ScoreSeeder::class);
     }
 }

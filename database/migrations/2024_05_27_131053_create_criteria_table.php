@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('criteria', function (Blueprint $table) {
             $table->id();
             $table->string('name', 64);
-            $table->integer('points');
+            $table->integer('points')->nullable();
             $table->timestamps();
         });
     }

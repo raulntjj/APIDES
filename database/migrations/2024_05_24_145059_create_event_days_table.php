@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('event_id');
             $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade')->onUpdate('cascade');
             $table->date('date');
+            $table->time('startHour');
             $table->integer('index')->unsigned();
             $table->timestamps();
         });

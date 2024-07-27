@@ -28,7 +28,7 @@ class UpdateUserRequest extends FormRequest{
             'email' => ['required'],
             'gender' => ['required'],
             'birthday' => ['required'],
-            'group' => ['nullable'],
+            'role' => ['nullable'],
             'interfaceLanguage' => ['nullable'],
             'photo' => ['nullable']
         ];

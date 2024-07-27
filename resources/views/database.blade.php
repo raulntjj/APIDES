@@ -12,6 +12,6 @@
     </style>
 </head>
 <body>
-    <iframe width="100%" height="100%" src="https://miro.com/app/live-embed/uXjVKNlMIYo=/?moveToViewport=-9026,-1310,5137,2467&embedId=209342936531" frameborder="0" scrolling="no" allow="fullscreen; clipboard-read; clipboard-write" allowfullscreen></iframe>
+    <iframe width="100%" height="100%" src="https://miro.com/app/live-embed/uXjVKNlMIYo=/?moveToViewport=-702,-541,11485,5103&embedId=91252771765" frameborder="0" scrolling="no" allow="fullscreen; clipboard-read; clipboard-write" allowfullscreen></iframe>
 </body>
 </html>

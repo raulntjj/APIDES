@@ -12,6 +12,10 @@ Route::get('database', function(){
     return view('database');
 });
 
+Route::fallback(function(){
+    return view('welcome');
+});
+
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::post('logout', [AuthController::class, 'logout']);
 Route::post('password/change', [PasswordController::class, 'changePassword']);
@@ -25,6 +29,9 @@ Route::group(['middleware' => ['jwt.auth']], function() {
 
 //Cria um resource de rotas para eventos, com excessão de create e edit pois não são rotas utilizadas para CRUD
 Route::apiResource('users', UserController::class)->except(['create', 'edit']);
+Route::get('judges', [UserController::class, 'getJudges']);
+Route::get('admins', [UserController::class, 'getAdmins']);
+Route::get('defaults', [UserController::class, 'getDefaults']);
 
 Route::apiResource('events', EventController::class)->except(['create', 'edit']);
 

@@ -10,11 +10,11 @@ class Achievement extends Model{
 
     protected $table = 'achievements';
     protected $fillable = [
-        'user_id',
+        'participant_id',
         'name'
     ];
 
     public function user(){
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(Participant::class, 'participant_id');
     }
 }

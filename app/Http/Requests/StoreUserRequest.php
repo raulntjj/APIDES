@@ -29,8 +29,8 @@ class StoreUserRequest extends FormRequest{
             'password' => ['required'],
             'gender' => ['required'],
             'birthday' => ['required'],
-            'group' => ['required'],
-            'interfaceLanguage' => ['nullable'],
+            'role' => ['required'],
+            'interfaceLanguage' => ['required'],
             'photo' => ['nullable']
         ];
     }

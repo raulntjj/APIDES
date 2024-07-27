@@ -23,8 +23,8 @@ class InstitutionRequest extends FormRequest{
             Request definido apenas como campos obrigatórios por enquanto.
         */
         return [
-            'name',
-            'logo' => ['required']
+            'name' => ['required'],
+            'logo' => ['required'],
         ];
     }
 }

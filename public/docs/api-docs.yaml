@@ -12,11 +12,13 @@ info:
       url : https://gnu.org/licenses/gpl-3.0.html
   termsOfService : https://versatecnologia.com.br
 servers:
-  - description: Localhost
-    url: http://127.0.0.1:8000/api/
+  - description: API
+    url: http://127.0.0.1:8001/api/
 tags:
   - name: Sessão
-    description: Rotas para controle de sessões, senhas, etc...
+    description: Rotas para controle de sessões de usuários
+  - name: Senha
+    description: Rotas para controle de senha de usuários
   - name: Usuário
     description: Rotas para controle de usuário
   - name: Evento
@@ -41,8 +43,6 @@ tags:
     description: Rotas para controle de julgamentos
   - name: Avaliação
     description: Rotas para controle de avaliações
-  - name: Agenda
-    description: Rotas para controle de agendamentos
 
 paths:
   /login:
@@ -55,6 +55,7 @@ paths:
           description: Token para autenticar usuários
         '400':
           description: Falha ao autenticar usuário
+          
   /logout:
     post:
       tags:
@@ -65,11 +66,23 @@ paths:
           description: Usuário deslogado com sucesso
         '400':
           description: Falha ao autenticar usuário
+
   /password/change:
     post:
       tags:
-        - Sessão
-      summary: Deslogar usuário
+        - Senha
+      summary: Trocar senha do usuário (Enviar senha antiga, nova senha e confirmação de senha)
+      responses:
+        '201':
+          description: Senha alterada com sucesso
+        '400':
+          description: Falha ao alterar senha
+
+  /password/forgot:
+    post:
+      tags:
+        - Senha
+      summary: Deslogar usuário (Enviar email da conta para restar a senha)
       responses:
         '201':
           description: Senha alterada com sucesso
@@ -181,6 +194,54 @@ paths:
           description: Usuário removido com sucesso
         '404':
           description: Usuário não encontrado
+  /judges:
+    get:
+      tags:
+        - Usuário
+      summary: Lista todos os usuários do grupo jurados
+      responses:
+        '200':
+          description: Lista de usuários recuperada com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '400':
+          description: Erro ao buscar usuário
+  /admins:
+    get:
+      tags:
+        - Usuário
+      summary: Lista todos os usuários do grupo administrador
+      responses:
+        '200':
+          description: Lista de usuários recuperada com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '400':
+          description: Erro ao buscar usuário
+  /defaults:
+    get:
+      tags:
+        - Usuário
+      summary: Lista todos os usuários do grupo padrão
+      responses:
+        '200':
+          description: Lista de usuários recuperada com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '400':
+          description: Erro ao buscar usuários
 
   /events:
     get:
@@ -1356,218 +1417,6 @@ paths:
         '404':
           description: Avaliação não encontrada
 
-  /schedules:
-    get:
-      tags:
-        - Agenda
-      summary: Lista todos as agendas
-      responses:
-        '200':
-          description: Lista de agendas recuperada com sucesso
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Schedule'
-        '400':
-          description: Erro ao buscar agenda
-    post:
-      tags:
-        - Agenda
-      summary: Cria uma nova agenda
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Schedule'
-      responses:
-        '201':
-          description: agenda criada com sucesso
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Schedule'
-        '400':
-          description: Falha ao adicionar agenda
-  /schedules/{id}:
-    get:
-      tags:
-        - Agenda
-      summary: Obtém uma agenda pelo ID
-      parameters:
-        - in: path
-          name: id
-          required: true
-          description: ID da agenda a ser obtida
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '200':
-          description: agenda recuperada com sucesso
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Schedule'
-        '404':
-          description: agenda não encontrada
-
-    put:
-      tags:
-        - Agenda
-      summary: Atualiza uma agenda existente pelo ID
-      parameters:
-        - in: path
-          name: id
-          required: true
-          description: ID da agenda a ser atualizada
-          schema:
-            type: integer
-            format: int64
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Schedule'
-      responses:
-        '200':
-          description: agenda atualizada com sucesso
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Schedule'
-        '404':
-          description: agenda não encontrado
-        '400':
-          description: Falha ao atualizar agenda
-
-    delete:
-      tags:
-        - Agenda
-      summary: Remove uma agenda pelo ID
-      parameters:
-        - in: path
-          name: id
-          required: true
-          description: ID da agenda a ser removida
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '204':
-          description: agenda removida com sucesso
-        '404':
-          description: agenda não encontrada
-
-  /scores:
-    get:
-      tags:
-        - Pontuação
-      summary: Lista todos as pontuações
-      responses:
-        '200':
-          description: Lista de pontuações recuperada com sucesso
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Score'
-        '400':
-          description: Erro ao buscar pontuação
-    post:
-      tags:
-        - Pontuação
-      summary: Cria uma nova pontuação
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Score'
-      responses:
-        '201':
-          description: pontuação criada com sucesso
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Score'
-        '400':
-          description: Falha ao adicionar pontuação
-  /scores/{id}:
-    get:
-      tags:
-        - Pontuação
-      summary: Obtém uma pontuação pelo ID
-      parameters:
-        - in: path
-          name: id
-          required: true
-          description: ID da pontuação a ser obtida
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '200':
-          description: pontuação recuperada com sucesso
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Score'
-        '404':
-          description: pontuação não encontrada
-
-    put:
-      tags:
-        - Pontuação
-      summary: Atualiza uma pontuação existente pelo ID
-      parameters:
-        - in: path
-          name: id
-          required: true
-          description: ID da pontuação a ser atualizada
-          schema:
-            type: integer
-            format: int64
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Score'
-      responses:
-        '200':
-          description: pontuação atualizada com sucesso
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Score'
-        '404':
-          description: pontuação não encontrado
-        '400':
-          description: Falha ao atualizar pontuação
-
-    delete:
-      tags:
-        - Pontuação
-      summary: Remove uma pontuação pelo ID
-      parameters:
-        - in: path
-          name: id
-          required: true
-          description: ID da pontuação a ser removida
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '204':
-          description: pontuação removida com sucesso
-        '404':
-          description: pontuação não encontrada
-
 components:
   schemas:
     User:
@@ -1580,25 +1429,42 @@ components:
         name:
           type: string
           description: Nome do usuário
+        lastname:
+          type: string
+          description: Sobrenome do usuário
+        birthday:
+          type: string
+          format: date
+          description: Data de nascimento do participante
+        gender:
+          type: string
+          description: Gênero do participante
+        photo:
+          type: string
+          description: Caminho para foto do usuário
+          nullable: true
         email:
           type: string
           format: email
           description: Email do usuário
         password:
-          type: integer
+          type: string
           description: Senha do usuário
-        photo:
-          type: integer
-          description: Caminho para foto do usuário
         interfaceLanguage:
           type: integer
           description: Idioma da interface do usuário
-        group:
+        role:
           type: integer
-          description: grupo do usuário
+          description: Grupo do usuário
       required:
         - name
+        - lastname
         - email
+        - password
+        - gender
+        - birthday
+        - interfaceLanguage
+        - role
 
     Event:
       type: object
@@ -1609,13 +1475,13 @@ components:
           description: ID do evento
         name:
           type: string
-          description: Nome do usuário
-        dateTime:
+          description: Nome do evento
+        logo:
           type: string
-          description: Data e hora do evento
-        eventLogo:
-          type: integer
           description: Caminho para logo do evento
+          nullable: true
+      required:
+        - name
 
     EventAddress:
       type: object
@@ -1630,14 +1496,14 @@ components:
           description: ID do evento
         address:
           type: string
-          description: Rua, avenida, etc..
+          description: Rua, avenida, etc.
         number:
           type: integer
           format: int64
-          description: Número do imovel
+          description: Número do imóvel
         neighborhood:
           type: string
-          description: Bairro, destrito, etc..
+          description: Bairro, distrito, etc.
         city:
           type: string
           description: Cidade
@@ -1649,7 +1515,16 @@ components:
           description: País
         cep:
           type: string
-          description: Códdigo Postal (CEP)
+          description: Código Postal (CEP)
+      required:
+        - event_id
+        - address
+        - number
+        - neighborhood
+        - city
+        - state
+        - country
+        - cep
 
     EventDay:
       type: object
@@ -1666,10 +1541,19 @@ components:
           type: string
           format: date
           description: Data
+        startHour:
+          type: string
+          format: time
+          description: Hora de início do evento
         index:
           type: integer
           format: int64
           description: Índice ordinário
+      required:
+        - event_id
+        - date
+        - startHour
+        - index
 
     Institution:
       type: object
@@ -1677,13 +1561,15 @@ components:
         id:
           type: integer
           format: int64
-          description: ID da instutição
+          description: ID da instituição
         name:
           type: string
-          description: nome da instutição
+          description: Nome da instituição
         logo:
           type: string
           description: Caminho para logo
+      required:
+        - name
 
     Modality:
       type: object
@@ -1691,13 +1577,15 @@ components:
         id:
           type: integer
           format: int64
-          description: ID da instutição
+          description: ID da modalidade
         name:
           type: string
-          description: nome da instutição
-        type:
+          description: Nome da modalidade
+        logo:
           type: string
-          description: Tipo de modalidade
+          description: Caminho para logo
+      required:
+        - name
 
     Team:
       type: object
@@ -1705,13 +1593,15 @@ components:
         id:
           type: integer
           format: int64
-          description: ID da instutição
+          description: ID do time
         name:
           type: string
-          description: nome da instutição
+          description: Nome do time
         logo:
           type: string
           description: Caminho para logo
+      required:
+        - name
 
     Participant:
       type: object
@@ -1720,6 +1610,10 @@ components:
           type: integer
           format: int64
           description: ID do participante
+        user_id:
+          type: integer
+          format: int64
+          description: ID do usuário
         team_id:
           type: integer
           format: int64
@@ -1727,34 +1621,20 @@ components:
         institution_id:
           type: integer
           format: int64
-          description: ID da instituição do participante
+          description: ID da instituição
+          nullable: true
         modality_id:
           type: integer
           format: int64
           description: ID da modalidade do participante
-        firstName:
-          type: string
-          description: Nome da participante
-        lastName:
-          type: string
-          description: Sobrenome do participante
-        gender:
-          type: string
-          description: Gênero do participante
         position:
           type: string
           description: Posição do participante
-        birthday:
-          type: string
-          format: date
-          description: data de nascimento do participante
-        achievements:
-          type: string
-          format: json
-          description: Neste JSON deve conter as conquistas individuais do participante
-        photo:
-          type: string
-          description: Caminho para foto do participante
+          nullable: true
+      required:
+        - user_id
+        - team_id
+        - modality_id
 
     Criterion:
       type: object
@@ -1765,10 +1645,13 @@ components:
           description: ID do critério
         name:
           type: string
-          description: nome do critério
+          description: Nome do critério
         points:
           type: string
-          description: pontos do critério
+          description: Pontos do critério
+          nullable: true
+      required:
+        - name
 
     SubCriterion:
       type: object
@@ -1776,13 +1659,16 @@ components:
         id:
           type: integer
           format: int64
-          description: ID do sub-critério
+          description: ID do subcritério
         name:
           type: string
-          description: nome do sub-critério
+          description: Nome do subcritério
         points:
           type: string
-          description: pontos do sub-critério
+          description: Pontos do subcritério
+          nullable: true
+      required:
+        - name
 
     Item:
       type: object
@@ -1791,16 +1677,29 @@ components:
           type: integer
           format: int64
           description: ID do item
-        name:
-          type: string
-          description: nome do item
-        aspect:
-          type: string
-          description: aspecto do item
-        points:
+        subCriterion_id:
           type: integer
           format: int64
-          description: pontos do item
+          description: ID do subcritério
+        name:
+          type: string
+          description: Nome do item
+        aspect:
+          type: string
+          enum:
+            - mensuravel
+            - quantitativo
+          description: Poderá ser "mensuravel" ou "quantitativo"
+        weight:
+          type: number
+          format: float
+          description: Peso para cálculo da nota final caso o aspecto seja quantitativo, caso contrário será nulo.
+          nullable: true
+      required:
+        - subCriterion_id
+        - name
+        - aspect
+        - weight
 
     Judgment:
       type: object
@@ -1809,17 +1708,37 @@ components:
           type: integer
           format: int64
           description: ID do julgamento
+        evaluation_id:
+          type: integer
+          format: int64
+          description: ID da avaliação
         item_id:
           type: integer
           format: int64
-          description: ID do item de julgamento
-        aspect:
-          type: string
-          description: aspecto do item
-        scores:
-          type: string
-          format: json
-          description: scores do julgamento
+          description: ID do item que será julgado
+        attempt:
+          type: integer
+          format: int64
+          description: Número de tentativas
+          nullable: true
+        correctAttempt:
+          type: integer
+          format: int64
+          description: Número de tentativas corretas
+          nullable: true
+        failAttempt:
+          type: integer
+          format: int64
+          description: Número de tentativas falhas
+          nullable: true
+        score:
+          type: number
+          format: float
+          description: Nota final
+          nullable: true
+      required:
+        - evaluation_id
+        - item_id
 
     Evaluation:
       type: object
@@ -1832,64 +1751,25 @@ components:
           type: integer
           format: int64
           description: ID do evento da avaliação
+          nullable: true
+        participant_id:
+          type: integer
+          format: int64
+          description: ID do participante avaliado
         modality_id:
           type: integer
           format: int64
           description: ID da modalidade da avaliação
-        criterion_id:
-          type: integer
-          format: int64
-          description: ID do critério da avaliação
-        subCriterion_id:
-          type: integer
-          format: int64
-          description: ID do sub critério da avaliação
-        item_id:
-          type: integer
-          format: int64
-          description: ID do item da avaliação
-        judgment_id:
-          type: integer
-          format: int64
-          description: ID do julgamento da avaliação
-
-    Schedule:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-          description: ID da agenda
-        item_id:
-          type: integer
-          format: int64
-          description: ID do sub-critério do agendamento
-        date:
-          type: string
-          format: date
-          description: data do agendamento
         judge_id:
           type: integer
           format: int64
-          description: ID do jurado
-
-    Score:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-          description: ID da pontuação
-        evaluation_id:
-          type: integer
-          format: int64
-          description: ID da avaliação
-        participant_id:
-          type: integer
-          format: int64
-          description: ID do participant
-        points:
-          type: integer
-          format: int64
-          description: Pontos do participante
-
+          description: ID do usuário que irá julgar
+        date:
+          type: string
+          format: date
+          description: Data da avaliação
+          nullable: true
+      required:
+        - participant_id
+        - modality_id
+        - judge_id

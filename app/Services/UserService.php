@@ -133,4 +133,17 @@ class UserService{
             return response()->json(['Error' => 'Failed to delete User', 'Details' => $e->getMessage()], 404);
         }
     }
+
+    public function getJudges(){
+        return User::where('role', 'judge')->get();
+    }
+
+    public function getAdmin(){
+        return User::where('role', 'admin')->get();
+    }
+
+    public function getDefaults(){
+        return User::where('role', 'default')->get();
+    }
+    
 }

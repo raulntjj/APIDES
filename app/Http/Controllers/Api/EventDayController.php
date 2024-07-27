@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\EventDayRequest;
+use App\Http\Requests\StoreEventDayRequest;
+use App\Http\Requests\UpdateEventDayRequest;
 use App\Services\EventDayService;
 
 class EventDayController{
@@ -23,12 +24,12 @@ class EventDayController{
     }
 
     //Função para criar um dia de evento
-    public function store(EventDayRequest $request){
+    public function store(StoreEventDayRequest $request){
         return $this->eventDayService->addDay($request);
     }
 
     //Função para editar um dia de evento
-    public function update(EventDayRequest $request, int $id){
+    public function update(UpdateEventDayRequest $request, int $id){
         return $this->eventDayService->updateDay($request, $id);
     }
 

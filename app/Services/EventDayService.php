@@ -2,7 +2,8 @@
 
 namespace App\Services;
 
-use App\Http\Requests\EventDayRequest;
+use App\Http\Requests\StoreEventDayRequest;
+use App\Http\Requests\UpdateEventDayRequest;
 use App\Models\EventDay;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -46,18 +47,24 @@ class EventDayService{
         }
     }
 
+    private function currentIndex($date){
+        $index = EventDay::where('date', $date)->count();
+        return $index + 1;
+    }
+
     //Função pública utilizada para atualizar e retornar um dia de evento
-    public function addDay(EventDayRequest $request){
+    public function addDay(StoreEventDayRequest $request){
         //Tratativa de erros
         try{
+            $index = $this->currentIndex($request->date);
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () use ($request){
                 //Criando dia de evento
-                $eventDay = EventDay::create($request->only(
-                    'event_id',
-                    'date',
-                    'index'
-                ));
+                $eventDay = EventDay::create([
+                    'event_id' => $request->event_id,
+                    'date' => $request->date,
+                    'index' => $index
+                ]);
 
                 //Retornando dia de evento criado com suas informações de endereço e o código de respostas
                 return response()->json($eventDay, 201);
@@ -67,10 +74,10 @@ class EventDayService{
             //Retorna mensagem de erro com flag e mensagem captada pelo exception
             return response()->json(['Error' => 'Failed to add event day', 'Details' => $e->getMessage()], 400);
         }
-        }
+    }
 
     //Função pública utilizada para atualizar e retornar um dia de evento
-    public function updateDay(EventDayRequest $request, int $id){
+    public function updateDay(UpdateEventDayRequest $request, int $id){
         //Tratativa de erros
         try{
             //DB transaction para lidar com transações de dados com o banco de dados

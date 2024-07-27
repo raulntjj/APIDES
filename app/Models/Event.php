@@ -14,8 +14,7 @@ class Event extends Model{
     protected $table = 'events';
     protected $fillable = [
         'name', //Nome do evento
-        'dateTime', //Data e hora de inicio
-        'eventLogo' //Logo do evento
+        'logo' //Logo do evento
     ];
 
     /*
