@@ -17,7 +17,6 @@ Route::fallback(function(){
 });
 
 Route::post('login', [AuthController::class, 'login'])->name('login');
-Route::post('logout', [AuthController::class, 'logout']);
 Route::post('password/change', [PasswordController::class, 'changePassword']);
 Route::post('password/forgot', [PasswordController::class, 'forgotPassword']);
 
@@ -25,6 +24,7 @@ Route::post('password/forgot', [PasswordController::class, 'forgotPassword']);
 
 Route::group(['middleware' => ['jwt.auth']], function() {
     Route::get('user', [AuthController::class, 'getAuthenticatedUser']);
+    Route::post('logout', [AuthController::class, 'logout']);
 });
 
 //Cria um resource de rotas para eventos, com excessão de create e edit pois não são rotas utilizadas para CRUD

@@ -20,8 +20,8 @@ servers:
   - description: API
     url: https://f7d7-45-70-34-167.ngrok-free.app
 tags:
-  - name: Sessão de Clientes da API
-    description: Por ordens superiores, por enquanto, não será necessário lidar com sessões para consumidores.
+  # - name: Sessão de Clientes da API
+  #   description: Por ordens superiores, por enquanto, não será necessário lidar com sessões para consumidores.
   - name: Sessão DE USUÁRIOS
     description: Rotas para controle de sessões de usuários
   - name: Senha
@@ -87,6 +87,31 @@ paths:
           description: Usuário deslogado com sucesso
         '400':
           description: Falha ao autenticar usuário
+
+  /api/user:
+    get:
+      tags:
+        - Sessão DE USUÁRIOS
+      summary: Obter dados do usuário logado
+      parameters:
+        - in: header
+          name: Token
+          required: true
+          description: Token de sessão obtido no login (Bearer token)
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Dados do usuário
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '400':
+          description: Erro ao buscar usuário
+
 
   /api/password/change:
     post:

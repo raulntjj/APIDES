@@ -37,12 +37,21 @@ class AuthController {
             return response()->json(['error' => 'Token ausente'], $e->getStatusCode());
         }
 
+        $user = $user->load('participant');
         return response()->json(compact('user'));
     }
 
-    // Método de logout
+    // Método para deslogar o usuário
     public function logout(){
-        auth()->logout();
-        return response()->json(['message' => 'Logout concluido com sucesso']);
+        try {
+            // Invalidar o token JWT
+            JWTAuth::invalidate(JWTAuth::parseToken());
+
+            // Retornar resposta de sucesso
+            return response()->json(['message' => 'Logout realizado com sucesso'], 200);
+        } catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
+            // Retornar resposta de erro se houver falha ao invalidar o token
+            return response()->json(['error' => 'Falha ao deslogar, por favor tente novamente'], 500);
+        }
     }
 }
