@@ -14,7 +14,7 @@ class Achievement extends Model{
         'name'
     ];
 
-    public function user(){
+    public function participant(){
         return $this->belongsTo(Participant::class, 'participant_id');
     }
 }

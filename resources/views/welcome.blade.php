@@ -35,8 +35,8 @@
             height: 60%;
             width: 30%;
             border-radius: 50%;
-            background-image: linear-gradient(to left, rgba(151, 29, 185, 0.12), rgba(15, 117, 206, 0.12));
-            filter: blur(1000px);
+            background-image: linear-gradient(to left, rgba(151, 29, 185, 0.3), rgba(15, 117, 206, 0.3));
+            filter: blur(300px);
         }
 
         .gradient-bottom{
@@ -46,8 +46,8 @@
             height: 60%;
             width: 30%;
             border-radius: 50%;
-            background-image: linear-gradient(to left, rgba(151, 29, 185, 0.12), rgba(15, 117, 206, 0.12));
-            filter: blur(1000px);
+            background-image: linear-gradient(to left, rgba(151, 29, 185, 0.3), rgba(15, 117, 206, 0.3));
+            filter: blur(300px);
         }
 
         .logo-background{
@@ -61,6 +61,7 @@
         }
 
         .content{
+            padding: 0 5%;
         }
 
         .teste{
@@ -134,12 +135,16 @@
         <div class="welcome-content">
             <h1 class="title">DEES<br>REST API</h1>
             <p class="welcome-description">O projeto Gestão de Desempenho Esportivo visa desenvolver um aplicativo mobile que auxilie escolas esportivas, responsáveis, profissionais esporte, esportistas de diversas modalidades no acompanhamento e aprimoramento de seu desempenho.</p>
-            <div class="d-flex align-items-center">
-                <a href="{{ url('/api/documentation') }}" class="btn btn-primary purple">Acesse a documentação</a>
-                <a href="{{ url('/api/database') }}" class="list-style" style="margin-left: 10px">Ou acesse o diagrama do banco de dados &rarr;</a>
+            <div class="row d-flex align-items-center">
+                <div class="col-sm-6 d-flex justify-content-center">
+                    <a href="{{ url('/api/documentation') }}" class="btn btn-primary purple" style="width: 100%">Acesse a documentação</a>
+                </div>
+                <div class="col-sm-6 d-flex justify-content-center">
+                    <a href="{{ url('/api/database') }}" class="list-style">Ou acesse o diagrama da modelagem de dados &rarr;</a>
+                </div>
             </div>
             <div class="additional-info">
-                <p><strong>Suporte:</strong> <a href="mailto:raulntjj@gmail.com">raulntjj@gmail.com</a></p>
+                <p><strong>Suporte:</strong> <a href="mailto:raul.oliveira@versatecnologia.com.br">raul.oliveira@versatecnologia.com.br</a></p>
             </div>
         </div>
     </div>

@@ -1,21 +1,28 @@
 openapi: 3.0.0
 info:
   title: Desempenho Esportivo
-  description: Documentação da API Rest para desempenho esportivo
+  description: |
+    Documentação da API Rest para desempenho esportivo.
+
+    Esta API, juntamente com seu banco de dados, está rodando localmente e serve como uma solução provisória enquanto ela não é colocada oficialmente em um servidor.
+
+    Quanto à sessão para consumir a API, ainda é inexistênte e sigo aguardando ordens superiores para dar continuidade na mesma.
   version: 1.0.0
   contact:
     name: Suporte para DEVs
     email: raul.oliveira@versatecnologia.com.br
     url: https://versatecnologia.com.br
   license:
-      name : License GLPv3
-      url : https://gnu.org/licenses/gpl-3.0.html
-  termsOfService : https://versatecnologia.com.br
+    name: License GPLv3
+    url: https://gnu.org/licenses/gpl-3.0.html
+  termsOfService: https://versatecnologia.com.br
 servers:
   - description: API
-    url: http://127.0.0.1:8001/api/
+    url: https://f7d7-45-70-34-167.ngrok-free.app
 tags:
-  - name: Sessão
+  - name: Sessão de Clientes da API
+    description: Por ordens superiores, por enquanto, não será necessário lidar com sessões para consumidores.
+  - name: Sessão DE USUÁRIOS
     description: Rotas para controle de sessões de usuários
   - name: Senha
     description: Rotas para controle de senha de usuários
@@ -35,7 +42,7 @@ tags:
     description: Rotas para controle de participantes
   - name: Critério
     description: Rotas para controle de critérios
-  - name: Sub Critério
+  - name: Subcritério
     description: Rotas para controle de sub-critérios
   - name: Item
     description: Rotas para controle de itens
@@ -45,21 +52,35 @@ tags:
     description: Rotas para controle de avaliações
 
 paths:
-  /login:
+  /api/login:
     post:
       tags:
-        - Sessão
-      summary: Autenticar usuário com credenciais
+        - Sessão DE USUÁRIOS
+      summary: Autenticar usuário
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: user@teste.com
+                password:
+                  type: string
+                  example: 123456789
       responses:
         '201':
           description: Token para autenticar usuários
         '400':
           description: Falha ao autenticar usuário
-          
-  /logout:
+
+  /api/logout:
     post:
       tags:
-        - Sessão
+        - Sessão DE USUÁRIOS
       summary: Deslogar usuário
       responses:
         '201':
@@ -67,29 +88,57 @@ paths:
         '400':
           description: Falha ao autenticar usuário
 
-  /password/change:
+  /api/password/change:
     post:
       tags:
         - Senha
-      summary: Trocar senha do usuário (Enviar senha antiga, nova senha e confirmação de senha)
+      summary: Trocar senha do usuário
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                old_password:
+                  type: string
+                  example: 12345678
+                new_password:
+                  type: string
+                  example: 123456789
+                new_password_confirmation:
+                  type: string
+                  example: 123456789
       responses:
         '201':
           description: Senha alterada com sucesso
         '400':
           description: Falha ao alterar senha
 
-  /password/forgot:
+  /api/password/forgot:
     post:
       tags:
         - Senha
-      summary: Deslogar usuário (Enviar email da conta para restar a senha)
+      summary: Deslogar usuário
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: user@teste.com
       responses:
         '201':
           description: Senha alterada com sucesso
         '400':
           description: Falha ao alterar senha
 
-  /users:
+
+  /api/users:
     get:
       tags:
         - Usuário
@@ -124,7 +173,7 @@ paths:
                 $ref: '#/components/schemas/User'
         '400':
           description: Falha ao adicionar usuário
-  /users/{id}:
+  /api/users/{id}:
     get:
       tags:
         - Usuário
@@ -194,7 +243,7 @@ paths:
           description: Usuário removido com sucesso
         '404':
           description: Usuário não encontrado
-  /judges:
+  /api/judges:
     get:
       tags:
         - Usuário
@@ -210,7 +259,7 @@ paths:
                   $ref: '#/components/schemas/User'
         '400':
           description: Erro ao buscar usuário
-  /admins:
+  /api/admins:
     get:
       tags:
         - Usuário
@@ -226,7 +275,7 @@ paths:
                   $ref: '#/components/schemas/User'
         '400':
           description: Erro ao buscar usuário
-  /defaults:
+  /api/defaults:
     get:
       tags:
         - Usuário
@@ -243,7 +292,7 @@ paths:
         '400':
           description: Erro ao buscar usuários
 
-  /events:
+  /api/events:
     get:
       tags:
         - Evento
@@ -282,7 +331,7 @@ paths:
                 $ref: '#/components/schemas/Event'
         '400':
           description: Falha ao adicionar evento
-  /events/{id}:
+  /api/events/{id}:
     get:
       tags:
         - Evento
@@ -356,7 +405,7 @@ paths:
         '404':
           description: evento não encontrado
 
-  /days:
+  /api/days:
     get:
       tags:
         - Dia de Evento
@@ -391,7 +440,7 @@ paths:
                 $ref: '#/components/schemas/EventDay'
         '400':
           description: Falha ao adicionar dia
-  /days/{id}:
+  /api/days/{id}:
     get:
       tags:
         - Dia de Evento
@@ -462,7 +511,7 @@ paths:
         '404':
           description: dia não encontrado
 
-  /institutions:
+  /api/institutions:
     get:
       tags:
         - Instituição
@@ -497,7 +546,7 @@ paths:
                 $ref: '#/components/schemas/Institution'
         '400':
           description: Falha ao adicionar Instituição
-  /institutions/{id}:
+  /api/institutions/{id}:
     get:
       tags:
         - Instituição
@@ -568,7 +617,7 @@ paths:
         '404':
           description: Instituição não encontrada
 
-  /modalities:
+  /api/modalities:
     get:
       tags:
         - Modalidade
@@ -603,7 +652,7 @@ paths:
                 $ref: '#/components/schemas/Modality'
         '400':
           description: Falha ao adicionar modalidade
-  /modalities/{id}:
+  /api/modalities/{id}:
     get:
       tags:
         - Modalidade
@@ -674,7 +723,7 @@ paths:
         '404':
           description: modalidade não encontrada
 
-  /teams:
+  /api/teams:
     get:
       tags:
         - Equipe
@@ -709,7 +758,7 @@ paths:
                 $ref: '#/components/schemas/Team'
         '400':
           description: Falha ao adicionar Equipe
-  /teams/{id}:
+  /api/teams/{id}:
     get:
       tags:
         - Equipe
@@ -780,7 +829,7 @@ paths:
         '404':
           description: Equipe não encontrada
 
-  /participants:
+  /api/participants:
     get:
       tags:
         - Participante
@@ -815,7 +864,7 @@ paths:
                 $ref: '#/components/schemas/Participant'
         '400':
           description: Falha ao adicionar Participante
-  /participants/{id}:
+  /api/participants/{id}:
     get:
       tags:
         - Participante
@@ -886,7 +935,7 @@ paths:
         '404':
           description: Participante não encontrado
 
-  /criteria:
+  /api/criteria:
     get:
       tags:
         - Critério
@@ -921,7 +970,7 @@ paths:
                 $ref: '#/components/schemas/Criterion'
         '400':
           description: Falha ao adicionar Criterio
-  /criteria/{id}:
+  /api/criteria/{id}:
     get:
       tags:
         - Critério
@@ -992,14 +1041,14 @@ paths:
         '404':
           description: Criterio não encontrado
 
-  /subcriteria:
+  /api/subcriteria:
     get:
       tags:
-        - Sub Critério
-      summary: Lista todos os Sub Critérios
+        - Subcritério
+      summary: Lista todos os Subcritérios
       responses:
         '200':
-          description: Lista de Sub Critérios recuperada com sucesso
+          description: Lista de Subcritérios recuperada com sucesso
           content:
             application/json:
               schema:
@@ -1007,11 +1056,11 @@ paths:
                 items:
                   $ref: '#/components/schemas/SubCriterion'
         '400':
-          description: Erro ao buscar Sub Critério
+          description: Erro ao buscar Subcritério
     post:
       tags:
-        - Sub Critério
-      summary: Cria um novo Sub Critério
+        - Subcritério
+      summary: Cria um novo Subcritério
       requestBody:
         required: true
         content:
@@ -1020,45 +1069,45 @@ paths:
               $ref: '#/components/schemas/SubCriterion'
       responses:
         '201':
-          description: Sub Critério criado com sucesso
+          description: Subcritério criado com sucesso
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/SubCriterion'
         '400':
-          description: Falha ao adicionar Sub Critério
-  /subcriteria/{id}:
+          description: Falha ao adicionar Subcritério
+  /api/subcriteria/{id}:
     get:
       tags:
-        - Sub Critério
-      summary: Obtém um Sub Critério pelo ID
+        - Subcritério
+      summary: Obtém um Subcritério pelo ID
       parameters:
         - in: path
           name: id
           required: true
-          description: ID do Sub Critério a ser obtido
+          description: ID do Subcritério a ser obtido
           schema:
             type: integer
             format: int64
       responses:
         '200':
-          description: Sub Critério recuperado com sucesso
+          description: Subcritério recuperado com sucesso
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/SubCriterion'
         '404':
-          description: Sub Critério não encontrado
+          description: Subcritério não encontrado
 
     put:
       tags:
-        - Sub Critério
-      summary: Atualiza um Sub Critério existente pelo ID
+        - Subcritério
+      summary: Atualiza um Subcritério existente pelo ID
       parameters:
         - in: path
           name: id
           required: true
-          description: ID do Sub Critério a ser atualizado
+          description: ID do Subcritério a ser atualizado
           schema:
             type: integer
             format: int64
@@ -1070,35 +1119,35 @@ paths:
               $ref: '#/components/schemas/SubCriterion'
       responses:
         '200':
-          description: Sub Critério atualizado com sucesso
+          description: Subcritério atualizado com sucesso
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/SubCriterion'
         '404':
-          description: Sub Critério não encontrado
+          description: Subcritério não encontrado
         '400':
-          description: Falha ao atualizar Sub Critério
+          description: Falha ao atualizar Subcritério
 
     delete:
       tags:
-        - Sub Critério
-      summary: Remove um Sub Critério pelo ID
+        - Subcritério
+      summary: Remove um Subcritério pelo ID
       parameters:
         - in: path
           name: id
           required: true
-          description: ID do Sub Critério a ser removido
+          description: ID do Subcritério a ser removido
           schema:
             type: integer
             format: int64
       responses:
         '204':
-          description: Sub Critério removido com sucesso
+          description: Subcritério removido com sucesso
         '404':
-          description: Sub Critério não encontrado
+          description: Subcritério não encontrado
 
-  /items:
+  /api/items:
     get:
       tags:
         - Item
@@ -1133,7 +1182,7 @@ paths:
                 $ref: '#/components/schemas/Item'
         '400':
           description: Falha ao adicionar Item
-  /items/{id}:
+  /api/items/{id}:
     get:
       tags:
         - Item
@@ -1204,7 +1253,7 @@ paths:
         '404':
           description: Item não encontrado
 
-  /judgments:
+  /api/judgments:
     get:
       tags:
         - Julgamento
@@ -1240,7 +1289,7 @@ paths:
                 $ref: '#/components/schemas/Judgment'
         '400':
           description: Falha ao adicionar Julgamento
-  /judgments/{id}:
+  /api/judgments/{id}:
     get:
       tags:
         - Julgamento
@@ -1311,7 +1360,7 @@ paths:
         '404':
           description: Julgamento não encontrado
 
-  /evaluations:
+  /api/evaluations:
     get:
       tags:
         - Avaliação
@@ -1346,7 +1395,7 @@ paths:
                 $ref: '#/components/schemas/Evaluation'
         '400':
           description: Falha ao adicionar Avaliação
-  /evaluations/{id}:
+  /api/evaluations/{id}:
     get:
       tags:
         - Avaliação
@@ -1426,36 +1475,46 @@ components:
           type: integer
           format: int64
           description: ID do usuário
+          example: 1
         name:
           type: string
           description: Nome do usuário
+          example: "João"
         lastname:
           type: string
           description: Sobrenome do usuário
+          example: "Da Silva"
         birthday:
           type: string
           format: date
           description: Data de nascimento do participante
+          example: "2000-01-01"
         gender:
           type: string
           description: Gênero do participante
+          example: "Male"
         photo:
           type: string
           description: Caminho para foto do usuário
           nullable: true
+          example: "path/image.jpg"
         email:
           type: string
           format: email
           description: Email do usuário
+          example: "joao@gmail.com"
         password:
           type: string
           description: Senha do usuário
+          example: "12345678"
         interfaceLanguage:
           type: integer
           description: Idioma da interface do usuário
+          example: "pt-BR"
         role:
           type: integer
           description: Grupo do usuário
+          example: "participant"
       required:
         - name
         - lastname
@@ -1473,13 +1532,16 @@ components:
           type: integer
           format: int64
           description: ID do evento
+          example: 1
         name:
           type: string
           description: Nome do evento
+          example: "Treinamento"
         logo:
           type: string
           description: Caminho para logo do evento
           nullable: true
+          example: "path/image.jpg"
       required:
         - name
 
@@ -1490,32 +1552,41 @@ components:
           type: integer
           format: int64
           description: ID do endereço
+          example: 1
         event_id:
           type: integer
           format: int64
           description: ID do evento
+          example: 1
         address:
           type: string
           description: Rua, avenida, etc.
+          example: "Rua do sol"
         number:
           type: integer
           format: int64
           description: Número do imóvel
+          example: "120"
         neighborhood:
           type: string
           description: Bairro, distrito, etc.
+          example: "Alvorada"
         city:
           type: string
           description: Cidade
+          example: "Entre Folhas"
         state:
           type: string
           description: Estado
+          example: "MG"
         country:
           type: string
           description: País
+          example: "Brasil"
         cep:
           type: string
           description: Código Postal (CEP)
+          example: 35300010
       required:
         - event_id
         - address
@@ -1533,22 +1604,27 @@ components:
           type: integer
           format: int64
           description: ID do dia de evento
+          example: 1
         event_id:
           type: integer
           format: int64
           description: ID do evento
+          example: 1
         date:
           type: string
           format: date
           description: Data
+          example: "2024-10-10"
         startHour:
           type: string
           format: time
           description: Hora de início do evento
+          example: "20:00:00"
         index:
           type: integer
           format: int64
           description: Índice ordinário
+          example: 2
       required:
         - event_id
         - date
@@ -1562,12 +1638,15 @@ components:
           type: integer
           format: int64
           description: ID da instituição
+          example: 1
         name:
           type: string
           description: Nome da instituição
+          example: JEMG
         logo:
           type: string
           description: Caminho para logo
+          example: "path/logo.jpeg"
       required:
         - name
 
@@ -1578,12 +1657,15 @@ components:
           type: integer
           format: int64
           description: ID da modalidade
+          example: 1
         name:
           type: string
           description: Nome da modalidade
+          example: "Futebol"
         logo:
           type: string
           description: Caminho para logo
+          example: "path/logo.jpeg"
       required:
         - name
 
@@ -1594,12 +1676,15 @@ components:
           type: integer
           format: int64
           description: ID do time
+          example: 1
         name:
           type: string
           description: Nome do time
+          example: Cruzeiro
         logo:
           type: string
           description: Caminho para logo
+          example: path/logo.jpeg
       required:
         - name
 
@@ -1610,14 +1695,17 @@ components:
           type: integer
           format: int64
           description: ID do participante
+          example: 1
         user_id:
           type: integer
           format: int64
           description: ID do usuário
+          example: 1
         team_id:
           type: integer
           format: int64
           description: ID do time do participante
+          example: 1
         institution_id:
           type: integer
           format: int64
@@ -1627,10 +1715,12 @@ components:
           type: integer
           format: int64
           description: ID da modalidade do participante
+          example: 1
         position:
           type: string
           description: Posição do participante
           nullable: true
+          example: ST
       required:
         - user_id
         - team_id
@@ -1643,13 +1733,16 @@ components:
           type: integer
           format: int64
           description: ID do critério
+          example: 1
         name:
           type: string
           description: Nome do critério
+          example: Técnica
         points:
           type: string
           description: Pontos do critério
           nullable: true
+          example: 100
       required:
         - name
 
@@ -1660,13 +1753,16 @@ components:
           type: integer
           format: int64
           description: ID do subcritério
+          example: 1
         name:
           type: string
           description: Nome do subcritério
+          example: Finalizações
         points:
           type: string
           description: Pontos do subcritério
           nullable: true
+          example: 25
       required:
         - name
 
@@ -1677,24 +1773,29 @@ components:
           type: integer
           format: int64
           description: ID do item
+          example: 1
         subCriterion_id:
           type: integer
           format: int64
           description: ID do subcritério
+          example: 1
         name:
           type: string
           description: Nome do item
+          example: Penâlti
         aspect:
           type: string
           enum:
             - mensuravel
             - quantitativo
           description: Poderá ser "mensuravel" ou "quantitativo"
+          example: quantitativo
         weight:
           type: number
           format: float
           description: Peso para cálculo da nota final caso o aspecto seja quantitativo, caso contrário será nulo.
           nullable: true
+          example: 0.02
       required:
         - subCriterion_id
         - name
@@ -1708,34 +1809,41 @@ components:
           type: integer
           format: int64
           description: ID do julgamento
+          example: 1
         evaluation_id:
           type: integer
           format: int64
           description: ID da avaliação
+          example: 1
         item_id:
           type: integer
           format: int64
           description: ID do item que será julgado
+          example: 1
         attempt:
           type: integer
           format: int64
           description: Número de tentativas
+          example: 30
           nullable: true
         correctAttempt:
           type: integer
           format: int64
           description: Número de tentativas corretas
           nullable: true
+          example: 25
         failAttempt:
           type: integer
           format: int64
           description: Número de tentativas falhas
           nullable: true
+          example: 5
         score:
           type: number
           format: float
           description: Nota final
           nullable: true
+          example: 10
       required:
         - evaluation_id
         - item_id
@@ -1747,28 +1855,34 @@ components:
           type: integer
           format: int64
           description: ID da avaliação
+          example: 1
         event_id:
           type: integer
           format: int64
           description: ID do evento da avaliação
           nullable: true
+          example: 1
         participant_id:
           type: integer
           format: int64
           description: ID do participante avaliado
+          example: 1
         modality_id:
           type: integer
           format: int64
           description: ID da modalidade da avaliação
+          example: 1
         judge_id:
           type: integer
           format: int64
           description: ID do usuário que irá julgar
+          example: 2
         date:
           type: string
           format: date
           description: Data da avaliação
           nullable: true
+          example: "2024-10-10"
       required:
         - participant_id
         - modality_id

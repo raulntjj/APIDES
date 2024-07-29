@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\PasswordController;
+use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\Auth\PasswordController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
