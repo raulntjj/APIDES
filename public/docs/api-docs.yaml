@@ -82,6 +82,13 @@ paths:
       tags:
         - Sessão DE USUÁRIOS
       summary: Deslogar usuário
+      parameters:
+        - in: header
+          name: Token
+          required: true
+          description: Token de sessão obtido no login (Bearer token)
+          schema:
+            type: string
       responses:
         '201':
           description: Usuário deslogado com sucesso

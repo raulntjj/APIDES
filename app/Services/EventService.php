@@ -21,7 +21,7 @@ class EventService{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () {
                 //Retornando todos eventos e o código de respostas
-                return response()->json(Event::all(), 200);
+                return response()->json(Event::with('days')->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){
