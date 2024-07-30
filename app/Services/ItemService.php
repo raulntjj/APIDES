@@ -11,7 +11,7 @@ class ItemService{
     //Função privada utilizada para encontrar os itenss ao longo do serviço
     private function findItem(int $id){
         //Busca e retorna o itens
-        return Item::findOrFail($id);
+        return Item::with('subCriterion.criterion', 'judgments')->findOrFail($id);
     }
 
     //Função pública utilizada para retornar todos os itenss
@@ -21,7 +21,7 @@ class ItemService{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () {
                 //Retornando todos itenss e o código de respostas
-                return response()->json(Item::with('subCriterion', 'judgments')->get(), 200);
+                return response()->json(Item::with('subCriterion.criterion', 'judgments')->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){

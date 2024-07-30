@@ -29,4 +29,8 @@ class EventDay extends Model{
         //Declarando pertencença a entidade evento
         return $this->belongsTo(Event::class);
     }
+
+    public function avaliations(){
+        return $this->hasMany(Avaliation::class, 'eventDays_id');
+    }
 }

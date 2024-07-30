@@ -17,73 +17,68 @@ class UserSeeder extends Seeder
         User::create([
             'name' => 'Admin',
             'lastname' => 'Admin',
-            'gender' => 'Male',
+            'gender' => 'male',
             'birthday' => '2000-01-01',
             'email' => 'admin@admin.com',
             'password' => '12345678',
-            'role' => 'Avaliador',
-            'interfaceLanguage' => 'PT-BR',
-            'photo' => 'path/perfil.jpg'
+            'role' => 'evaluator',
+            'isAdmin' => true,
+            'interfaceLanguage' => 'PT-BR'
         ]);
 
         User::create([
             'name' => 'Glauco',
             'lastname' => 'Silva',
-            'gender' => 'Male',
+            'gender' => 'male',
             'birthday' => '2000-01-01',
-            'email' => 'glauco@gmail.com',
+            'email' => 'glauco@example.com',
             'password' => '12345678',
-            'role' => 'Avaliador',
-            'interfaceLanguage' => 'PT-BR',
-            'photo' => 'path/perfil.jpg'
+            'role' => 'participant',
+            'interfaceLanguage' => 'PT-BR'
         ]);
 
         User::create([
             'name' => 'Joana',
             'lastname' => 'Silva',
-            'gender' => 'Female',
+            'gender' => 'female',
             'birthday' => '2000-01-01',
             'email' => 'joana@example.com',
-            'password' => 'senha123',
-            'role' => 'Usuário',
-            'interfaceLanguage' => 'EN',
-            'photo' => 'path/joana.jpg'
+            'password' => '12345678',
+            'role' => 'participant',
+            'interfaceLanguage' => 'PT-BR'
         ]);
 
         User::create([
             'name' => 'Ricardo',
             'lastname' => 'Silva',
-            'gender' => 'Male',
+            'gender' => 'other',
             'birthday' => '2000-01-01',
-            'email' => 'ricardo@hotmail.com',
-            'password' => 'senha1234',
-            'role' => 'Administrador',
-            'interfaceLanguage' => 'ES',
-            'photo' => 'path/ricardo.jpg'
+            'email' => 'ricardo@example.com',
+            'password' => '12345678',
+            'role' => 'participant',
+            'interfaceLanguage' => 'PT-BR'
         ]);
 
         User::create([
             'name' => 'Camila',
             'lastname' => 'Silva',
-            'gender' => 'Female',
+            'gender' => 'female',
             'birthday' => '2000-01-01',
             'email' => 'camila@example.com',
-            'password' => 'senha12345',
-            'role' => 'Moderador',
-            'interfaceLanguage' => 'PT-BR',
-            'photo' => 'path/camila.jpg'
+            'password' => '12345678',
+            'role' => 'participant',
+            'interfaceLanguage' => 'PT-BR'
         ]);
 
         User::create([
             'name' => 'Pedro',
             'lastname' => 'Silva',
-            'gender' => 'Male',
+            'gender' => 'male',
             'birthday' => '2000-01-01',
             'email' => 'pedro@example.com',
-            'password' => 'senha123456',
-            'role' => 'Cliente',
-            'interfaceLanguage' => 'PT-BR',
-            'photo' => 'path/pedro.jpg'
+            'password' => '12345678',
+            'role' => 'Default',
+            'interfaceLanguage' => 'PT-BR'
         ]);
     }
 }

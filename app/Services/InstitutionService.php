@@ -11,7 +11,7 @@ class InstitutionService{
     //Função privada utilizada para encontrar as instituições ao longo do serviço
     private function findInstitution(int $id){
         //Busca e retorna a instituição
-        return Institution::findOrFail($id);
+        return Institution::with('participants', 'participants.team', 'participants.modality', 'participants.institution', 'participants.user')->findOrFail($id);
     }
 
     //Função pública utilizada para retornar todas as instituições
@@ -21,7 +21,7 @@ class InstitutionService{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () {
                 //Retornando todas instituições e o código de respostas
-                return response()->json(Institution::all(), 200);
+                return response()->json(Institution::with('participants', 'participants.team', 'participants.modality', 'participants.institution', 'participants.user')->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){

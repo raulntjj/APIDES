@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Models\EventAddress;
 use App\Models\EventDayAddress;
-
+ 
 
 class Event extends Model{
     use HasFactory;
@@ -36,9 +36,5 @@ class Event extends Model{
 
     public function days(){
         return $this->hasMany(EventDay::class);
-    }
-
-    public function avaliations(){
-        return $this->hasMany(Avaliation::class);
     }
 }

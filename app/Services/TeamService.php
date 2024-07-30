@@ -11,7 +11,7 @@ class TeamService{
     //Função privada utilizada para encontrar os times ao longo do serviço
     private function findTeam(int $id){
         //Busca e retorna o time
-        return Team::findOrFail($id);
+        return Team::with('participants', 'participants.team', 'participants.modality', 'participants.institution', 'participants.user')->findOrFail($id);
     }
 
     //Função pública utilizada para retornar todos os times
@@ -21,7 +21,7 @@ class TeamService{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () {
                 //Retornando todos times e o código de respostas
-                return response()->json(Team::all(), 200);
+                return response()->json(Team::with('participants', 'participants.team', 'participants.modality', 'participants.institution', 'participants.user')->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){

@@ -11,7 +11,7 @@ class SubCriterionService{
     //Função privada utilizada para encontrar os criterios ao longo do serviço
     private function findSubCriterion(int $id){
         //Busca e retorna o criterio
-        return SubCriterion::findOrFail($id);
+        return SubCriterion::with('criterion', 'items')->findOrFail($id);
     }
 
     //Função pública utilizada para retornar todos os criterios
@@ -21,7 +21,7 @@ class SubCriterionService{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () {
                 //Retornando todos criterios e o código de respostas
-                return response()->json(SubCriterion::with('criterion')->get(), 200);
+                return response()->json(SubCriterion::with('criterion', 'items')->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){

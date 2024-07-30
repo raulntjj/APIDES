@@ -22,7 +22,7 @@ class Institution extends Model{
     */
 
     //Relacionamentos eloquent
-    public function participant(){
+    public function participants(){
         return $this->hasMany(Participant::class);
     }
 }

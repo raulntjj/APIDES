@@ -5,19 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-use App\Models\Event;
-use App\Models\Modality;
-use App\Models\Criterion;
-use App\Models\SubCriterion;
-use App\Models\Item;
-use App\Models\Judgment;
-
 class Evaluation extends Model{
     use HasFactory;
     protected $table = 'evaluations';
     protected $fillable = [
         'participant_id',
-        'event_id',
+        'eventDay_id',
         'modality_id',
         'judge_id',
         'date',
@@ -40,8 +33,8 @@ class Evaluation extends Model{
         return $this->belongsTo(User::class, 'judge_id');
     }
 
-    public function event(){
-        return $this->belongsTo(Event::class, 'event_id');
+    public function eventDay(){
+        return $this->belongsTo(EventDay::class, 'eventDay_id');
     }
 
     public function modality(){
@@ -50,10 +43,6 @@ class Evaluation extends Model{
 
     public function judgments(){
         return $this->hasMany(Judgment::class, 'evaluation_id');
-    }
-
-    public function scores(){
-        return $this->hasMany(Score::class);
     }
 
     // public function criterion(){

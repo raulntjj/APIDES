@@ -18,7 +18,7 @@ info:
   termsOfService: https://versatecnologia.com.br
 servers:
   - description: API
-    url: https://f7d7-45-70-34-167.ngrok-free.app
+    url: https://a527-45-70-34-167.ngrok-free.app
 tags:
   # - name: Sessão de Clientes da API
   #   description: Por ordens superiores, por enquanto, não será necessário lidar com sessões para consumidores.
@@ -67,10 +67,10 @@ paths:
                 email:
                   type: string
                   format: email
-                  example: user@teste.com
+                  example: admin@admin.com
                 password:
                   type: string
-                  example: 123456789
+                  example: 12345678
       responses:
         '201':
           description: Token para autenticar usuários
@@ -79,16 +79,11 @@ paths:
 
   /api/logout:
     post:
+      security:
+        - bearerAuth: []
       tags:
         - Sessão DE USUÁRIOS
       summary: Deslogar usuário
-      parameters:
-        - in: header
-          name: Token
-          required: true
-          description: Token de sessão obtido no login (Bearer token)
-          schema:
-            type: string
       responses:
         '201':
           description: Usuário deslogado com sucesso
@@ -97,16 +92,11 @@ paths:
 
   /api/user:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - Sessão DE USUÁRIOS
       summary: Obter dados do usuário logado
-      parameters:
-        - in: header
-          name: Token
-          required: true
-          description: Token de sessão obtido no login (Bearer token)
-          schema:
-            type: string
       responses:
         '200':
           description: Dados do usuário
@@ -118,7 +108,6 @@ paths:
                   $ref: '#/components/schemas/User'
         '400':
           description: Erro ao buscar usuário
-
 
   /api/password/change:
     post:
@@ -1499,6 +1488,11 @@ paths:
           description: Avaliação não encontrada
 
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
     User:
       type: object
@@ -1888,10 +1882,10 @@ components:
           format: int64
           description: ID da avaliação
           example: 1
-        event_id:
+        eventDay_id:
           type: integer
           format: int64
-          description: ID do evento da avaliação
+          description: ID do dia do evento da avaliação
           nullable: true
           example: 1
         participant_id:

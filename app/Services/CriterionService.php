@@ -11,7 +11,7 @@ class CriterionService{
     //Função privada utilizada para encontrar os criterios ao longo do serviço
     private function findCriterion(int $id){
         //Busca e retorna o criterio
-        return Criterion::findOrFail($id);
+        return Criterion::with('subCriteria.items')->findOrFail($id);
     }
 
     //Função pública utilizada para retornar todos os criterios

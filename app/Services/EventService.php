@@ -11,7 +11,7 @@ class EventService{
     //Função privada utilizada para encontrar os eventos ao longo do serviço
     private function findEvent(int $id){
         //Busca e retorna o evento
-        return Event::findOrFail($id);
+        return Event::with('days', 'address')->findOrFail($id);
     }
 
     //Função pública utilizada para retornar todos os evento
@@ -21,7 +21,7 @@ class EventService{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () {
                 //Retornando todos eventos e o código de respostas
-                return response()->json(Event::with('days')->get(), 200);
+                return response()->json(Event::with('days', 'address')->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){
@@ -37,7 +37,7 @@ class EventService{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () use ($id){
                 //Retornando evento encontrado com suas informações de endereço e o código de respostas
-                return response()->json($this->findEvent($id)->load('address', 'days'), 200);
+                return response()->json($this->findEvent($id), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){

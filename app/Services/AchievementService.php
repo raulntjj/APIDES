@@ -11,7 +11,7 @@ class AchievementService{
     //Função privada utilizada para encontrar os Achievementes ao longo do serviço
     private function findAchievement(int $id){
         //Busca e retorna o Achievemente
-        return Achievement::findOrFail($id);
+        return Achievement::with('participant.user')->findOrFail($id);
     }
 
     //Função pública utilizada para retornar todos os Achievementes
@@ -21,7 +21,7 @@ class AchievementService{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () {
                 //Retornando todos Achievementes e o código de respostas
-                return response()->json(Achievement::all(), 200);
+                return response()->json(Achievement::with('participant.user')->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){

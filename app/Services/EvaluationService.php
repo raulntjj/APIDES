@@ -11,7 +11,7 @@ class EvaluationService{
     //Função privada utilizada para encontrar as avaliações ao longo do serviço
     private function findEvaluation(int $id){
         //Busca e retorna a avaliação
-        return Evaluation::findOrFail($id);
+        return Evaluation::with('judgments.item.subCriterion.criterion', 'participant.user', 'participant.team', 'participant.institution', 'participant.modality', 'modality', 'eventDay.event', 'judge')->findOrFail($id);
     }
 
     //Função pública utilizada para retornar todos as avaliação
@@ -21,7 +21,7 @@ class EvaluationService{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () {
                 //Retornando todas avaliações e o código de respostas
-                return response()->json(Evaluation::with('judgments', 'participant', 'modality', 'event')->get(), 200);
+                return response()->json(Evaluation::with('judgments.item.subCriterion.criterion', 'participant.user', 'participant.team', 'participant.institution', 'participant.modality', 'modality', 'eventDay.event', 'judge')->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){
@@ -60,7 +60,7 @@ class EvaluationService{
                     //Foi deixado o request->only() no lugar do request->all()
                     //Para deixar mais explícito e descritivo em relação as variavéis que estão sendo utilizadas etc..
                     'participant_id',
-                    'event_id',
+                    'eventDay_id',
                     'modality_id',
                     'judge_id',
                     'date',
@@ -89,7 +89,7 @@ class EvaluationService{
                 $evaluation->fill($request->only(
                     //Explicitando váriaveis
                     'participant_id',
-                    'event_id',
+                    'eventDay_id',
                     'modality_id',
                     'judge_id',
                     'date',

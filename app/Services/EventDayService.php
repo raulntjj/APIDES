@@ -22,7 +22,7 @@ class EventDayService{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () {
                 //Retornando todos dia de eventos e o código de respostas
-                return response()->json(EventDay::all(), 200);
+                return response()->json(EventDay::with('event')->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){
@@ -61,7 +61,7 @@ class EventDayService{
             return DB::transaction(function () use ($request){
                 //Criando dia de evento
                 $eventDay = EventDay::create([
-                    'event_id' => $request->event_id,
+                    'eventDay_id' => $request->eventDay_id,
                     'date' => $request->date,
                     'index' => $index
                 ]);
@@ -87,7 +87,7 @@ class EventDayService{
 
                 //Atualizando dados do dia de evento e salvando utilizando o método fill
                 $eventDay->fill($request->only(
-                    'event_id',
+                    'eventDay_id',
                     'date',
                     'index'
                 ))->save();

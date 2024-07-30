@@ -30,15 +30,11 @@ class SubCriterion extends Model{
         return $this->hasMany(Evaluation::class);
     }
 
-    public function schedules(){
-        return $this->hasMany(User::class);
-    }
-
     public function criterion(){
         return $this->belongsTo(Criterion::class, 'criterion_id');
     }
 
     public function items(){
-        return $this->belongsTo(Item::class, 'subCriterion_id');
+        return $this->hasMany(Item::class, 'subCriterion_id');
     }
 }

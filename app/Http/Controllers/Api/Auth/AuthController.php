@@ -7,6 +7,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Models\User;
+use Tymon\JWTAuth\Exceptions;
 
 class AuthController {
     // Método de login
@@ -29,11 +30,11 @@ class AuthController {
             if (! $user = JWTAuth::parseToken()->authenticate()) {
                 return response()->json(['error' => 'Usuário não existente'], 404);
             }
-        } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+        } catch (TokenExpiredException $e) {
             return response()->json(['error' => 'Token expirado'], $e->getStatusCode());
-        } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+        } catch (TokenInvalidException $e) {
             return response()->json(['error' => 'Token inválido'], $e->getStatusCode());
-        } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
+        } catch (JWTException $e) {
             return response()->json(['error' => 'Token ausente'], $e->getStatusCode());
         }
 
@@ -49,7 +50,7 @@ class AuthController {
 
             // Retornar resposta de sucesso
             return response()->json(['message' => 'Logout realizado com sucesso'], 200);
-        } catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
+        } catch (\JWTException $e) {
             // Retornar resposta de erro se houver falha ao invalidar o token
             return response()->json(['error' => 'Falha ao deslogar, por favor tente novamente'], 500);
         }

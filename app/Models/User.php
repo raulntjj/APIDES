@@ -11,7 +11,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class User extends Authenticatable implements JWTSubject{
     use HasFactory, Notifiable;
 
-    /*  
+    /*
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
@@ -53,10 +53,6 @@ class User extends Authenticatable implements JWTSubject{
 
     public function participant(){
         return $this->HasOne(Participant::class);
-    }
-
-    public function achievements(){
-        return $this->HasMany(Achievement::class);
     }
 
     public function getJWTIdentifier(){

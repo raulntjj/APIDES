@@ -17,7 +17,8 @@ class JudgmentService{
     //Função privada utilizada para encontrar os julgamentos ao longo do serviço
     private function findJudgment(int $id){
         //Busca e retorna o julgamento
-        return Judgment::findOrFail($id);
+        return Judgment::with('item.subCriterion.criterion', 'evaluation.modality', 'evaluation.eventDay.event', 'evaluation.participant.user',
+            'evaluation.participant.team', 'evaluation.participant.modality', 'evaluation.participant.institution', 'evaluation.judge')->findOrFail($id);
     }
 
     //Função pública utilizada para retornar todos os julgamentos
@@ -27,7 +28,8 @@ class JudgmentService{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () {
                 //Retornando todos julgamentos e o código de respostas
-                return response()->json(Judgment::with('item', 'evaluation')->get(), 200);
+                return response()->json(Judgment::with('item.subCriterion.criterion', 'evaluation.modality', 'evaluation.eventDay.event', 'evaluation.participant.user',
+                'evaluation.participant.team', 'evaluation.participant.modality', 'evaluation.participant.institution', 'evaluation.judge')->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){
@@ -43,7 +45,7 @@ class JudgmentService{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () use ($id){
                 //Retornando julgamento encontrado com suas informações de endereço e o código de respostas
-                return response()->json(Judgment::whereId($id)->with('item')->get(), 200);
+                return response()->json($this->findJudgment($id), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){

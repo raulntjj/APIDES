@@ -14,7 +14,7 @@ class UserService{
     //Função privada utilizada para encontrar os usuários ao longo do serviço
     private function findUser(int $id){
         //Busca e retorna o usuário
-        return User::findOrFail($id);
+        return User::with('participant', 'participant.team', 'participant.modality', 'participant.institution')->findOrFail($id);
     }
 
     //Função pública utilizada para retornar todos os usuários
@@ -24,7 +24,7 @@ class UserService{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () {
                 //Retornando todos usuários e o código de respostas
-                return response()->json(User::all(), 200);
+                return response()->json(User::with('participant', 'participant.team', 'participant.modality', 'participant.institution')->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){
@@ -145,5 +145,5 @@ class UserService{
     public function getDefaults(){
         return User::where('role', 'default')->get();
     }
-    
+
 }

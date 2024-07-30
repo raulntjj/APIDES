@@ -16,12 +16,12 @@ return new class extends Migration {
             $table->string('password');
             $table->string('name', 64);
             $table->string('lastname', 128);
-            $table->string('gender', 16);
+            $table->enum('gender', ['male', 'female', 'other']);
             $table->date('birthday');
             $table->string('photo', 256)->nullable();
             $table->string('interfaceLanguage', 16)->default('pt-BR');
             $table->boolean('isAdmin')->default(false);
-            $table->string('role', 32)->default('default');
+            $table->enum('role', ['default', 'participant', 'evaluator'])->default('default');
             $table->rememberToken();
             $table->timestamps();
         });
