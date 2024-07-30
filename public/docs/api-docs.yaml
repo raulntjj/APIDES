@@ -2,11 +2,25 @@ openapi: 3.0.0
 info:
   title: Desempenho Esportivo
   description: |
-    Documentação da API Rest para desempenho esportivo.
+    #Documentação da API Rest para Desempenho Esportivo.
 
-    Esta API, juntamente com seu banco de dados, está rodando localmente e serve como uma solução provisória enquanto ela não é colocada oficialmente em um servidor.
+    Esta API, juntamente com seu banco de dados, está rodando localmente e serve como uma solução provisória até que seja oficialmente implantada em um servidor.
 
-    Quanto à sessão para consumir a API, ainda é inexistênte e sigo aguardando ordens superiores para dar continuidade na mesma.
+    ## A API inclui uma seed de dados fictícios apenas para fins de teste.
+
+    ### Usuários Padrão:
+    - **Administrador:**
+      - Email: admin@teste.com
+      - Senha: 12345678
+    - **Avaliador:**
+      - Email: avaliador@teste.com
+      - Senha: 12345678
+    - **Participante:**
+      - Email: participante@teste.com
+      - Senha: 12345678
+
+    Para mais detalhes, é possível acessar a lista de usuários utilizando o usuário administrador, ou criar um usuário conforme sua necessidade.
+
   version: 1.0.0
   contact:
     name: Suporte para DEVs
@@ -18,16 +32,17 @@ info:
   termsOfService: https://versatecnologia.com.br
 servers:
   - description: API
-    url: https://a527-45-70-34-167.ngrok-free.app
+    url: http://127.0.0.1:8001
+    # url: https://a527-45-70-34-167.ngrok-free.app
 tags:
   # - name: Sessão de Clientes da API
   #   description: Por ordens superiores, por enquanto, não será necessário lidar com sessões para consumidores.
-  - name: Sessão DE USUÁRIOS
+  - name: Sessão
     description: Rotas para controle de sessões de usuários
   - name: Senha
     description: Rotas para controle de senha de usuários
   - name: Usuário
-    description: Rotas para controle de usuário
+    description: Rotas para controle de usuários
   - name: Evento
     description: Rotas para controle de eventos
   - name: Dia de Evento
@@ -55,7 +70,7 @@ paths:
   /api/login:
     post:
       tags:
-        - Sessão DE USUÁRIOS
+        - Sessão
       summary: Autenticar usuário
       requestBody:
         required: true
@@ -67,7 +82,7 @@ paths:
                 email:
                   type: string
                   format: email
-                  example: admin@admin.com
+                  example: admin@teste.com
                 password:
                   type: string
                   example: 12345678
@@ -82,7 +97,7 @@ paths:
       security:
         - bearerAuth: []
       tags:
-        - Sessão DE USUÁRIOS
+        - Sessão
       summary: Deslogar usuário
       responses:
         '201':
@@ -95,7 +110,7 @@ paths:
       security:
         - bearerAuth: []
       tags:
-        - Sessão DE USUÁRIOS
+        - Sessão
       summary: Obter dados do usuário logado
       responses:
         '200':
@@ -108,9 +123,44 @@ paths:
                   $ref: '#/components/schemas/User'
         '400':
           description: Erro ao buscar usuário
+    put:
+      security:
+        - bearerAuth: []
+      tags:
+        - Sessão
+      summary: Editar dados do usuário logado
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: Usuário criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Falha ao adicionar usuário
+
+    delete:
+      security:
+        - bearerAuth: []
+      tags:
+        - Sessão
+      summary: Excluir conta do usuário logado
+      responses:
+        '201':
+          description: Usuário excluido com sucesso
+        '400':
+          description: falha ao excluir usuário
 
   /api/password/change:
     post:
+      security:
+        - bearerAuth: []
       tags:
         - Senha
       summary: Trocar senha do usuário
@@ -151,7 +201,7 @@ paths:
                 email:
                   type: string
                   format: email
-                  example: user@teste.com
+                  example: glauco@teste.com
       responses:
         '201':
           description: Senha alterada com sucesso
@@ -161,9 +211,11 @@ paths:
 
   /api/users:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - Usuário
-      summary: Lista todos os usuários
+      summary: Lista todos os usuários (ACESSO LIMITADO A USUÁRIOS ADMINSTRADORES)
       responses:
         '200':
           description: Lista de usuários recuperada com sucesso
@@ -176,9 +228,11 @@ paths:
         '400':
           description: Erro ao buscar usuário
     post:
+      security:
+        - bearerAuth: []
       tags:
         - Usuário
-      summary: Cria um novo usuário
+      summary: Cria um novo usuário (ACESSO LIMITADO A USUÁRIOS ADMINSTRADORES)
       requestBody:
         required: true
         content:
@@ -196,9 +250,11 @@ paths:
           description: Falha ao adicionar usuário
   /api/users/{id}:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - Usuário
-      summary: Obtém um usuário pelo ID
+      summary: Obtém um usuário pelo ID (ACESSO LIMITADO A USUÁRIOS ADMINSTRADORES)
       parameters:
         - in: path
           name: id
@@ -218,9 +274,11 @@ paths:
           description: Usuário não encontrado
 
     put:
+      security:
+        - bearerAuth: []
       tags:
         - Usuário
-      summary: Atualiza um usuário existente pelo ID
+      summary: Atualiza um usuário existente pelo ID (ACESSO LIMITADO A USUÁRIOS ADMINSTRADORES)
       parameters:
         - in: path
           name: id
@@ -248,9 +306,11 @@ paths:
           description: Falha ao atualizar usuário
 
     delete:
+      security:
+        - bearerAuth: []
       tags:
         - Usuário
-      summary: Remove um usuário pelo ID
+      summary: Remove um usuário pelo ID (ACESSO LIMITADO A USUÁRIOS ADMINSTRADORES)
       parameters:
         - in: path
           name: id
@@ -264,8 +324,11 @@ paths:
           description: Usuário removido com sucesso
         '404':
           description: Usuário não encontrado
+
   /api/judges:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - Usuário
       summary: Lista todos os usuários do grupo jurados
@@ -279,28 +342,15 @@ paths:
                 items:
                   $ref: '#/components/schemas/User'
         '400':
-          description: Erro ao buscar usuário
+          description: Erro ao buscar usuários
+
   /api/admins:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - Usuário
       summary: Lista todos os usuários do grupo administrador
-      responses:
-        '200':
-          description: Lista de usuários recuperada com sucesso
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/User'
-        '400':
-          description: Erro ao buscar usuário
-  /api/defaults:
-    get:
-      tags:
-        - Usuário
-      summary: Lista todos os usuários do grupo padrão
       responses:
         '200':
           description: Lista de usuários recuperada com sucesso
@@ -315,6 +365,8 @@ paths:
 
   /api/events:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - Evento
       summary: Lista todos os eventos
@@ -330,9 +382,11 @@ paths:
         '400':
           description: Erro ao buscar evento
     post:
+      security:
+        - bearerAuth: []
       tags:
         - Evento
-      summary: Cria um novo evento
+      summary: Cria um novo evento (ACESSO LIMITADO A USUÁRIOS ADMINSTRADORES)
       description: Esta requisição irá preecher as tabelas EventDay, e EventAddress. Então será obrigatório o envio dos atributos das mesmas. Como a data e index 1 para Event Day e dados de endereço para EventAddress, em caso de dúvida, verificar no EventRequest. Abaixo também foi deixado o exemplo de requisição
       requestBody:
         required: true
@@ -354,6 +408,8 @@ paths:
           description: Falha ao adicionar evento
   /api/events/{id}:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - Evento
       summary: Obtém um evento pelo ID
@@ -379,6 +435,8 @@ paths:
           description: evento não encontrado
 
     put:
+      security:
+        - bearerAuth: []
       tags:
         - Evento
       summary: Atualiza um evento existente pelo ID
@@ -409,9 +467,11 @@ paths:
           description: Falha ao atualizar evento
 
     delete:
+      security:
+        - bearerAuth: []
       tags:
         - Evento
-      summary: Remove um evento pelo ID
+      summary: Remove um evento pelo ID (ACESSO LIMITADO A USUÁRIOS ADMINSTRADORES)
       parameters:
         - in: path
           name: id
@@ -428,6 +488,8 @@ paths:
 
   /api/days:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - Dia de Evento
       summary: Lista todos os dias
@@ -443,9 +505,11 @@ paths:
         '400':
           description: Erro ao buscar dia
     post:
+      security:
+        - bearerAuth: []
       tags:
         - Dia de Evento
-      summary: Cria um novo dia
+      summary: Cria um novo dia (ACESSO LIMITADO A USUÁRIOS ADMINSTRADORES)
       requestBody:
         required: true
         content:
@@ -463,6 +527,8 @@ paths:
           description: Falha ao adicionar dia
   /api/days/{id}:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - Dia de Evento
       summary: Obtém um dia pelo ID
@@ -485,9 +551,11 @@ paths:
           description: dia não encontrado
 
     put:
+      security:
+        - bearerAuth: []
       tags:
         - Dia de Evento
-      summary: Atualiza um dia existente pelo ID
+      summary: Atualiza um dia existente pelo ID (ACESSO LIMITADO A USUÁRIOS ADMINSTRADORES)
       parameters:
         - in: path
           name: id
@@ -515,9 +583,11 @@ paths:
           description: Falha ao atualizar dia
 
     delete:
+      security:
+        - bearerAuth: []
       tags:
         - Dia de Evento
-      summary: Remove um dia pelo ID
+      summary: Remove um dia pelo ID (ACESSO LIMITADO A USUÁRIOS ADMINSTRADORES)
       parameters:
         - in: path
           name: id
@@ -534,6 +604,8 @@ paths:
 
   /api/institutions:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - Instituição
       summary: Lista todos as Instituições
@@ -549,9 +621,11 @@ paths:
         '400':
           description: Erro ao buscar Instituição
     post:
+      security:
+        - bearerAuth: []
       tags:
         - Instituição
-      summary: Cria uma nova Instituição
+      summary: Cria uma nova Instituição (ACESSO LIMITADO A USUÁRIOS ADMINSTRADORES)
       requestBody:
         required: true
         content:
@@ -569,6 +643,8 @@ paths:
           description: Falha ao adicionar Instituição
   /api/institutions/{id}:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - Instituição
       summary: Obtém uma Instituição pelo ID
@@ -591,9 +667,11 @@ paths:
           description: Instituição não encontrada
 
     put:
+      security:
+        - bearerAuth: []
       tags:
         - Instituição
-      summary: Atualiza uma Instituição existente pelo ID
+      summary: Atualiza uma Instituição existente pelo ID (ACESSO LIMITADO A USUÁRIOS ADMINSTRADORES)
       parameters:
         - in: path
           name: id
@@ -621,9 +699,11 @@ paths:
           description: Falha ao atualizar Instituição
 
     delete:
+      security:
+        - bearerAuth: []
       tags:
         - Instituição
-      summary: Remove uma Instituição pelo ID
+      summary: Remove uma Instituição pelo ID (ACESSO LIMITADO A USUÁRIOS ADMINSTRADORES)
       parameters:
         - in: path
           name: id
@@ -640,6 +720,8 @@ paths:
 
   /api/modalities:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - Modalidade
       summary: Lista todos as modalidades
@@ -655,9 +737,11 @@ paths:
         '400':
           description: Erro ao buscar modalidade
     post:
+      security:
+        - bearerAuth: []
       tags:
         - Modalidade
-      summary: Cria uma nova modalidade
+      summary: Cria uma nova modalidade (ACESSO LIMITADO A USUÁRIOS ADMINSTRADORES)
       requestBody:
         required: true
         content:
@@ -675,6 +759,8 @@ paths:
           description: Falha ao adicionar modalidade
   /api/modalities/{id}:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - Modalidade
       summary: Obtém uma modalidade pelo ID
@@ -697,9 +783,11 @@ paths:
           description: modalidade não encontrada
 
     put:
+      security:
+        - bearerAuth: []
       tags:
         - Modalidade
-      summary: Atualiza uma modalidade existente pelo ID
+      summary: Atualiza uma modalidade existente pelo ID (ACESSO LIMITADO A USUÁRIOS ADMINSTRADORES)
       parameters:
         - in: path
           name: id
@@ -727,9 +815,11 @@ paths:
           description: Falha ao atualizar modalidade
 
     delete:
+      security:
+        - bearerAuth: []
       tags:
         - Modalidade
-      summary: Remove uma modalidade pelo ID
+      summary: Remove uma modalidade pelo ID (ACESSO LIMITADO A USUÁRIOS ADMINSTRADORES)
       parameters:
         - in: path
           name: id
@@ -746,6 +836,8 @@ paths:
 
   /api/teams:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - Equipe
       summary: Lista todos as Equipes
@@ -761,9 +853,11 @@ paths:
         '400':
           description: Erro ao buscar Equipe
     post:
+      security:
+        - bearerAuth: []
       tags:
         - Equipe
-      summary: Cria uma nova Equipe
+      summary: Cria uma nova Equipe (ACESSO LIMITADO A USUÁRIOS ADMINSTRADORES)
       requestBody:
         required: true
         content:
@@ -781,6 +875,8 @@ paths:
           description: Falha ao adicionar Equipe
   /api/teams/{id}:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - Equipe
       summary: Obtém uma Equipe pelo ID
@@ -803,9 +899,11 @@ paths:
           description: Equipe não encontrada
 
     put:
+      security:
+        - bearerAuth: []
       tags:
         - Equipe
-      summary: Atualiza uma Equipe existente pelo ID
+      summary: Atualiza uma Equipe existente pelo ID (ACESSO LIMITADO A USUÁRIOS ADMINSTRADORES)
       parameters:
         - in: path
           name: id
@@ -833,9 +931,11 @@ paths:
           description: Falha ao atualizar Equipe
 
     delete:
+      security:
+        - bearerAuth: []
       tags:
         - Equipe
-      summary: Remove uma Equipe pelo ID
+      summary: Remove uma Equipe pelo ID (ACESSO LIMITADO A USUÁRIOS ADMINSTRADORES)
       parameters:
         - in: path
           name: id
@@ -852,6 +952,8 @@ paths:
 
   /api/participants:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - Participante
       summary: Lista todos os participantes
@@ -867,9 +969,11 @@ paths:
         '400':
           description: Erro ao buscar Participante
     post:
+      security:
+        - bearerAuth: []
       tags:
         - Participante
-      summary: Cria um novo Participante
+      summary: Cria um novo Participante (ACESSO LIMITADO A USUÁRIOS ADMINSTRADORES)
       requestBody:
         required: true
         content:
@@ -887,6 +991,8 @@ paths:
           description: Falha ao adicionar Participante
   /api/participants/{id}:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - Participante
       summary: Obtém um Participante pelo ID
@@ -909,9 +1015,11 @@ paths:
           description: Participante não encontrado
 
     put:
+      security:
+        - bearerAuth: []
       tags:
         - Participante
-      summary: Atualiza um Participante existente pelo ID
+      summary: Atualiza um Participante existente pelo ID (ACESSO LIMITADO A USUÁRIOS ADMINSTRADORES)
       parameters:
         - in: path
           name: id
@@ -939,9 +1047,11 @@ paths:
           description: Falha ao atualizar Participante
 
     delete:
+      security:
+        - bearerAuth: []
       tags:
         - Participante
-      summary: Remove um Participante pelo ID
+      summary: Remove um Participante pelo ID (ACESSO LIMITADO A USUÁRIOS ADMINSTRADORES)
       parameters:
         - in: path
           name: id
@@ -958,6 +1068,8 @@ paths:
 
   /api/criteria:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - Critério
       summary: Lista todos os Criterios
@@ -973,9 +1085,11 @@ paths:
         '400':
           description: Erro ao buscar Criterio
     post:
+      security:
+        - bearerAuth: []
       tags:
         - Critério
-      summary: Cria um novo Criterio
+      summary: Cria um novo Criterio (ACESSO LIMITADO A USUÁRIOS ADMINSTRADORES)
       requestBody:
         required: true
         content:
@@ -993,6 +1107,8 @@ paths:
           description: Falha ao adicionar Criterio
   /api/criteria/{id}:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - Critério
       summary: Obtém um Criterio pelo ID
@@ -1015,9 +1131,11 @@ paths:
           description: Criterio não encontrado
 
     put:
+      security:
+        - bearerAuth: []
       tags:
         - Critério
-      summary: Atualiza um Criterio existente pelo ID
+      summary: Atualiza um Criterio existente pelo ID (ACESSO LIMITADO A USUÁRIOS ADMINSTRADORES)
       parameters:
         - in: path
           name: id
@@ -1045,9 +1163,11 @@ paths:
           description: Falha ao atualizar Criterio
 
     delete:
+      security:
+        - bearerAuth: []
       tags:
         - Critério
-      summary: Remove um Criterio pelo ID
+      summary: Remove um Criterio pelo ID (ACESSO LIMITADO A USUÁRIOS ADMINSTRADORES)
       parameters:
         - in: path
           name: id
@@ -1064,6 +1184,8 @@ paths:
 
   /api/subcriteria:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - Subcritério
       summary: Lista todos os Subcritérios
@@ -1079,9 +1201,11 @@ paths:
         '400':
           description: Erro ao buscar Subcritério
     post:
+      security:
+        - bearerAuth: []
       tags:
         - Subcritério
-      summary: Cria um novo Subcritério
+      summary: Cria um novo Subcritério (ACESSO LIMITADO A USUÁRIOS ADMINSTRADORES)
       requestBody:
         required: true
         content:
@@ -1099,6 +1223,8 @@ paths:
           description: Falha ao adicionar Subcritério
   /api/subcriteria/{id}:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - Subcritério
       summary: Obtém um Subcritério pelo ID
@@ -1121,9 +1247,11 @@ paths:
           description: Subcritério não encontrado
 
     put:
+      security:
+        - bearerAuth: []
       tags:
         - Subcritério
-      summary: Atualiza um Subcritério existente pelo ID
+      summary: Atualiza um Subcritério existente pelo ID (ACESSO LIMITADO A USUÁRIOS ADMINSTRADORES)
       parameters:
         - in: path
           name: id
@@ -1151,9 +1279,11 @@ paths:
           description: Falha ao atualizar Subcritério
 
     delete:
+      security:
+        - bearerAuth: []
       tags:
         - Subcritério
-      summary: Remove um Subcritério pelo ID
+      summary: Remove um Subcritério pelo ID (ACESSO LIMITADO A USUÁRIOS ADMINSTRADORES)
       parameters:
         - in: path
           name: id
@@ -1170,6 +1300,8 @@ paths:
 
   /api/items:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - Item
       summary: Lista todos os Items
@@ -1185,9 +1317,11 @@ paths:
         '400':
           description: Erro ao buscar Item
     post:
+      security:
+        - bearerAuth: []
       tags:
         - Item
-      summary: Cria um novo Item
+      summary: Cria um novo Item (ACESSO LIMITADO A USUÁRIOS ADMINSTRADORES)
       requestBody:
         required: true
         content:
@@ -1205,6 +1339,8 @@ paths:
           description: Falha ao adicionar Item
   /api/items/{id}:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - Item
       summary: Obtém um Item pelo ID
@@ -1227,9 +1363,11 @@ paths:
           description: Item não encontrado
 
     put:
+      security:
+        - bearerAuth: []
       tags:
         - Item
-      summary: Atualiza um Item existente pelo ID
+      summary: Atualiza um Item existente pelo ID (ACESSO LIMITADO A USUÁRIOS ADMINSTRADORES)
       parameters:
         - in: path
           name: id
@@ -1257,9 +1395,11 @@ paths:
           description: Falha ao atualizar Item
 
     delete:
+      security:
+        - bearerAuth: []
       tags:
         - Item
-      summary: Remove um Item pelo ID
+      summary: Remove um Item pelo ID (ACESSO LIMITADO A USUÁRIOS ADMINSTRADORES)
       parameters:
         - in: path
           name: id
@@ -1276,6 +1416,8 @@ paths:
 
   /api/judgments:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - Julgamento
       summary: Lista todos os Julgamentos
@@ -1291,9 +1433,11 @@ paths:
         '400':
           description: Erro ao buscar Julgamento
     post:
+      security:
+        - bearerAuth: []
       tags:
         - Julgamento
-      summary: Cria um novo Julgamento
+      summary: Cria um novo Julgamento (ACESSO LIMITADO A USUÁRIOS AVALIADORES)
       description: O atributo scores é em formato JSON, favor verificar antes de enviar. Dentro do mesmo possui um ou mais score
       requestBody:
         required: true
@@ -1312,6 +1456,8 @@ paths:
           description: Falha ao adicionar Julgamento
   /api/judgments/{id}:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - Julgamento
       summary: Obtém um Julgamento pelo ID
@@ -1334,9 +1480,11 @@ paths:
           description: Julgamento não encontrado
 
     put:
+      security:
+        - bearerAuth: []
       tags:
         - Julgamento
-      summary: Atualiza um Julgamento existente pelo ID
+      summary: Atualiza um Julgamento existente pelo ID (ACESSO LIMITADO A USUÁRIOS AVALIADORES)
       parameters:
         - in: path
           name: id
@@ -1364,9 +1512,11 @@ paths:
           description: Falha ao atualizar Julgamento
 
     delete:
+      security:
+        - bearerAuth: []
       tags:
         - Julgamento
-      summary: Remove um Julgamento pelo ID
+      summary: Remove um Julgamento pelo ID (ACESSO LIMITADO A USUÁRIOS AVALIADORES)
       parameters:
         - in: path
           name: id
@@ -1383,6 +1533,8 @@ paths:
 
   /api/evaluations:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - Avaliação
       summary: Lista todos as availiações
@@ -1398,9 +1550,11 @@ paths:
         '400':
           description: Erro ao buscar Avaliação
     post:
+      security:
+        - bearerAuth: []
       tags:
         - Avaliação
-      summary: Cria uma nova Avaliação
+      summary: Cria uma nova Avaliação (ACESSO LIMITADO A USUÁRIOS ADMINSTRADORES)
       requestBody:
         required: true
         content:
@@ -1418,6 +1572,8 @@ paths:
           description: Falha ao adicionar Avaliação
   /api/evaluations/{id}:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - Avaliação
       summary: Obtém uma Avaliação pelo ID
@@ -1440,9 +1596,11 @@ paths:
           description: Avaliação não encontrada
 
     put:
+      security:
+        - bearerAuth: []
       tags:
         - Avaliação
-      summary: Atualiza uma Avaliação existente pelo ID
+      summary: Atualiza uma Avaliação existente pelo ID (ACESSO LIMITADO A USUÁRIOS ADMINSTRADORES)
       parameters:
         - in: path
           name: id
@@ -1470,9 +1628,11 @@ paths:
           description: Falha ao atualizar Avaliação
 
     delete:
+      security:
+        - bearerAuth: []
       tags:
         - Avaliação
-      summary: Remove uma Avaliação pelo ID
+      summary: Remove uma Avaliação pelo ID (ACESSO LIMITADO A USUÁRIOS ADMINSTRADORES)
       parameters:
         - in: path
           name: id

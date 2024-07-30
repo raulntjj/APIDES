@@ -79,6 +79,6 @@ class AppServiceProvider extends ServiceProvider{
         });
 
         //Para testes
-        URL::forceScheme('https');
+        // URL::forceScheme('https');
     }
 }

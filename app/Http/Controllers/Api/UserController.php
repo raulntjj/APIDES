@@ -41,8 +41,4 @@ class UserController{
     public function getAdmins(){
         return $this->userService->getAdmins();
     }
-
-    public function getDefaults(){
-        return $this->userService->getDefaults();
-    }
 }

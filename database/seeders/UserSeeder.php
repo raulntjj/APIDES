@@ -19,30 +19,30 @@ class UserSeeder extends Seeder
             'lastname' => 'Admin',
             'gender' => 'male',
             'birthday' => '2000-01-01',
-            'email' => 'admin@admin.com',
+            'email' => 'admin@teste.com',
             'password' => '12345678',
-            'role' => 'evaluator',
+            'role' => 'default',
             'isAdmin' => true,
             'interfaceLanguage' => 'PT-BR'
         ]);
 
         User::create([
-            'name' => 'Glauco',
-            'lastname' => 'Silva',
+            'name' => 'avaliador',
+            'lastname' => 'avaliador',
             'gender' => 'male',
             'birthday' => '2000-01-01',
-            'email' => 'glauco@example.com',
+            'email' => 'avaliador@teste.com',
             'password' => '12345678',
-            'role' => 'participant',
+            'role' => 'evaluator',
             'interfaceLanguage' => 'PT-BR'
         ]);
 
         User::create([
-            'name' => 'Joana',
-            'lastname' => 'Silva',
+            'name' => 'participant',
+            'lastname' => 'participant',
             'gender' => 'female',
             'birthday' => '2000-01-01',
-            'email' => 'joana@example.com',
+            'email' => 'participante@teste.com',
             'password' => '12345678',
             'role' => 'participant',
             'interfaceLanguage' => 'PT-BR'
@@ -53,7 +53,7 @@ class UserSeeder extends Seeder
             'lastname' => 'Silva',
             'gender' => 'other',
             'birthday' => '2000-01-01',
-            'email' => 'ricardo@example.com',
+            'email' => 'ricardo@teste.com',
             'password' => '12345678',
             'role' => 'participant',
             'interfaceLanguage' => 'PT-BR'
@@ -64,7 +64,7 @@ class UserSeeder extends Seeder
             'lastname' => 'Silva',
             'gender' => 'female',
             'birthday' => '2000-01-01',
-            'email' => 'camila@example.com',
+            'email' => 'camila@teste.com',
             'password' => '12345678',
             'role' => 'participant',
             'interfaceLanguage' => 'PT-BR'
@@ -75,7 +75,7 @@ class UserSeeder extends Seeder
             'lastname' => 'Silva',
             'gender' => 'male',
             'birthday' => '2000-01-01',
-            'email' => 'pedro@example.com',
+            'email' => 'pedro@teste.com',
             'password' => '12345678',
             'role' => 'Default',
             'interfaceLanguage' => 'PT-BR'

@@ -138,12 +138,7 @@ class UserService{
         return User::where('role', 'judge')->get();
     }
 
-    public function getAdmin(){
-        return User::where('role', 'admin')->get();
+    public function getAdmins(){
+        return User::where('isAdmin', true)->get();
     }
-
-    public function getDefaults(){
-        return User::where('role', 'default')->get();
-    }
-
 }

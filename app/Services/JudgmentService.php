@@ -5,15 +5,11 @@ namespace App\Services;
 use App\Http\Requests\JudgmentRequest;
 use App\Models\Judgment;
 use App\Services\ItemService;
+use App\Models\Item;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
 class JudgmentService{
-    protected $itemService;
-
-    public function __construct(ItemService $itemService){
-        $this->itemService = $itemService;
-    }
     //Função privada utilizada para encontrar os julgamentos ao longo do serviço
     private function findJudgment(int $id){
         //Busca e retorna o julgamento
@@ -60,11 +56,11 @@ class JudgmentService{
         try{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () use ($request){
-                $item = $this->itemService->getItem($item_id);
-                if($item['aspect'] === 'quantitativo'){
+                $item = Item::where('id', $request->item_id)->first()->toArray();
+                if($item['aspect'] === 'quantitative'){
                     //Lógica para cálculo de score
                     $attempt = $request->correctAttempt + $request->failAttempt;
-                    $score = (($correctAttempt - ($request->correctAttempt + ($request->failAttempt * $item['weight']))) / $attempt) * 10;
+                    $score = (($request->correctAttempt - ($request->failAttempt * $item['weight'])) / $attempt) * 10;
                 } else{
                     $score = $request->score;
                     $attempt = null;
@@ -104,7 +100,7 @@ class JudgmentService{
                 $Judgment = $this->findJudgment($id);
 
                 $item = $this->itemService->getItem($item_id);
-                if($item['aspect'] === 'Julgamento'){
+                if($item['aspect'] === 'quantitative'){
                     //Lógica para cálculo de score
                     $attempt = $request->correctAttempt + $request->failAttempt;
                     $score = (($correctAttempt - ($request->correctAttempt + ($request->failAttempt * $item['weight']))) / $attempt) * 10;
