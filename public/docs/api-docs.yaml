@@ -1739,7 +1739,7 @@ components:
           type: string
           description: Nome do usuário
           example: "João"
-        las_tname:
+        last_name:
           type: string
           description: Sobrenome do usuário
           example: "Da Silva"
