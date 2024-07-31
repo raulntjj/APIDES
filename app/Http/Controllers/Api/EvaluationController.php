@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\EvaluationRequest;
 use App\Services\EvaluationService;
+use Illuminate\Http\Request;
 
 class EvaluationController{
     //Instanciando serviço
@@ -13,8 +14,8 @@ class EvaluationController{
     }
 
     //Função para obter todas avaliações
-    public function index(){
-        return $this->evaluationService->getEvaluations();
+    public function index(Request $request){
+        return $this->evaluationService->getEvaluations($request);
     }
 
     //Função para obter uma avaliação

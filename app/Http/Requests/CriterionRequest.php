@@ -24,7 +24,7 @@ class CriterionRequest extends FormRequest{
         */
         return [
             'name' => ['required'],
-            'points' => ['required']
+            'points' => ['nullable']
         ];
     }
 }

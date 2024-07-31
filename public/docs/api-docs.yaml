@@ -6,7 +6,7 @@ info:
 
     Esta API, juntamente com seu banco de dados, está rodando localmente e serve como uma solução provisória até que seja oficialmente implantada em um servidor.
 
-    ## A API inclui uma seed de dados fictícios apenas para fins de teste.
+    ## A API está contando com uma seed de dados fictícios apenas para fins de teste.
 
     ### Usuários Padrão:
     - **Administrador:**
@@ -32,8 +32,8 @@ info:
   termsOfService: https://versatecnologia.com.br
 servers:
   - description: API
-    url: http://127.0.0.1:8001
-    # url: https://a527-45-70-34-167.ngrok-free.app
+    # url: http://127.0.0.1:8001
+    url: https://a527-45-70-34-167.ngrok-free.app
 tags:
   # - name: Sessão de Clientes da API
   #   description: Por ordens superiores, por enquanto, não será necessário lidar com sessões para consumidores.
@@ -65,7 +65,8 @@ tags:
     description: Rotas para controle de julgamentos
   - name: Avaliação
     description: Rotas para controle de avaliações
-
+  - name: Conquistas
+    description: Rotas para controle de conquistas individuais e lesões (Em manutenção...)
 paths:
   /api/login:
     post:
@@ -216,6 +217,12 @@ paths:
       tags:
         - Usuário
       summary: Lista todos os usuários (ACESSO LIMITADO A USUÁRIOS ADMINSTRADORES)
+      parameters:
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: Pesquisa opcional.
       responses:
         '200':
           description: Lista de usuários recuperada com sucesso
@@ -370,6 +377,12 @@ paths:
       tags:
         - Evento
       summary: Lista todos os eventos
+      parameters:
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: Pesquisa opcional.
       responses:
         '200':
           description: Lista de eventos recuperada com sucesso
@@ -493,6 +506,12 @@ paths:
       tags:
         - Dia de Evento
       summary: Lista todos os dias
+      parameters:
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: Pesquisa opcional.
       responses:
         '200':
           description: Lista de dias recuperada com sucesso
@@ -609,6 +628,12 @@ paths:
       tags:
         - Instituição
       summary: Lista todos as Instituições
+      parameters:
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: Pesquisa opcional.
       responses:
         '200':
           description: Lista de Instituições recuperada com sucesso
@@ -725,6 +750,12 @@ paths:
       tags:
         - Modalidade
       summary: Lista todos as modalidades
+      parameters:
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: Pesquisa opcional.
       responses:
         '200':
           description: Lista de modalidades recuperada com sucesso
@@ -841,6 +872,12 @@ paths:
       tags:
         - Equipe
       summary: Lista todos as Equipes
+      parameters:
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: Pesquisa opcional.
       responses:
         '200':
           description: Lista de Equipes recuperada com sucesso
@@ -957,6 +994,12 @@ paths:
       tags:
         - Participante
       summary: Lista todos os participantes
+      parameters:
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: Pesquisa opcional.
       responses:
         '200':
           description: Lista de participantes recuperada com sucesso
@@ -1073,6 +1116,12 @@ paths:
       tags:
         - Critério
       summary: Lista todos os Criterios
+      parameters:
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: Pesquisa opcional.
       responses:
         '200':
           description: Lista de Criterios recuperada com sucesso
@@ -1189,6 +1238,12 @@ paths:
       tags:
         - Subcritério
       summary: Lista todos os Subcritérios
+      parameters:
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: Pesquisa opcional.
       responses:
         '200':
           description: Lista de Subcritérios recuperada com sucesso
@@ -1305,6 +1360,12 @@ paths:
       tags:
         - Item
       summary: Lista todos os Items
+      parameters:
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: Pesquisa opcional.
       responses:
         '200':
           description: Lista de Items recuperada com sucesso
@@ -1421,6 +1482,12 @@ paths:
       tags:
         - Julgamento
       summary: Lista todos os Julgamentos
+      parameters:
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: Pesquisa opcional.
       responses:
         '200':
           description: Lista de Julgamentos recuperada com sucesso
@@ -1538,6 +1605,12 @@ paths:
       tags:
         - Avaliação
       summary: Lista todos as availiações
+      parameters:
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: Pesquisa opcional.
       responses:
         '200':
           description: Lista de availiações recuperada com sucesso
@@ -1666,7 +1739,7 @@ components:
           type: string
           description: Nome do usuário
           example: "João"
-        lastname:
+        las_tname:
           type: string
           description: Sobrenome do usuário
           example: "Da Silva"
@@ -1693,7 +1766,7 @@ components:
           type: string
           description: Senha do usuário
           example: "12345678"
-        interfaceLanguage:
+        interface_language:
           type: integer
           description: Idioma da interface do usuário
           example: "pt-BR"
@@ -1703,12 +1776,12 @@ components:
           example: "participant"
       required:
         - name
-        - lastname
+        - last_name
         - email
         - password
         - gender
         - birthday
-        - interfaceLanguage
+        - interface_language
         - role
 
     Event:
@@ -1801,7 +1874,7 @@ components:
           format: date
           description: Data
           example: "2024-10-10"
-        startHour:
+        start_hour:
           type: string
           format: time
           description: Hora de início do evento
@@ -1814,7 +1887,7 @@ components:
       required:
         - event_id
         - date
-        - startHour
+        - start_hour
         - index
 
     Institution:
@@ -1960,7 +2033,7 @@ components:
           format: int64
           description: ID do item
           example: 1
-        subCriterion_id:
+        sub_criterion_id:
           type: integer
           format: int64
           description: ID do subcritério
@@ -1972,10 +2045,10 @@ components:
         aspect:
           type: string
           enum:
-            - mensuravel
-            - quantitativo
-          description: Poderá ser "mensuravel" ou "quantitativo"
-          example: quantitativo
+            - measurable
+            - quantitative
+          description: Poderá ser "measurable" ou "quantitative"
+          example: quantitative
         weight:
           type: number
           format: float
@@ -1983,7 +2056,7 @@ components:
           nullable: true
           example: 0.02
       required:
-        - subCriterion_id
+        - sub_criterion_id
         - name
         - aspect
         - weight
@@ -2012,13 +2085,13 @@ components:
           description: Número de tentativas
           example: 30
           nullable: true
-        correctAttempt:
+        correct_attempt:
           type: integer
           format: int64
           description: Número de tentativas corretas
           nullable: true
           example: 25
-        failAttempt:
+        fail_attempt:
           type: integer
           format: int64
           description: Número de tentativas falhas
@@ -2042,7 +2115,7 @@ components:
           format: int64
           description: ID da avaliação
           example: 1
-        eventDay_id:
+        event_day_id:
           type: integer
           format: int64
           description: ID do dia do evento da avaliação

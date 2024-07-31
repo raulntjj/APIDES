@@ -15,8 +15,8 @@ class UserController{
     }
 
     //Função para obter todos usuários
-    public function index(){
-        return $this->userService->getUsers();
+    public function index(Request $request){
+        return $this->userService->getUsers($request);
     }
 
     //Função para obter um usuário
@@ -32,6 +32,11 @@ class UserController{
     //Função para editar um usuário
     public function update(UpdateUserRequest $request, int $id){
         return $this->userService->updateUser($request, $id);
+    }
+
+    //Função para editar um usuário
+    public function destroy(int $id){
+        return $this->userService->deleteUser($id);
     }
 
     public function getJudges(){

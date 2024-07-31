@@ -17,15 +17,16 @@ class User extends Authenticatable implements JWTSubject{
      * @var array<int, string>
      */
     protected $fillable = [
-        'name', //Nome
-        'lastname', //Sobrenome
-        'birthday', //Data de aniversário
-        'gender', //Gênero
-        'photo', //Caminho para foto do participant
+        'name',
+        'last_name',
+        'birthday',
+        'gender',
+        'photo',
         'email',
         'password',
         'role',
-        'interfaceLanguage',
+        'interface_language',
+        'is_admin'
     ];
 
     /**
@@ -55,6 +56,7 @@ class User extends Authenticatable implements JWTSubject{
         return $this->HasOne(Participant::class);
     }
 
+
     public function getJWTIdentifier(){
         return $this->getKey();
     }
@@ -64,6 +66,14 @@ class User extends Authenticatable implements JWTSubject{
     }
 
     public function isAdmin(){
-        $return::parent();
+        return $this->is_admin;
+    }
+
+    public function isEvaluator(){
+        return $this->role === "evaluator";
+    }
+
+    public function isParticipant(){
+        return $this->role === "participant";
     }
 }

@@ -5,14 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-use App\Models\Evaluation;
-use App\Models\Judgment;
-
 class Item extends Model{
     use HasFactory;
     protected $table = 'items';
     protected $fillable = [
-        'subCriterion_id',
+        'sub_criterion_id',
         'name',
         'aspect',
         'weight'
@@ -27,8 +24,8 @@ class Item extends Model{
     */
 
     //Relações Eloquent
-    public function subCriterion(){
-        return $this->belongsTo(SubCriterion::class, 'subCriterion_id');
+    public function subcriterion(){
+        return $this->belongsTo(Subcriterion::class, 'sub_criterion_id');
     }
 
     public function judgments(){

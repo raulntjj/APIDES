@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\JudgmentRequest;
 use App\Services\JudgmentService;
 use App\Models\Judgment;
+use Illuminate\Http\Request;
 
 class JudgmentController{
     //Instanciando serviço
@@ -14,8 +15,8 @@ class JudgmentController{
     }
 
     //Função para obter todos julgamentos
-    public function index(){
-        return $this->judgmentService->getJudgments();
+    public function index(Request $request){
+        return $this->judgmentService->getJudgments($request);
     }
 
     //Função para obter um julgamento

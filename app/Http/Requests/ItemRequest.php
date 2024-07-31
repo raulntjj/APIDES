@@ -23,7 +23,7 @@ class ItemRequest extends FormRequest{
             Request definido apenas como campos obrigatórios por enquanto.
         */
         return [
-            'subCriterion_id' => ['required'],
+            'sub_criterion_id' => ['required'],
             'name' => ['required'],
             'aspect' => ['required'],
             'weight' => ['nullable'],

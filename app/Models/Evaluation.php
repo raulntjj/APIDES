@@ -10,7 +10,7 @@ class Evaluation extends Model{
     protected $table = 'evaluations';
     protected $fillable = [
         'participant_id',
-        'eventDay_id',
+        'event_day_id',
         'modality_id',
         'judge_id',
         'date',
@@ -34,7 +34,7 @@ class Evaluation extends Model{
     }
 
     public function eventDay(){
-        return $this->belongsTo(EventDay::class, 'eventDay_id');
+        return $this->belongsTo(EventDay::class, 'event_day_id');
     }
 
     public function modality(){
@@ -44,16 +44,4 @@ class Evaluation extends Model{
     public function judgments(){
         return $this->hasMany(Judgment::class, 'evaluation_id');
     }
-
-    // public function criterion(){
-    //     return $this->belongsTo(Criterion::class, 'criterion_id');
-    // }
-
-    // public function subCriterion(){
-    //     return $this->belongsTo(SubCriterion::class, 'subCriterion_id');
-    // }
-
-    // public function item(){
-    //     return $this->belongsTo(Item::class, 'item_id');
-    // }
 }

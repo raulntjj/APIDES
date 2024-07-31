@@ -15,12 +15,12 @@ return new class extends Migration {
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('name', 64);
-            $table->string('lastname', 128);
+            $table->string('last_name', 128);
             $table->enum('gender', ['male', 'female', 'other']);
             $table->date('birthday');
             $table->string('photo', 256)->nullable();
-            $table->string('interfaceLanguage', 16)->default('pt-BR');
-            $table->boolean('isAdmin')->default(false);
+            $table->string('interface_language', 16)->default('pt-BR');
+            $table->boolean('is_admin')->default(false);
             $table->enum('role', ['default', 'participant', 'evaluator'])->default('default');
             $table->rememberToken();
             $table->timestamps();

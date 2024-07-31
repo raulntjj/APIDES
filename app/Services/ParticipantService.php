@@ -29,7 +29,7 @@ class ParticipantService{
             if ($request->has('search')) {
                 $participants->where(function ($query) use ($request) {
                     $query->where('users.name', 'like', '%' . $request->search . '%')
-                        ->orWhere('users.lastname', 'like', '%' . $request->search . '%')
+                        ->orWhere('users.last_name', 'like', '%' . $request->search . '%')
                         ->orWhere('users.gender', 'like', '%' . $request->search . '%')
                         ->orWhere('users.birthday', 'like', '%' . $request->search . '%');
                 });

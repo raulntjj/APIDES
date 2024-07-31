@@ -15,8 +15,8 @@ class JudgmentSeeder extends Seeder{
             "item_id" => 1,
             "evaluation_id" => 1,
             "attempt" => 30,
-            "correctAttempt" => 20,
-            "failAttempt" => 10,
+            "correct_attempt" => 20,
+            "fail_attempt" => 10,
             "score" => 6.3
         ]);
 
@@ -24,8 +24,8 @@ class JudgmentSeeder extends Seeder{
             "item_id" => 2,
             "evaluation_id" => 1,
             "attempt" => 30,
-            "correctAttempt" => 20,
-            "failAttempt" => 10,
+            "correct_attempt" => 20,
+            "fail_attempt" => 10,
             "score" => 6.2
         ]);
 
@@ -33,8 +33,8 @@ class JudgmentSeeder extends Seeder{
             "item_id" => 3,
             "evaluation_id" => 1,
             "attempt" => 30,
-            "correctAttempt" => 20,
-            "failAttempt" => 10,
+            "correct_attempt" => 20,
+            "fail_attempt" => 10,
             "score" => 8.3
         ]);
 

@@ -24,12 +24,12 @@ class UpdateUserRequest extends FormRequest{
         */
         return [
             'name' => ['required'],
-            'lastname' => ['required'],
+            'last_name' => ['required'],
             'email' => ['required'],
             'gender' => ['required'],
             'birthday' => ['required'],
             'role' => ['nullable'],
-            'interfaceLanguage' => ['nullable'],
+            'interface_language' => ['nullable'],
             'photo' => ['nullable']
         ];
     }

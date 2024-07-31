@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\ScheduleRequest;
 use App\Services\ScheduleService;
+use Illuminate\Http\Request;
 
 class ScheduleController{
     //Instanciando serviço
@@ -13,8 +14,8 @@ class ScheduleController{
     }
 
     //Função para obter todas agendas
-    public function index(){
-        return $this->scheduleService->getSchedules();
+    public function index(Request $request){
+        return $this->scheduleService->getSchedules($request);
     }
 
     //Função para obter uma agenda

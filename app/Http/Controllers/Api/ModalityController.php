@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\ModalityRequest;
 use App\Services\ModalityService;
+use Illuminate\Http\Request;
 
 class ModalityController{
     //Instanciando serviço
@@ -13,8 +14,8 @@ class ModalityController{
     }
 
     //Função para obter todas modalidades
-    public function index(){
-        return $this->modalityService->getModalities();
+    public function index(Request $request){
+        return $this->modalityService->getModalities($request);
     }
 
     //Função para obter uma modalidade

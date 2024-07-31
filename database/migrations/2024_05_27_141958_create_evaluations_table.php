@@ -20,8 +20,8 @@ return new class extends Migration
 
             $table->foreign('participant_id')->references('id')->on('participants')->onDelete('cascade')->onUpdate('cascade');
 
-            $table->unsignedBigInteger('eventDay_id')->nullable();
-            $table->foreign('eventDay_id')->references('id')->on('event_days')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedBigInteger('event_day_id')->nullable();
+            $table->foreign('event_day_id')->references('id')->on('event_days')->onDelete('cascade')->onUpdate('cascade');
 
             $table->unsignedBigInteger('modality_id');
             $table->foreign('modality_id')->references('id')->on('modalities')->onDelete('cascade')->onUpdate('cascade');

@@ -74,6 +74,9 @@
         }
 
         @media (max-width: 768px) {
+            .content{
+                padding: 0 10%;
+            }
             .title{
                 font-family: 'Stretch Pro', 'sans-serif';
                 font-size: 3rem;
@@ -136,10 +139,15 @@
             <h1 class="title">DEES<br>REST API</h1>
             <p class="welcome-description">O projeto Gestão de Desempenho Esportivo visa desenvolver um aplicativo mobile que auxilie escolas esportivas, responsáveis, profissionais esporte, esportistas de diversas modalidades no acompanhamento e aprimoramento de seu desempenho.</p>
             <div class="row d-flex align-items-center">
-                <div class="col-sm-6 d-flex justify-content-center">
+                <div class="col-sm-6 d-flex justify-content-center mt-3">
                     <a href="{{ url('/api/documentation') }}" class="btn btn-primary purple" style="width: 100%">Acesse a documentação</a>
                 </div>
-                <div class="col-sm-6 d-flex justify-content-center">
+                <div class="col-sm-6 d-flex justify-content-center mt-3">
+                    <a href="{{ route('download.collection') }}" class="btn btn-primary purple" style="width: 100%">Baixe a collection da API</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 d-flex justify-content-center mt-3">
                     <a href="{{ url('/api/database') }}" class="list-style">Ou acesse o diagrama da modelagem de dados &rarr;</a>
                 </div>
             </div>

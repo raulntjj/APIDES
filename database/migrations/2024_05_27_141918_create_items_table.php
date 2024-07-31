@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('subCriterion_id');
-            $table->foreign('subCriterion_id')->references('id')->on('sub_criteria')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedBigInteger('sub_criterion_id');
+            $table->foreign('sub_criterion_id')->references('id')->on('sub_criteria')->onDelete('cascade')->onUpdate('cascade');
             $table->string('name', 64);
             $table->enum('aspect', ['quantitative', 'measurable']);
             $table->decimal('weight', 4, 2)->nullable(); // Permitindo valores de 0.01 a 10.00

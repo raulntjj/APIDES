@@ -1,0 +1,2151 @@
+{
+	"info": {
+		"_postman_id": "dfb9a076-d10a-437b-bcae-bc35279753bb",
+		"name": "API Desempenho esportivo Copy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34921459"
+	},
+	"item": [
+		{
+			"name": "User session OK",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\" : \"admin@teste.com\",\n    \"password\" : \"12345678\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/login",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout authenticated user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "//Token",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/logout",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get authenticated user",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "//Token",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/user",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update authenticated user",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@teste.com\",\n    \"name\": \"Admin12\",\n    \"lastname\": \"Admin\",\n    \"gender\": \"male\",\n    \"birthday\": \"2000-01-01\",\n    \"interfaceLanguage\": \"PT-BR\",\n    \"role\": \"default\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/user",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete authenticated user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "//Token",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/user",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User OK",
+			"item": [
+				{
+					"name": "Show Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/users?search=male",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"users"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "male"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/users/1",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Set User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"glauco@gmail.com\",\r\n    \"name\": \"Glauco\",\r\n    \"lastname\": \"Silva\",\r\n    \"gender\": \"Male\",\r\n    \"birthday\": \"2000-01-01\",\r\n    \"interfaceLanguage\": \"PT-BR\",\r\n    \"role\": \"evaluator\",\r\n    \"password\" : \"12345678\"\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/users",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"glauco@a.com\",\n    \"name\": \"Glauco1\",\n    \"lastname\": \"Silva\",\n    \"gender\": \"Male\",\n    \"birthday\": \"2000-01-01\",\n    \"interfaceLanguage\": \"PT-BR\",\n    \"role\": \"evaluator\"\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/users/1",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/users/1",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Events OK",
+			"item": [
+				{
+					"name": "Get Events",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/events?search=a",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"events"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "a"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Event",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/events/1",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"events",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Event",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Campeonato Brasileiro de Botão\",\n    \"logo\": \"path/logo.png\",\n\n    //Endereço\n    \"eventLogo\" : \"path/logo.png\",\n    \"address\" : \"Av. Antônio Abrahão Caram\",\n    \"number\" : \"1001\",\n    \"neighborhood\" : \"Pampulha\",\n    \"city\" : \"Belo Horizonte\",\n    \"state\" : \"Minas Gerias\",\n    \"country\" : \"Brasil\",\n    \"cep\" : \"31275-000\",\n\n    //Data do evento\n    \"date\" : \"2024-04-11\",\n    \"startHour\" : \"20:00:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/events/",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"events",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Event",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Campeonato Brasileiro de Botão1\",\n    \"logo\": \"path/logo.png\",\n\n    //Endereço\n    \"eventLogo\" : \"path/logo.png\",\n    \"address\" : \"Av. Antônio Abrahão Caram\",\n    \"number\" : \"1001\",\n    \"neighborhood\" : \"Pampulha\",\n    \"city\" : \"Belo Horizonte\",\n    \"state\" : \"Minas Gerias\",\n    \"country\" : \"Brasil\",\n    \"cep\" : \"31275-000\",\n\n    //Data do evento\n    \"date\" : \"2024-04-11\",\n    \"startHour\" : \"20:00:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/events/6",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"events",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Event",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/events/6",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"events",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Event Days OK",
+			"item": [
+				{
+					"name": "Get Days",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/days?search=a",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"days"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "a"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Day",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/days/4",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"days",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Day",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"event_id\" : 1,\n    \"date\" : \"2024-05-10\",\n    \"startHour\" : \"19:00:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/days",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"days"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Day",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"event_id\" : 1,\n    \"date\" : \"2024-05-10\",\n    \"startHour\" : \"19:00:00\",\n    \"index\" : \"10\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/days/8",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"days",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Day",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/days/8",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"days",
+								"8"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Institutions OK",
+			"item": [
+				{
+					"name": "Get Institutions",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/institutions?search=",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"institutions"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Institution",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/institutions/1",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"institutions",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Institution",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"JEMG1\",\n    \"logo\" : \"path/logo.png\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/institutions",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"institutions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Institution",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"JEMG12\",\n    \"logo\" : \"path/logo.png\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/institutions/6",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"institutions",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Institution",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/institutions/6",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"institutions",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Modality OK",
+			"item": [
+				{
+					"name": "Get Modalities",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/modalities?search=futsal",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"modalities"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "futsal"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Modality",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/modalities/1",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"modalities",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Modality",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"Futsal121212\",\n    \"photo\" : \"path/image.jpeg\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/modalities",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"modalities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Institution",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"Futsal12\",\n    \"photo\" : \"path/image.jpeg\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/modalities/6",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"modalities",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Institution",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/modalities/6",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"modalities",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Team OK",
+			"item": [
+				{
+					"name": "Get Teams",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/teams?",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"teams"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Team",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/teams/1",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"teams",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Team",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Cruzeiro\",\n    \"logo\" : \"A\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/teams",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"teams"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Team",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Cruzeiro\",\n    \"logo\" : \"Asss\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/teams/6",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"teams",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Institution",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/teams/7",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"teams",
+								"7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Participant OK",
+			"item": [
+				{
+					"name": "Get Participants",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/participants?search=participant",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"participants"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "participant"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Participant",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/participants/1",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"participants",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Participant",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\": 3,\n    \"team_id\": 3,\n    \"institution_id\": 3,\n    \"modality_id\": 3,\n    \"position\": \"ATK\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/participants",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"participants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Participant",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\": 3,\n    \"team_id\": 3,\n    \"institution_id\": 3,\n    \"modality_id\": 3,\n    \"position\": \"ST\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/participants/6",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"participants",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Participant",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/participants/3",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"participants",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Criterion OK",
+			"item": [
+				{
+					"name": "Get Criteria",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/criteria",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"criteria"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Criterion",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/criteria/1",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"criteria",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Criterion",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"Técnica\",\n    \"points\" : null\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/criteria",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"criteria"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Criterion",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"Técnica\",\n    \"points\" : 25\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/criteria/5",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"criteria",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Criterion",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/criteria/2",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"criteria",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Subcriterion OK",
+			"item": [
+				{
+					"name": "Get Subcriteria",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/subcriteria?search=finalização",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"subcriteria"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "finalização"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Subcriterion",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/subcriteria/1",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"subcriteria",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Subcriterion",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"criterion_id\" : 5,\n    \"name\" : \"Finalizações\",\n    \"points\" : null\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/subcriteria",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"subcriteria"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Subcriterion",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"criterion_id\" : 5,\n    \"name\" : \"Finalizações\",\n    \"points\" : null\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/subcriteria/5",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"subcriteria",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Subcriterion",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/subcriteria/2",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"subcriteria",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Item OK",
+			"item": [
+				{
+					"name": "Get Items",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/items",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"items"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Item",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/items/1",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"items",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Item",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"subCriterion_id\": 1,\n    \"name\": \"Chutes de fora da área\",\n    \"aspect\": \"measurable\",\n    \"weight\": 0.90\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/items",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"items"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Item",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"subCriterion_id\": 1,\n    \"name\": \"Chutes de fora da área\",\n    \"aspect\": \"mensuravel\",\n    \"weight\": 0.90\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/items/1",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"items",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Item",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/items/2",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"items",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Judgment OK",
+			"item": [
+				{
+					"name": "Get Judgments",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/judgments",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"judgments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Judgment",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/judgments/4",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"judgments",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Judgment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"evaluation_id\": 1,\n    \"item_id\": 1,\n    \"correctAttempt\": 7,\n    \"failAttempt\": 3\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/judgments",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"judgments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Judgment",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"item_id\" : 5,\n    \"aspect\" : \"Julgamento\",\n    \"scores\" : {\n        \"1\" : \"Teste1\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/judgments/4",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"judgments",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Judgment",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/judgments/2",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"judgments",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Evaluation OK",
+			"item": [
+				{
+					"name": "Get Evaluations",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/evaluations",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"evaluations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Evaluation",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/evaluations/1",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"evaluations",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Evaluation",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"event_id\": 1,\n    \"participant_id\": 1,\n    \"modality_id\": 1,\n    \"judge_id\": 1,\n    \"date\": \"2024-07-29\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/evaluations",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"evaluations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Evaluation",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"event_id\" : 1,\n    \"modality_id\" : 1,\n    \"criterion_id\" : 1,\n    \"sub_criterion_id\" : 1,\n    \"item_id\" : 1,\n    \"judgment_id\" : 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/evaluations/1",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"evaluations",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Evaluation",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://a527-45-70-34-167.ngrok-free.app/api/evaluations/2",
+							"protocol": "https",
+							"host": [
+								"a527-45-70-34-167",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"evaluations",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDEvYXBpL2xvZ2luIiwiaWF0IjoxNzIyNDQ0Nzk5LCJleHAiOjE3MjI0NDgzOTksIm5iZiI6MTcyMjQ0NDc5OSwianRpIjoiQU5uZ21nMGsxWUN5ZHlTMSIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.J-zFlIjwrYsxKX0P_WgL8RwbzpR8eY593Gqddwd0XMY",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

@@ -5,11 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-use App\Models\Team;
-use App\Models\Institution;
-use App\Models\Modality;
-use App\Models\Score;
-
 class Participant extends Model{
     use HasFactory;
 

@@ -24,7 +24,7 @@ class ModalityRequest extends FormRequest{
         */
         return [
             'name' => ['required'],
-            'logo' => ['required'],
+            'photo' => ['nullable'],
         ];
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\EventRequest;
 use App\Services\EventService;
+use Illuminate\Http\Request;
 
 class EventController{
     //Instanciando serviço
@@ -13,8 +14,8 @@ class EventController{
     }
 
     //Função para obter todos eventos
-    public function index(){
-        return $this->eventService->getEvents();
+    public function index(Request $request){
+        return $this->eventService->getEvents($request);
     }
 
     //Função para obter um evento

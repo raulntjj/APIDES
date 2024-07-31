@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Http\Requests\CriterionRequest;
 use App\Models\Criterion;
+use Illuminate\Http\Request;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
@@ -11,17 +12,23 @@ class CriterionService{
     //Função privada utilizada para encontrar os criterios ao longo do serviço
     private function findCriterion(int $id){
         //Busca e retorna o criterio
-        return Criterion::with('subCriteria.items')->findOrFail($id);
+        return Criterion::with('subcriteria.items')->findOrFail($id);
     }
 
     //Função pública utilizada para retornar todos os criterios
-    public function getCriteria(){
-        //Tratativa de erros
+    public function getCriteria(Request $request){
         try{
             //DB transaction para lidar com transações de dados com o banco de dados
-            return DB::transaction(function () {
+            return DB::transaction(function () use ($request){
                 //Retornando todos criterios e o código de respostas
-                return response()->json(Criterion::all(), 200);
+                if($request->has('search')){
+                    $criteria = Criterion::with('subcriteria.items')->where('name', 'like', '%' . $request->search . '%')->get();
+                } else {
+                    $criteria = Criterion::with('subcriteria.items')->get();
+                }
+
+                //Retornando todos Achievementes e o código de respostas
+                return response()->json($criteria, 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){

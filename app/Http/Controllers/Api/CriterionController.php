@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\CriterionRequest;
 use App\Services\CriterionService;
+use Illuminate\Http\Request;
 
 class CriterionController{
     //Instanciando serviço
@@ -13,8 +14,8 @@ class CriterionController{
     }
 
     //Função para obter todos criterios
-    public function index(){
-        return $this->criterionService->getCriteria();
+    public function index(Request $request){
+        return $this->criterionService->getCriteria($request);
     }
 
     //Função para obter um criterio

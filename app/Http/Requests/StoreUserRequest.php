@@ -24,13 +24,13 @@ class StoreUserRequest extends FormRequest{
         */
         return [
             'name' => ['required'],
-            'lastname' => ['required'],
+            'last_name' => ['required'],
             'email' => ['required'],
             'password' => ['required'],
             'gender' => ['required'],
             'birthday' => ['required'],
             'role' => ['required'],
-            'interfaceLanguage' => ['required'],
+            'interface_language' => ['required'],
             'photo' => ['nullable']
         ];
     }

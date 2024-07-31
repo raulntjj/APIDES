@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Http\Requests\ModalityRequest;
 use App\Models\Modality;
+use Illuminate\Http\Request;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
@@ -15,13 +16,21 @@ class ModalityService{
     }
 
     //Função pública utilizada para retornar todos as modalidade
-    public function getModalities(){
+    public function getModalities(Request $request){
         //Tratativa de erros
         try{
             //DB transaction para lidar com transações de dados com o banco de dados
-            return DB::transaction(function () {
+            return DB::transaction(function () use ($request) {
                 //Retornando todas modalidades e o código de respostas
-                return response()->json(Modality::all(), 200);
+                if ($request->has('search')) {
+                    $search = $request->search;
+
+                    return response()->json(Modality::where(function ($query) use ($search) {
+                        $query->Where('name', 'like', '%' . $search . '%');
+                    })->get(), 200);
+                } else {
+                    return response()->json(Modality::all(), 200);
+                }
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){
@@ -57,7 +66,7 @@ class ModalityService{
                     //Foi deixado o request->only() no lugar do request->all()
                     //Para deixar mais explícito e descritivo em relação as variavéis que estão sendo utilizadas etc..
                     'name',
-                    'type'
+                    'photo'
                 ));
 
                 //Retornanda modalidade criado com suas informações de endereço e o código de respostas
@@ -83,7 +92,7 @@ class ModalityService{
                 $modality->fill($request->only(
                     //Explicitando váriaveis
                     'name',
-                    'type'
+                    'photo'
                 ))->save();
 
                 //Retornanda modalidade atualizado com suas informações de endereço e o código de respostas
@@ -104,8 +113,7 @@ class ModalityService{
             return DB::transaction(function () use ($id){
                 //Buscando a modalidade
                 $modality = $this->findModality($id);
-                //Deletando seus endereços
-                $modality->address()->delete();
+
                 //Deletanda modalidade
                 $modality->delete();
 

@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TeamSeeder::class);
         $this->call(ParticipantSeeder::class);
         $this->call(CriterionSeeder::class);
-        $this->call(SubCriterionSeeder::class);
+        $this->call(SubcriterionSeeder::class);
         $this->call(ItemSeeder::class);
         $this->call(EvaluationSeeder::class);
         $this->call(JudgmentSeeder::class);

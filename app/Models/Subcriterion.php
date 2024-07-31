@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Model\Evaluation;
 use App\Model\User;
 
-class SubCriterion extends Model{
+class Subcriterion extends Model{
     use HasFactory;
     protected $table = 'sub_criteria';
     protected $fillable = [
@@ -35,6 +35,6 @@ class SubCriterion extends Model{
     }
 
     public function items(){
-        return $this->hasMany(Item::class, 'subCriterion_id');
+        return $this->hasMany(Item::class, 'sub_criterion_id');
     }
 }

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Http\Requests\TeamRequest;
 use App\Models\Team;
+use Illuminate\Http\Request;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
@@ -15,13 +16,21 @@ class TeamService{
     }
 
     //Função pública utilizada para retornar todos os times
-    public function getTeams(){
+    public function getTeams(Request $request){
         //Tratativa de erros
         try{
             //DB transaction para lidar com transações de dados com o banco de dados
-            return DB::transaction(function () {
+            return DB::transaction(function () use ($request) {
+                $teamQuery = Team::with('participants', 'participants.team', 'participants.modality', 'participants.institution', 'participants.user');
+                if ($request->has('search')) {
+                    $search = $request->search;
+
+                    $teamQuery->where(function ($query) use ($search) {
+                        $query->Where('name', 'like', '%' . $search . '%');
+                    });
+                }
                 //Retornando todos times e o código de respostas
-                return response()->json(Team::with('participants', 'participants.team', 'participants.modality', 'participants.institution', 'participants.user')->get(), 200);
+                return response()->json($teamQuery->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){

@@ -10,7 +10,7 @@ class Modality extends Model{
     protected $table = 'modalities';
     protected $fillable = [
         'name', //Nome da modalidade
-        'logo' //Tipo de modalidade
+        'photo' //Tipo de modalidade
     ];
 
     /*

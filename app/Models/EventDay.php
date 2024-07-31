@@ -5,14 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-use App\Models\Event;
-
 class EventDay extends Model{
     use HasFactory;
     protected $fillable = [
         'event_id', //índice do event
         'date', //'date' faz referência a data do evento
-        'startHour', //Hora de inicio do evento
+        'start_hour', //Hora de inicio do evento
         'index' //'Index' faz alusão ao índice da data acima ex: primeiro dia, segunda dia, etc...
     ];
 
@@ -30,7 +28,7 @@ class EventDay extends Model{
         return $this->belongsTo(Event::class);
     }
 
-    public function avaliations(){
-        return $this->hasMany(Avaliation::class, 'eventDays_id');
+    public function evaluations(){
+        return $this->hasMany(Evaluations::class, 'event_day_id');
     }
 }

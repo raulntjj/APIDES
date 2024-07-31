@@ -18,13 +18,25 @@ class UserService{
     }
 
     //Função pública utilizada para retornar todos os usuários
-    public function getUsers(){
+    public function getUsers(Request $request){
         //Tratativa de erros
         try{
             //DB transaction para lidar com transações de dados com o banco de dados
-            return DB::transaction(function () {
-                //Retornando todos usuários e o código de respostas
-                return response()->json(User::with('participant', 'participant.team', 'participant.modality', 'participant.institution')->get(), 200);
+            return DB::transaction(function () use ($request) {
+                $userQuery = User::with('participant', 'participant.team', 'participant.modality', 'participant.institution');
+                if ($request->has('search')) {
+                    $search = $request->search;
+
+                    $userQuery->where(function ($query) use ($search) {
+                        $query->Where('name', 'like', '%' . $search . '%')
+                        ->orWhere('last_name', 'like', '%' . $search . '%')
+                        ->orWhere('gender', 'like', '%' . $search . '%')
+                        ->orWhere('birthday', 'like', '%' . $search . '%')
+                        ->orWhere('role', 'like', '%' . $search . '%');
+                    });
+                }
+                //Retornando todos times e o código de respostas
+                return response()->json($userQuery->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){
@@ -61,12 +73,12 @@ class UserService{
                     array_merge(
                         $request->only(
                             'name',
-                            'lastname',
+                            'last_name',
                             'birthday',
                             'gender',
                             'email',
                             'group',
-                            'interfaceLanguage',
+                            'interface_language',
                             'photo'
                         ),
                         ['password' => $passwordHashed]
@@ -94,12 +106,12 @@ class UserService{
                 $user->fill($request->only(
                     //Explicitando váriaveis
                     'name',
-                    'lastname',
+                    'last_name',
                     'birthday',
                     'gender',
                     'email',
                     'group',
-                    'interfaceLanguage',
+                    'interface_language',
                     'photo'
                 ))->save();
 
@@ -139,6 +151,6 @@ class UserService{
     }
 
     public function getAdmins(){
-        return User::where('isAdmin', true)->get();
+        return User::where('is_admin', true)->get();
     }
 }

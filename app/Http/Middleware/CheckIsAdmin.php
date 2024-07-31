@@ -15,7 +15,7 @@ class CheckIsAdmin{
      */
     public function handle(Request $request, Closure $next): Response{
         $user = JWTAuth::parseToken()->authenticate();
-        if($user->isAdmin){
+        if($user->isAdmin()){
             return $next($request);
         }
         return response()->json(['error' => 'not authorized'], 403);

@@ -9,12 +9,11 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
+    public function up(): void {
         Schema::create('modalities', function (Blueprint $table) {
             $table->id();
             $table->string('name', 64);
-            $table->string('type', 64);
+            $table->string('photo', 256)->nullable();
             $table->timestamps();
         });
     }

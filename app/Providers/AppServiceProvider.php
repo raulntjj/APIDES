@@ -17,6 +17,7 @@ use App\Services\CriterionService;
 use App\Services\SubCriterionService;
 use App\Services\JugdmentService;
 use App\Services\EvaluationService;
+use App\Services\AchievementService;
 
 class AppServiceProvider extends ServiceProvider{
     /*
@@ -55,8 +56,8 @@ class AppServiceProvider extends ServiceProvider{
             return new CriterionService();
         });
 
-        $this->app->singleton(SubCriterionService::class, function ($app){
-            return new SubCriterionService();
+        $this->app->singleton(SubcriterionService::class, function ($app){
+            return new SubcriterionService();
         });
 
         $this->app->singleton(ItemService::class, function ($app){
@@ -71,6 +72,10 @@ class AppServiceProvider extends ServiceProvider{
             return new EvaluationService();
         });
 
+        $this->app->singleton(AchievementService::class, function ($app){
+            return new AchievementService();
+        });
+
     }
 
     public function boot(): void{
@@ -79,6 +84,6 @@ class AppServiceProvider extends ServiceProvider{
         });
 
         //Para testes
-        // URL::forceScheme('https');
+        URL::forceScheme('https');
     }
 }

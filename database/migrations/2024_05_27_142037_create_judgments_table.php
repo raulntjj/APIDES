@@ -18,8 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('item_id');
             $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('attempt')->nullable();
-            $table->integer('correctAttempt')->nullable();
-            $table->integer('failAttempt')->nullable();
+            $table->integer('correct_attempt')->nullable();
+            $table->integer('fail_attempt')->nullable();
             $table->decimal('score', 4, 2)->nullable(); // Permitindo valores de 0.00 a 10.00
             $table->timestamps();
         });

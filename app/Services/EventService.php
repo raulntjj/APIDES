@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Http\Requests\EventRequest;
 use App\Models\Event;
+use Illuminate\Http\Request;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
@@ -15,13 +16,21 @@ class EventService{
     }
 
     //Função pública utilizada para retornar todos os evento
-    public function getEvents(){
+    public function getEvents(Request $request){
         //Tratativa de erros
         try{
             //DB transaction para lidar com transações de dados com o banco de dados
-            return DB::transaction(function () {
+            return DB::transaction(function () use ($request) {
+                $eventQuery = Event::with('days', 'address');
+                if ($request->has('search')) {
+                    $search = $request->search;
+
+                    $eventQuery->where(function ($query) use ($search) {
+                        $query->Where('name', 'like', '%' . $search . '%');
+                    });
+                }
                 //Retornando todos eventos e o código de respostas
-                return response()->json(Event::with('days', 'address')->get(), 200);
+                return response()->json($eventQuery->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){
@@ -74,7 +83,7 @@ class EventService{
 
                 $event->days()->create([
                     'date' => $request->date,
-                    'startHour' => $request->startHour,
+                    'start_hour' => $request->start_hour,
                     'index' => 1
                 ]);
 
@@ -149,21 +158,4 @@ class EventService{
             return response()->json(['Error' => 'Failed to delete event', 'Details' => $e->getMessage()], 404);
         }
     }
-
-    /*
-    //Função pública utilizada para retornar endereço do evento
-    public function getAddress(int $id){
-        //Tratativa de erros
-        try{
-            //DB transaction para lidar com transações de dados com o banco de dados
-            return DB::transaction(function () use ($id){
-                return response()->json($this->findEvent($id)->address, 200);
-            });
-        //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
-        } catch(Exception $e){
-            //Retorna mensagem de erro com flag e mensagem captada pelo exception
-            return response()->json(['Error' => 'Failed to get event', 'Details' => $e->getMessage()], 400);
-        }
-    }
-    */
 }

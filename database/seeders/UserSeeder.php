@@ -16,69 +16,69 @@ class UserSeeder extends Seeder
     public function run(): void{
         User::create([
             'name' => 'Admin',
-            'lastname' => 'Admin',
+            'last_name' => 'Admin',
             'gender' => 'male',
             'birthday' => '2000-01-01',
             'email' => 'admin@teste.com',
             'password' => '12345678',
             'role' => 'default',
-            'isAdmin' => true,
-            'interfaceLanguage' => 'PT-BR'
+            'is_admin' => true,
+            'interface_language' => 'PT-BR'
         ]);
 
         User::create([
             'name' => 'avaliador',
-            'lastname' => 'avaliador',
+            'last_name' => 'avaliador',
             'gender' => 'male',
             'birthday' => '2000-01-01',
             'email' => 'avaliador@teste.com',
             'password' => '12345678',
             'role' => 'evaluator',
-            'interfaceLanguage' => 'PT-BR'
+            'interface_language' => 'PT-BR'
         ]);
 
         User::create([
             'name' => 'participant',
-            'lastname' => 'participant',
+            'last_name' => 'participant',
             'gender' => 'female',
             'birthday' => '2000-01-01',
             'email' => 'participante@teste.com',
             'password' => '12345678',
             'role' => 'participant',
-            'interfaceLanguage' => 'PT-BR'
+            'interface_language' => 'PT-BR'
         ]);
 
         User::create([
             'name' => 'Ricardo',
-            'lastname' => 'Silva',
+            'last_name' => 'Silva',
             'gender' => 'other',
             'birthday' => '2000-01-01',
             'email' => 'ricardo@teste.com',
             'password' => '12345678',
             'role' => 'participant',
-            'interfaceLanguage' => 'PT-BR'
+            'interface_language' => 'PT-BR'
         ]);
 
         User::create([
             'name' => 'Camila',
-            'lastname' => 'Silva',
+            'last_name' => 'Silva',
             'gender' => 'female',
             'birthday' => '2000-01-01',
             'email' => 'camila@teste.com',
             'password' => '12345678',
             'role' => 'participant',
-            'interfaceLanguage' => 'PT-BR'
+            'interface_language' => 'PT-BR'
         ]);
 
         User::create([
             'name' => 'Pedro',
-            'lastname' => 'Silva',
+            'last_name' => 'Silva',
             'gender' => 'male',
             'birthday' => '2000-01-01',
             'email' => 'pedro@teste.com',
             'password' => '12345678',
             'role' => 'Default',
-            'interfaceLanguage' => 'PT-BR'
+            'interface_language' => 'PT-BR'
         ]);
     }
 }

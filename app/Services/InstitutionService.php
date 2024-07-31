@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Http\Requests\InstitutionRequest;
 use App\Models\Institution;
+use Illuminate\Http\Request;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
@@ -15,13 +16,21 @@ class InstitutionService{
     }
 
     //Função pública utilizada para retornar todas as instituições
-    public function getInstitutions(){
+    public function getInstitutions(Request $request){
         //Tratativa de erros
         try{
             //DB transaction para lidar com transações de dados com o banco de dados
-            return DB::transaction(function () {
+            return DB::transaction(function () use ($request) {
+                $institutionQuery = Institution::with('participants', 'participants.team', 'participants.modality', 'participants.institution', 'participants.user');
+                if ($request->has('search')) {
+                    $search = $request->search;
+
+                    $institutionQuery->where(function ($query) use ($search) {
+                        $query->Where('name', 'like', '%' . $search . '%');
+                    });
+                }
                 //Retornando todas instituições e o código de respostas
-                return response()->json(Institution::with('participants', 'participants.team', 'participants.modality', 'participants.institution', 'participants.user')->get(), 200);
+                return response()->json($institutionQuery->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){

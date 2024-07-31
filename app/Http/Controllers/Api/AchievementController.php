@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\AchievementRequest;
 use App\Services\AchievementService;
+use Illuminate\Http\Request;
 
 class AchievementController{
     //Instanciando serviço
@@ -13,8 +14,8 @@ class AchievementController{
     }
 
     //Função para obter todos Achievementes
-    public function index(){
-        return $this->achievementService->getAchievements();
+    public function index(Request $request){
+        return $this->achievementService->getAchievements($request);
     }
 
     //Função para obter um Achievemente

@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Http\Requests\StoreEventDayRequest;
 use App\Http\Requests\UpdateEventDayRequest;
 use App\Models\EventDay;
+use Illuminate\Http\Request;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
@@ -16,13 +17,23 @@ class EventDayService{
     }
 
     //Função pública utilizada para retornar todos os dia de evento
-    public function getDays(){
+    public function getDays(Request $request){
         //Tratativa de erros
         try{
             //DB transaction para lidar com transações de dados com o banco de dados
-            return DB::transaction(function () {
-                //Retornando todos dia de eventos e o código de respostas
-                return response()->json(EventDay::with('event')->get(), 200);
+            return DB::transaction(function () use($request) {
+                $eventDayQuery = EventDay::with('event');
+                if ($request->has('search')) {
+                    $search = $request->search;
+
+                    $eventDayQuery->where(function ($query) use ($search) {
+                        $query->whereHas('event', function ($q) use ($search) {
+                            $q->where('name', 'like', '%' . $search . '%');
+                        });
+                        $query->orWhere('date', 'like', '%' . $search . '%');
+                    });
+                }
+                return response()->json($eventDayQuery->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){
@@ -47,8 +58,9 @@ class EventDayService{
         }
     }
 
-    private function currentIndex($date){
-        $index = EventDay::where('date', $date)->count();
+    //Retorna o próximo índice do dia
+    private function nextIndex($event_id){
+        $index = EventDay::where('event_id', $event_id)->count();
         return $index + 1;
     }
 
@@ -56,13 +68,14 @@ class EventDayService{
     public function addDay(StoreEventDayRequest $request){
         //Tratativa de erros
         try{
-            $index = $this->currentIndex($request->date);
+            $index = $this->nextIndex($request->event_id);
             //DB transaction para lidar com transações de dados com o banco de dados
-            return DB::transaction(function () use ($request){
+            return DB::transaction(function () use ($request, $index){
                 //Criando dia de evento
                 $eventDay = EventDay::create([
-                    'eventDay_id' => $request->eventDay_id,
+                    'event_id' => $request->event_id,
                     'date' => $request->date,
+                    'start_hour' => $request->start_hour,
                     'index' => $index
                 ]);
 
@@ -87,8 +100,9 @@ class EventDayService{
 
                 //Atualizando dados do dia de evento e salvando utilizando o método fill
                 $eventDay->fill($request->only(
-                    'eventDay_id',
+                    'event_id',
                     'date',
+                    'start_hour',
                     'index'
                 ))->save();
 

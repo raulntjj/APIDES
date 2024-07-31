@@ -25,7 +25,7 @@ class StoreEventDayRequest extends FormRequest{
         return [
             'event_id' => ['required'],
             'date' => ['required'],
-            'startHour' => ['required'],
+            'start_hour' => ['required'],
         ];
     }
 }

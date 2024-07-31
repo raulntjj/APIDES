@@ -5,8 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-use App\Model\Evaluation;
-
 class Criterion extends Model{
     use HasFactory;
     protected $table = 'criteria';
@@ -29,6 +27,6 @@ class Criterion extends Model{
     }
 
     public function subcriteria(){
-        return $this->hasMany(SubCriterion::class, 'criterion_id');
+        return $this->hasMany(Subcriterion::class, 'criterion_id');
     }
 }

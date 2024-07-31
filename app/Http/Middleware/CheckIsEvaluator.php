@@ -15,7 +15,7 @@ class CheckIsEvaluator{
      */
     public function handle(Request $request, Closure $next): Response{
         $user = JWTAuth::parseToken()->authenticate();
-        if($user->role === "evaluator"){
+        if($user->isEvaluator()){
             return $next($request);
         }
         return response()->json(['error' => 'not authorized'], 403);

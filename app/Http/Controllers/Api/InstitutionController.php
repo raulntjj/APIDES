@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\InstitutionRequest;
 use App\Services\InstitutionService;
+use Illuminate\Http\Request;
 
 class InstitutionController{
     //Instanciando serviço
@@ -13,8 +14,8 @@ class InstitutionController{
     }
 
     //Função para obter todas instituições
-    public function index(){
-        return $this->institutionService->getInstitutions();
+    public function index(Request $request){
+        return $this->institutionService->getInstitutions($request);
     }
 
     //Função para obter uma instituição

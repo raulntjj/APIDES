@@ -26,8 +26,8 @@ class JudgmentRequest extends FormRequest{
             'evaluation_id' => ['required'],
             'item_id' => ['required'],
             'attempt' => ['nullable'],
-            'correctAttempt' => ['nullable'],
-            'failAttempt' => ['nullable'],
+            'correct_attempt' => ['nullable'],
+            'fail_attempt' => ['nullable'],
             'score' => ['nullable'],
         ];
     }

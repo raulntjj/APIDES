@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Http\Requests\EvaluationRequest;
 use App\Models\Evaluation;
+use Illuminate\Http\Request;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
@@ -11,17 +12,50 @@ class EvaluationService{
     //Função privada utilizada para encontrar as avaliações ao longo do serviço
     private function findEvaluation(int $id){
         //Busca e retorna a avaliação
-        return Evaluation::with('judgments.item.subCriterion.criterion', 'participant.user', 'participant.team', 'participant.institution', 'participant.modality', 'modality', 'eventDay.event', 'judge')->findOrFail($id);
+        return Evaluation::with('judgments.item.subcriterion.criterion', 'participant.user', 'participant.team', 'participant.institution', 'participant.modality', 'modality', 'eventday.event', 'judge')->findOrFail($id);
     }
 
     //Função pública utilizada para retornar todos as avaliação
-    public function getEvaluations(){
+    public function getEvaluations(Request $request){
         //Tratativa de erros
         try{
             //DB transaction para lidar com transações de dados com o banco de dados
-            return DB::transaction(function () {
+            return DB::transaction(function () use ($request) {
                 //Retornando todas avaliações e o código de respostas
-                return response()->json(Evaluation::with('judgments.item.subCriterion.criterion', 'participant.user', 'participant.team', 'participant.institution', 'participant.modality', 'modality', 'eventDay.event', 'judge')->get(), 200);
+                $evaluationQuery = Evaluation::with('judgments.item.subcriterion.criterion', 'participant.user', 'participant.team', 'participant.institution',
+                'participant.modality', 'modality', 'eventday.event', 'judge');
+
+                // Filtro de busca
+                if ($request->has('search')) {
+                    $search = $request->search;
+
+                    $evaluationQuery->where(function ($query) use ($search) {
+                        $query->WhereHas('participant.user', function ($q) use ($search) {
+                            $q->where('name', 'like', '%' . $search . '%')
+                            ->orWhere('last_name', 'like', '%' . $search . '%');
+                        })
+                        ->orWhereHas('participant.team', function ($q) use ($search) {
+                            $q->where('name', 'like', '%' . $search . '%');
+                        })
+                        ->orWhereHas('participant.institution', function ($q) use ($search) {
+                            $q->where('name', 'like', '%' . $search . '%');
+                        })
+                        ->orWhereHas('participant.modality', function ($q) use ($search) {
+                            $q->where('name', 'like', '%' . $search . '%');
+                        })
+                        ->orWhereHas('modality', function ($q) use ($search) {
+                            $q->where('name', 'like', '%' . $search . '%');
+                        })
+                        ->orWhereHas('eventday.event', function ($q) use ($search) {
+                            $q->where('name', 'like', '%' . $search . '%');
+                        })
+                        ->orWhereHas('judge', function ($q) use ($search) {
+                            $q->where('name', 'like', '%' . $search . '%');
+                        });
+                    });
+                }
+
+                return response()->json($evaluationQuery->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){
@@ -60,7 +94,7 @@ class EvaluationService{
                     //Foi deixado o request->only() no lugar do request->all()
                     //Para deixar mais explícito e descritivo em relação as variavéis que estão sendo utilizadas etc..
                     'participant_id',
-                    'eventDay_id',
+                    'eventay_id',
                     'modality_id',
                     'judge_id',
                     'date',
@@ -89,7 +123,7 @@ class EvaluationService{
                 $evaluation->fill($request->only(
                     //Explicitando váriaveis
                     'participant_id',
-                    'eventDay_id',
+                    'eventay_id',
                     'modality_id',
                     'judge_id',
                     'date',

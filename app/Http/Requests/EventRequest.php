@@ -33,7 +33,7 @@ class EventRequest extends FormRequest{
             'country' => ['required'],
             'cep' => ['required'],
             'date' => ['required'],
-            'startHour' => ['required']
+            'start_hour' => ['required']
         ];
     }
 }

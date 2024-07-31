@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Http\Requests\ItemRequest;
 use App\Models\Item;
+use Illuminate\Http\Request;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
@@ -11,17 +12,31 @@ class ItemService{
     //Função privada utilizada para encontrar os itenss ao longo do serviço
     private function findItem(int $id){
         //Busca e retorna o itens
-        return Item::with('subCriterion.criterion', 'judgments')->findOrFail($id)->toArray();
+        return Item::with('subcriterion.criterion', 'judgments')->findOrFail($id)->toArray();
     }
 
     //Função pública utilizada para retornar todos os itenss
-    public function getItems(){
+    public function getItems(Request $request){
         //Tratativa de erros
         try{
             //DB transaction para lidar com transações de dados com o banco de dados
-            return DB::transaction(function () {
+            return DB::transaction(function () use ($request) {
+                $itemQuery = Item::with('subcriterion.criterion', 'judgments');
+                if ($request->has('search')) {
+                    $search = $request->search;
+
+                    $itemQuery->where(function ($query) use ($search) {
+                        $query->whereHas('subcriterion.criterion', function ($q) use ($search) {
+                            $q->where('name', 'like', '%' . $search . '%');
+                        })
+                        ->orWhereHas('subcriterion', function ($q) use ($search) {
+                            $q->where('name', 'like', '%' . $search . '%');
+                        })
+                        ->orWhere('aspect', 'like', '%' . $search . '%');
+                    });
+                }
                 //Retornando todos itenss e o código de respostas
-                return response()->json(Item::with('subCriterion.criterion', 'judgments')->get(), 200);
+                return response()->json($itemQuery->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){

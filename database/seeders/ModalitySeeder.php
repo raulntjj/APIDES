@@ -13,28 +13,23 @@ class ModalitySeeder extends Seeder
      */
     public function run(): void{
         Modality::create([
-            "name" => "Futsal",
-            "type" => "Esporte coletivo"
+            "name" => "Futsal"
         ]);
 
         Modality::create([
-            "name" => "Natação",
-            "type" => "Esporte individual"
+            "name" => "Natação"
         ]);
 
         Modality::create([
-            "name" => "Vôlei",
-            "type" => "Esporte coletivo"
+            "name" => "Vôlei"
         ]);
 
         Modality::create([
-            "name" => "Judô",
-            "type" => "Arte marcial"
+            "name" => "Judô"
         ]);
 
         Modality::create([
-            "name" => "Atletismo",
-            "type" => "Esporte individual"
+            "name" => "Atletismo"
         ]);
     }
 }

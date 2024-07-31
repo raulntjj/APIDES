@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\StoreEventDayRequest;
 use App\Http\Requests\UpdateEventDayRequest;
+use Illuminate\Http\Request;
 use App\Services\EventDayService;
 
 class EventDayController{
@@ -14,8 +15,8 @@ class EventDayController{
     }
 
     //Função para obter todos dia de eventos
-    public function index(){
-        return $this->eventDayService->getDays();
+    public function index(Request $request){
+        return $this->eventDayService->getDays($request);
     }
 
     //Função para obter um dia de evento

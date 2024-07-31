@@ -25,7 +25,7 @@ class EvaluationRequest extends FormRequest{
         return [
             'participant_id' => ['required'],
             'judge_id' => ['required'],
-            'eventDay_id' => ['nullable'],
+            'event_day_id' => ['nullable'],
             'modality_id' => ['required'],
             'date' => ['nullable'],
         ];

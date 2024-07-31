@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\TeamRequest;
 use App\Services\TeamService;
+use Illuminate\Http\Request;
 
 class TeamController{
     //Instanciando serviço
@@ -13,8 +14,8 @@ class TeamController{
     }
 
     //Função para obter todos times
-    public function index(){
-        return $this->teamService->getTeams();
+    public function index(Request $request){
+        return $this->teamService->getTeams($request);
     }
 
     //Função para obter um time

@@ -5,9 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-use App\Models\Evaluation;
-use App\Models\Item;
-
 class Judgment extends Model{
     use HasFactory;
     protected $table = 'judgments';
@@ -15,8 +12,8 @@ class Judgment extends Model{
         'evaluation_id',
         'item_id',
         'attempt',
-        'correctAttempt',
-        'failAttempt',
+        'correct_attempt',
+        'fail_attempt',
         'score',
     ];
 
