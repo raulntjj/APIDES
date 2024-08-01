@@ -15,10 +15,10 @@ class AuthController {
         $credentials = $request->only('email', 'password');
         try {
             if (! $token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'Credênciais inválidas'], 400);
+                return response()->json(['Error' => 'Credênciais inválidas'], 400);
             }
         } catch (JWTException $e) {
-            return response()->json(['error' => 'Não foi possível concluir o login'], 500);
+            return response()->json(['Error' => 'Não foi possível concluir o login'], 500);
         }
 
         return response()->json(compact('token'));
@@ -28,14 +28,14 @@ class AuthController {
     public function getAuthenticatedUser(){
         try {
             if (! $user = JWTAuth::parseToken()->authenticate()) {
-                return response()->json(['error' => 'Usuário não existente'], 404);
+                return response()->json(['Error' => 'User not found'], 404);
             }
         } catch (TokenExpiredException $e) {
-            return response()->json(['error' => 'Token expirado'], $e->getStatusCode());
+            return response()->json(['Error' => 'Token expired'], $e->getStatusCode());
         } catch (TokenInvalidException $e) {
-            return response()->json(['error' => 'Token inválido'], $e->getStatusCode());
+            return response()->json(['Error' => 'Token invalid'], $e->getStatusCode());
         } catch (JWTException $e) {
-            return response()->json(['error' => 'Token ausente'], $e->getStatusCode());
+            return response()->json(['Error' => 'Token ausente'], $e->getStatusCode());
         }
 
         $user = $user->load('participant');
@@ -49,10 +49,10 @@ class AuthController {
             JWTAuth::invalidate(JWTAuth::parseToken());
 
             // Retornar resposta de sucesso
-            return response()->json(['message' => 'Logout realizado com sucesso'], 200);
+            return response()->json(['Success' => 'Logout succesfully'], 200);
         } catch (\JWTException $e) {
             // Retornar resposta de erro se houver falha ao invalidar o token
-            return response()->json(['error' => 'Falha ao deslogar, por favor tente novamente'], 500);
+            return response()->json(['Error' => 'Failed to logout', 'Details' => $e->getMessage()], $e->getStatusCode());
         }
     }
 }

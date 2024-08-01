@@ -118,7 +118,7 @@ class ModalityService{
                 $modality->delete();
 
                 //retornando resposta json
-                return response()->json(["Modality deleted"], 204);
+                return response()->json(['Success' => 'Modality deleted'], 204);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){

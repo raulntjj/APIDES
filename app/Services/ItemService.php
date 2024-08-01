@@ -125,7 +125,7 @@ class ItemService{
                 $item->delete();
 
                 //retornando resposta json
-                return response()->json(["Item deleted"], 204);
+                return response()->json(['Success' => 'Item deleted'], 204);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){

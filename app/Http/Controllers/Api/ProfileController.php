@@ -25,21 +25,11 @@ class ProfileController{
 
     // Função para editar um usuário
     public function update(UpdateUserRequest $request){
-        try {
-            $updatedUser = $this->userService->updateUser($request, $this->authenticatedUser->id);
-            return response()->json($updatedUser, 200);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Falha ao atualizar dados', 'message' => $e->getMessage()], 500);
-        }
+        return $this->userService->updateUser($request, $this->authenticatedUser->id);
     }
 
     // Função para deletar um usuário
     public function destroy(){
-        try {
-            $this->userService->deleteUser($this->authenticatedUser->id);
-            return response()->json(['message' => 'Usuário deletado'], 200);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Falha ao deletar usuário', 'message' => $e->getMessage()], 500);
-        }
+        return $this->userService->deleteUser($this->authenticatedUser->id);
     }
 }

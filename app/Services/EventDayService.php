@@ -128,7 +128,7 @@ class EventDayService{
                 $eventDay->delete();
 
                 //retornando resposta json
-                return response()->json('Event deleted', 204);
+                return response()->json(['Success' => 'Event Day deleted'], 204);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){

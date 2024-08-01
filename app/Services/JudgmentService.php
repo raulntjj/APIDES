@@ -185,7 +185,7 @@ class JudgmentService{
                 $Judgment->delete();
 
                 //retornando resposta json
-                return response()->json(["Judgment deleted"], 204);
+                return response()->json(['Success' => 'Judgment deleted'], 204);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){

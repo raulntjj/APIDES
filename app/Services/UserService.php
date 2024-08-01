@@ -137,7 +137,7 @@ class UserService{
                 $user->delete();
 
                 //retornando resposta json
-                return response()->json(["User deleted"], 204);
+                return response()->json(['Success' => 'User deleted'], 204);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){

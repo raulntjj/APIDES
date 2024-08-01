@@ -18,6 +18,6 @@ class CheckIsAdmin{
         if($user->isAdmin()){
             return $next($request);
         }
-        return response()->json(['error' => 'not authorized'], 403);
+        return response()->json(['Error' => 'Not authorized'], 403);
     }
 }

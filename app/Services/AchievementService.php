@@ -120,7 +120,7 @@ class AchievementService{
                 $achivement->delete();
 
                 //retornando resposta json
-                return response()->json(["Achievement deleted"], 204);
+                return response()->json(['Success' => 'Achievement deleted'], 204);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){
