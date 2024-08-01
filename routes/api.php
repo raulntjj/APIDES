@@ -25,7 +25,7 @@ Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::post('password/change', [PasswordController::class, 'changePassword']);
 Route::post('password/forgot', [PasswordController::class, 'forgotPassword']);
 
-// Route::group(['middleware' => ['jwt.auth']], function() {
+Route::group(['middleware' => ['jwt.auth']], function() {
     //Rotas de sessão
     Route::get('user', [AuthController::class, 'getAuthenticatedUser']);
     Route::put('post', [ProfileController::class, 'store']);
@@ -53,12 +53,12 @@ Route::post('password/forgot', [PasswordController::class, 'forgotPassword']);
     Route::apiResource('evaluations', EvaluationController::class)->only(['index', 'show']);
 
     //Apenas avaliadores podem fazer julgamentos
-    // Route::middleware(CheckIsEvaluator::class)->group(function(){
+    Route::middleware(CheckIsEvaluator::class)->group(function(){
         Route::apiResource('judgments', JudgmentController::class)->only(['store', 'update', 'destroy']);
-    // });
+    });
 
-    //Apenas administradores podem criar, editar e excluir algumas entidades
-    // Route::middleware(CheckIsAdmin::class)->group(function(){
+    // Apenas administradores podem criar, editar e excluir algumas entidades
+    Route::middleware(CheckIsAdmin::class)->group(function(){
         Route::apiResource('users', UserController::class)->except(['create', 'edit']);
         Route::apiResource('events', EventController::class)->only(['store', 'update', 'destroy']);
         Route::apiResource('days', EventDayController::class)->only(['store', 'update', 'destroy']);
@@ -71,5 +71,5 @@ Route::post('password/forgot', [PasswordController::class, 'forgotPassword']);
         Route::apiResource('items', ItemController::class)->only(['store', 'update', 'destroy']);
         Route::apiResource('evaluations', EvaluationController::class)->only(['store', 'update', 'destroy']);
         Route::apiResource('achievements', AchievementController::class)->only(['store', 'update', 'destroy']);
-    // });
-// });
+    });
+});
