@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Desempenho Esportivo
   description: |
-    #Documentação da API Rest para Desempenho Esportivo.
+    # Documentação da API Rest para Desempenho Esportivo.
 
     Esta API, juntamente com seu banco de dados, está rodando localmente e serve como uma solução provisória até que seja oficialmente implantada em um servidor.
 
@@ -32,8 +32,8 @@ info:
   termsOfService: https://versatecnologia.com.br
 servers:
   - description: API
-    # url: http://127.0.0.1:8001
-    url: https://a527-45-70-34-167.ngrok-free.app
+    url: http://127.0.0.1:8001
+    # url: https://a527-45-70-34-167.ngrok-free.app
 tags:
   # - name: Sessão de Clientes da API
   #   description: Por ordens superiores, por enquanto, não será necessário lidar com sessões para consumidores.
@@ -90,7 +90,15 @@ paths:
       responses:
         '201':
           description: Token para autenticar usuários
-        '400':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDEvYXBpL2xvZ2luIiwiaWF0IjoxNzIyNDQ0Nzk5LCJleHAiOjE3MjI0NDgzOTksIm5iZiI6MTcyMjQ0NDc5OSwianRpIjoiQU5uZ21nMGsxWUN5ZHlTMSIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.J-zFlIjwrYsxKX0P_WgL8RwbzpR8eY593Gqddwd0XMY
+        '500':
           description: Falha ao autenticar usuário
 
   /api/logout:
@@ -103,7 +111,7 @@ paths:
       responses:
         '201':
           description: Usuário deslogado com sucesso
-        '400':
+        '500':
           description: Falha ao autenticar usuário
 
   /api/user:
@@ -119,10 +127,69 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/User'
-        '400':
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: "Exemplo"
+                  last_name:
+                    type: string
+                    example: "Teste"
+                  birthday:
+                    type: string
+                    format: date
+                    example: "2000-01-01"
+                  gender:
+                    type: string
+                    example: "male"
+                  photo:
+                    type: string
+                    nullable: true
+                    example: null
+                  email:
+                    type: string
+                    format: email
+                    example: "teste@teste.com"
+                  interface_language:
+                    type: integer
+                    example: "pt-BR"
+                  role:
+                    type: integer
+                    example: "participant"
+                  participant:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        format: int64
+                        description: ID do participante
+                        example: 1
+                      user_id:
+                        type: integer
+                        format: int64
+                        description: ID do usuário
+                        example: 1
+                      team_id:
+                        type: integer
+                        format: int64
+                        description: ID do time do participante
+                        example: 1
+                      institution_id:
+                        type: integer
+                        format: int64
+                        description: ID da instituição
+                        nullable: true
+                      modality_id:
+                        type: integer
+                        format: int64
+                        description: ID da modalidade do participante
+                        example: 1
+                      position:
+                        type: string
+                        description: Posição do participante
+                        nullable: true
+                        example: ST
+        '500':
           description: Erro ao buscar usuário
     put:
       security:
@@ -135,15 +202,71 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Exemplo"
+                last_name:
+                  type: string
+                  example: "Teste"
+                birthday:
+                  type: string
+                  format: date
+                  example: "2000-01-01"
+                gender:
+                  type: string
+                  example: "male"
+                photo:
+                  type: string
+                  nullable: true
+                  example: null
+                email:
+                  type: string
+                  format: email
+                  example: "teste@teste.com"
+                interface_language:
+                  type: integer
+                  example: "pt-BR"
+                role:
+                  type: integer
+                  example: "participant"
       responses:
         '201':
           description: Usuário criado com sucesso
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
-        '400':
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: "Exemplo"
+                  last_name:
+                    type: string
+                    example: "Teste"
+                  birthday:
+                    type: string
+                    format: date
+                    example: "2000-01-01"
+                  gender:
+                    type: string
+                    example: "male"
+                  photo:
+                    type: string
+                    nullable: true
+                    example: null
+                  email:
+                    type: string
+                    format: email
+                    example: "teste@teste.com"
+                  interface_language:
+                    type: integer
+                    example: "pt-BR"
+                  role:
+                    type: integer
+                    example: "participant"
+        '500':
           description: Falha ao adicionar usuário
 
     delete:
@@ -153,9 +276,9 @@ paths:
         - Sessão
       summary: Excluir conta do usuário logado
       responses:
-        '201':
+        '204':
           description: Usuário excluido com sucesso
-        '400':
+        '500':
           description: falha ao excluir usuário
 
   /api/password/change:
@@ -184,7 +307,7 @@ paths:
       responses:
         '201':
           description: Senha alterada com sucesso
-        '400':
+        '500':
           description: Falha ao alterar senha
 
   /api/password/forgot:
@@ -202,11 +325,11 @@ paths:
                 email:
                   type: string
                   format: email
-                  example: glauco@teste.com
+                  example: teste@teste.com
       responses:
         '201':
-          description: Senha alterada com sucesso
-        '400':
+          description: Token enviado com sucesso
+        '500':
           description: Falha ao alterar senha
 
 
@@ -231,8 +354,68 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
-        '400':
+                  properties:
+                    name:
+                      type: string
+                      example: "Exemplo"
+                    last_name:
+                      type: string
+                      example: "Teste"
+                    birthday:
+                      type: string
+                      format: date
+                      example: "2000-01-01"
+                    gender:
+                      type: string
+                      example: "male"
+                    photo:
+                      type: string
+                      nullable: true
+                      example: null
+                    email:
+                      type: string
+                      format: email
+                      example: "teste@teste.com"
+                    interface_language:
+                      type: integer
+                      example: "pt-BR"
+                    role:
+                      type: integer
+                      example: "participant"
+                    participant:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          format: int64
+                          description: ID do participante
+                          example: 1
+                        user_id:
+                          type: integer
+                          format: int64
+                          description: ID do usuário
+                          example: 1
+                        team_id:
+                          type: integer
+                          format: int64
+                          description: ID do time do participante
+                          example: 1
+                        institution_id:
+                          type: integer
+                          format: int64
+                          description: ID da instituição
+                          nullable: true
+                        modality_id:
+                          type: integer
+                          format: int64
+                          description: ID da modalidade do participante
+                          example: 1
+                        position:
+                          type: string
+                          description: Posição do participante
+                          nullable: true
+                          example: ST
+        '500':
           description: Erro ao buscar usuário
     post:
       security:
@@ -245,15 +428,71 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Exemplo"
+                last_name:
+                  type: string
+                  example: "Teste"
+                birthday:
+                  type: string
+                  format: date
+                  example: "2000-01-01"
+                gender:
+                  type: string
+                  example: "male"
+                photo:
+                  type: string
+                  nullable: true
+                  example: null
+                email:
+                  type: string
+                  format: email
+                  example: "teste@teste.com"
+                interface_language:
+                  type: integer
+                  example: "pt-BR"
+                role:
+                  type: integer
+                  example: "participant"
       responses:
         '201':
           description: Usuário criado com sucesso
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
-        '400':
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: "Exemplo"
+                  last_name:
+                    type: string
+                    example: "Teste"
+                  birthday:
+                    type: string
+                    format: date
+                    example: "2000-01-01"
+                  gender:
+                    type: string
+                    example: "male"
+                  photo:
+                    type: string
+                    nullable: true
+                    example: null
+                  email:
+                    type: string
+                    format: email
+                    example: "teste@teste.com"
+                  interface_language:
+                    type: integer
+                    example: "pt-BR"
+                  role:
+                    type: integer
+                    example: "participant"
+        '500':
           description: Falha ao adicionar usuário
   /api/users/{id}:
     get:
@@ -276,7 +515,68 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: "Exemplo"
+                  last_name:
+                    type: string
+                    example: "Teste"
+                  birthday:
+                    type: string
+                    format: date
+                    example: "2000-01-01"
+                  gender:
+                    type: string
+                    example: "male"
+                  photo:
+                    type: string
+                    nullable: true
+                    example: null
+                  email:
+                    type: string
+                    format: email
+                    example: "teste@teste.com"
+                  interface_language:
+                    type: integer
+                    example: "pt-BR"
+                  role:
+                    type: integer
+                    example: "participant"
+                  participant:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        format: int64
+                        description: ID do participante
+                        example: 1
+                      user_id:
+                        type: integer
+                        format: int64
+                        description: ID do usuário
+                        example: 1
+                      team_id:
+                        type: integer
+                        format: int64
+                        description: ID do time do participante
+                        example: 1
+                      institution_id:
+                        type: integer
+                        format: int64
+                        description: ID da instituição
+                        nullable: true
+                      modality_id:
+                        type: integer
+                        format: int64
+                        description: ID da modalidade do participante
+                        example: 1
+                      position:
+                        type: string
+                        description: Posição do participante
+                        nullable: true
+                        example: ST
         '404':
           description: Usuário não encontrado
 
@@ -299,17 +599,73 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Exemplo"
+                last_name:
+                  type: string
+                  example: "Teste"
+                birthday:
+                  type: string
+                  format: date
+                  example: "2000-01-01"
+                gender:
+                  type: string
+                  example: "male"
+                photo:
+                  type: string
+                  nullable: true
+                  example: null
+                email:
+                  type: string
+                  format: email
+                  example: "teste@teste.com"
+                interface_language:
+                  type: integer
+                  example: "pt-BR"
+                role:
+                  type: integer
+                  example: "participant"
       responses:
         '200':
           description: Usuário atualizado com sucesso
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: "Exemplo"
+                  last_name:
+                    type: string
+                    example: "Teste"
+                  birthday:
+                    type: string
+                    format: date
+                    example: "2000-01-01"
+                  gender:
+                    type: string
+                    example: "male"
+                  photo:
+                    type: string
+                    nullable: true
+                    example: null
+                  email:
+                    type: string
+                    format: email
+                    example: "teste@teste.com"
+                  interface_language:
+                    type: integer
+                    example: "pt-BR"
+                  role:
+                    type: integer
+                    example: "participant"
         '404':
           description: Usuário não encontrado
-        '400':
+        '500':
           description: Falha ao atualizar usuário
 
     delete:
@@ -347,8 +703,68 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
-        '400':
+                  properties:
+                    name:
+                      type: string
+                      example: "Exemplo"
+                    last_name:
+                      type: string
+                      example: "Teste"
+                    birthday:
+                      type: string
+                      format: date
+                      example: "2000-01-01"
+                    gender:
+                      type: string
+                      example: "male"
+                    photo:
+                      type: string
+                      nullable: true
+                      example: null
+                    email:
+                      type: string
+                      format: email
+                      example: "teste@teste.com"
+                    interface_language:
+                      type: integer
+                      example: "pt-BR"
+                    role:
+                      type: integer
+                      example: "participant"
+                    participant:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          format: int64
+                          description: ID do participante
+                          example: 1
+                        user_id:
+                          type: integer
+                          format: int64
+                          description: ID do usuário
+                          example: 1
+                        team_id:
+                          type: integer
+                          format: int64
+                          description: ID do time do participante
+                          example: 1
+                        institution_id:
+                          type: integer
+                          format: int64
+                          description: ID da instituição
+                          nullable: true
+                        modality_id:
+                          type: integer
+                          format: int64
+                          description: ID da modalidade do participante
+                          example: 1
+                        position:
+                          type: string
+                          description: Posição do participante
+                          nullable: true
+                          example: ST
+        '500':
           description: Erro ao buscar usuários
 
   /api/admins:
@@ -366,8 +782,68 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
-        '400':
+                  properties:
+                    name:
+                      type: string
+                      example: "Exemplo"
+                    last_name:
+                      type: string
+                      example: "Teste"
+                    birthday:
+                      type: string
+                      format: date
+                      example: "2000-01-01"
+                    gender:
+                      type: string
+                      example: "male"
+                    photo:
+                      type: string
+                      nullable: true
+                      example: null
+                    email:
+                      type: string
+                      format: email
+                      example: "teste@teste.com"
+                    interface_language:
+                      type: integer
+                      example: "pt-BR"
+                    role:
+                      type: integer
+                      example: "participant"
+                    participant:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          format: int64
+                          description: ID do participante
+                          example: 1
+                        user_id:
+                          type: integer
+                          format: int64
+                          description: ID do usuário
+                          example: 1
+                        team_id:
+                          type: integer
+                          format: int64
+                          description: ID do time do participante
+                          example: 1
+                        institution_id:
+                          type: integer
+                          format: int64
+                          description: ID da instituição
+                          nullable: true
+                        modality_id:
+                          type: integer
+                          format: int64
+                          description: ID da modalidade do participante
+                          example: 1
+                        position:
+                          type: string
+                          description: Posição do participante
+                          nullable: true
+                          example: ST
+        '500':
           description: Erro ao buscar usuários
 
   /api/events:
@@ -391,8 +867,61 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Event'
-        '400':
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: "Treinamento"
+                    logo:
+                      type: string
+                      example: "imaginaryPath/image.jpg"
+                    days:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          event_id:
+                            type: integer
+                            example: 101
+                          date:
+                            type: string
+                            format: date
+                            example: "2024-05-10"
+                          start_hour:
+                            type: string
+                            format: time
+                            example: "19:00:00"
+                          index:
+                            type: integer
+                            example: 1
+                    address:
+                      type: object
+                      properties:
+                        event_id:
+                          type: integer
+                          example: 101
+                        address:
+                          type: string
+                          example: "Rua do sol"
+                        number:
+                          type: string
+                          example: "456"
+                        neighborhood:
+                          type: string
+                          example: "Centro"
+                        city:
+                          type: string
+                          example: Caratinga
+                        state:
+                          type: string
+                          example: "MG"
+                        country:
+                          type: string
+                          example: "Brasil"
+        '500':
           description: Erro ao buscar evento
     post:
       security:
@@ -406,18 +935,101 @@ paths:
         content:
           application/json:
             schema:
-              allOf:
-                - $ref: '#/components/schemas/Event'
-                - $ref: '#/components/schemas/EventAddress'
-                - $ref: '#/components/schemas/EventDay'
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Treinamento"
+                logo:
+                  type: string
+                  example: "imaginaryPath/image.jpg"
+                date:
+                  type: string
+                  format: date
+                  example: "2024-05-10"
+                start_hour:
+                  type: string
+                  format: time
+                  example: "19:00:00"
+                address:
+                  type: string
+                  example: "Rua do sol"
+                number:
+                  type: string
+                  example: "456"
+                neighborhood:
+                  type: string
+                  example: "Centro"
+                city:
+                  type: string
+                  example: Caratinga
+                state:
+                  type: string
+                  example: "MG"
+                country:
+                  type: string
+                  example: "Brasil"
       responses:
         '201':
           description: evento criado com sucesso
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Event'
-        '400':
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: "Treinamento"
+                  logo:
+                    type: string
+                    example: "imaginaryPath/image.jpg"
+                  days:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        event_id:
+                          type: integer
+                          example: 101
+                        date:
+                          type: string
+                          format: date
+                          example: "2024-05-10"
+                        start_hour:
+                          type: string
+                          format: time
+                          example: "19:00:00"
+                        index:
+                          type: integer
+                          example: 1
+                  address:
+                    type: object
+                    properties:
+                      event_id:
+                        type: integer
+                        example: 101
+                      address:
+                        type: string
+                        example: "Rua do sol"
+                      number:
+                        type: string
+                        example: "456"
+                      neighborhood:
+                        type: string
+                        example: "Centro"
+                      city:
+                        type: string
+                        example: Caratinga
+                      state:
+                        type: string
+                        example: "MG"
+                      country:
+                        type: string
+                        example: "Brasil"
+        '500':
           description: Falha ao adicionar evento
   /api/events/{id}:
     get:
@@ -440,10 +1052,60 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/Event'
-                  - $ref: '#/components/schemas/EventAddress'
-                  - $ref: '#/components/schemas/EventDay'
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: "Treinamento"
+                  logo:
+                    type: string
+                    example: "imaginaryPath/image.jpg"
+                  days:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        event_id:
+                          type: integer
+                          example: 101
+                        date:
+                          type: string
+                          format: date
+                          example: "2024-05-10"
+                        start_hour:
+                          type: string
+                          format: time
+                          example: "19:00:00"
+                        index:
+                          type: integer
+                          example: 1
+                  address:
+                    type: object
+                    properties:
+                      event_id:
+                        type: integer
+                        example: 101
+                      address:
+                        type: string
+                        example: "Rua do sol"
+                      number:
+                        type: string
+                        example: "456"
+                      neighborhood:
+                        type: string
+                        example: "Centro"
+                      city:
+                        type: string
+                        example: Caratinga
+                      state:
+                        type: string
+                        example: "MG"
+                      country:
+                        type: string
+                        example: "Brasil"
         '404':
           description: evento não encontrado
 
@@ -466,17 +1128,103 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/EventDay'
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Treinamento"
+                logo:
+                  type: string
+                  example: "imaginaryPath/image.jpg"
+                date:
+                  type: string
+                  format: date
+                  example: "2024-05-10"
+                start_hour:
+                  type: string
+                  format: time
+                  example: "19:00:00"
+                address:
+                  type: string
+                  example: "Rua do sol"
+                number:
+                  type: string
+                  example: "456"
+                neighborhood:
+                  type: string
+                  example: "Centro"
+                city:
+                  type: string
+                  example: Caratinga
+                state:
+                  type: string
+                  example: "MG"
+                country:
+                  type: string
+                  example: "Brasil"
       responses:
         '200':
           description: evento atualizado com sucesso
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EventDay'
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: "Treinamento"
+                  logo:
+                    type: string
+                    example: "imaginaryPath/image.jpg"
+                  days:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        event_id:
+                          type: integer
+                          example: 101
+                        date:
+                          type: string
+                          format: date
+                          example: "2024-05-10"
+                        start_hour:
+                          type: string
+                          format: time
+                          example: "19:00:00"
+                        index:
+                          type: integer
+                          example: 1
+                  address:
+                    type: object
+                    properties:
+                      event_id:
+                        type: integer
+                        example: 101
+                      address:
+                        type: string
+                        example: "Rua do sol"
+                      number:
+                        type: string
+                        example: "456"
+                      neighborhood:
+                        type: string
+                        example: "Centro"
+                      city:
+                        type: string
+                        example: Caratinga
+                      state:
+                        type: string
+                        example: "MG"
+                      country:
+                        type: string
+                        example: "Brasil"
         '404':
           description: evento não encontrado
-        '400':
+        '500':
           description: Falha ao atualizar evento
 
     delete:
@@ -520,8 +1268,33 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/EventDay'
-        '400':
+                  type: object
+                  properties:
+                    event_id:
+                      type: integer
+                      format: int64
+                      example: 1
+                    date:
+                      type: string
+                      format: date
+                      example: "2024-05-10"
+                    start_hour:
+                      type: string
+                      format: time
+                      example: "19:00:00"
+                    event:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: "Name"
+                        logo:
+                          type: string
+                          example: "imaginaryPath/event_logo.png"
+        '500':
           description: Erro ao buscar dia
     post:
       security:
@@ -534,15 +1307,43 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/EventDay'
+              type: array
+              items:
+                properties:
+                  event_id:
+                    type: integer
+                    format: int64
+                    example: 1
+                  date:
+                    type: string
+                    format: date
+                    example: "2024-05-10"
+                  start_hour:
+                    type: string
+                    format: hour
+                    example: "19:00:00"
       responses:
         '201':
           description: dia criado com sucesso
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EventDay'
-        '400':
+                type: array
+                items:
+                  properties:
+                    event_id:
+                      type: integer
+                      format: int64
+                      example: 1
+                    date:
+                      type: string
+                      format: date
+                      example: "2024-05-10"
+                    start_hour:
+                      type: string
+                      format: hour
+                      example: "19:00:00"
+        '500':
           description: Falha ao adicionar dia
   /api/days/{id}:
     get:
@@ -565,7 +1366,34 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EventDay'
+                type: array
+                items:
+                  type: object
+                  properties:
+                    event_id:
+                      type: integer
+                      format: int64
+                      example: 1
+                    date:
+                      type: string
+                      format: date
+                      example: "2024-05-10"
+                    start_hour:
+                      type: string
+                      format: time
+                      example: "19:00:00"
+                    event:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: "Name"
+                        logo:
+                          type: string
+                          example: "imaginaryPath/event_logo.png"
         '404':
           description: dia não encontrado
 
@@ -588,17 +1416,46 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/EventDay'
+              type: array
+              items:
+                properties:
+                  event_id:
+                    type: integer
+                    format: int64
+                    example: 1
+                  date:
+                    type: string
+                    format: date
+                    example: "2024-05-10"
+                  start_hour:
+                    type: string
+                    format: hour
+                    example: "19:00:00"
       responses:
         '200':
           description: dia atualizado com sucesso
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EventDay'
+                type: array
+                items:
+                  properties:
+                    event_id:
+                      type: integer
+                      format: int64
+                      example: 1
+                    date:
+                      type: string
+                      format: date
+                      example: "2024-05-10"
+                    start_hour:
+                      type: string
+                      format: hour
+                      example: "19:00:00"
+
         '404':
           description: dia não encontrado
-        '400':
+        '500':
           description: Falha ao atualizar dia
 
     delete:
@@ -642,8 +1499,107 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Institution'
-        '400':
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      format: int64
+                      example: 1
+                    name:
+                      type: string
+                      example: "Name"
+                    logo:
+                      type: string
+                      example: "imaginaryPath/logo.png"
+                    participants:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          user_id:
+                            type: integer
+                            example: 1
+                          team_id:
+                            type: integer
+                            example: 2
+                          institution_id:
+                            type: integer
+                            example: 3
+                          modality_id:
+                            type: integer
+                            example: 4
+                          position:
+                            type: string
+                            example: "ST"
+                          team:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 1
+                              name:
+                                type: string
+                                example: "Team A"
+                              logo:
+                                type: string
+                                example: "imaginaryPath/team_logo.png"
+                          modality:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 1
+                              name:
+                                type: string
+                                example: "Soccer"
+                              logo:
+                                type: string
+                                example: "imaginaryPath/soccer_logo.png"
+                          institution:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 3
+                              name:
+                                type: string
+                                example: "IFMG"
+                              logo:
+                                type: string
+                                example: "imaginaryPath/IFMG.png"
+                          user:
+                            type: object
+                            properties:
+                              email:
+                                type: string
+                                format: email
+                                example: "user@teste.com"
+                              name:
+                                type: string
+                                example: "Teste"
+                              last_name:
+                                type: string
+                                example: "Teste"
+                              gender:
+                                type: string
+                                example: "male"
+                              birthday:
+                                type: string
+                                format: date
+                                example: "1990-01-01"
+                              photo:
+                                type: string
+                                example: "imaginaryPath/photo.jpg"
+                              interface_language:
+                                type: string
+                                example: "pt-BR"
+                              is_admin:
+                                type: boolean
+                                example: false
+                              role:
+                                type: string
+                                example: "participant"
+        '500':
           description: Erro ao buscar Instituição
     post:
       security:
@@ -656,15 +1612,37 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Institution'
+              type: object
+              properties:
+                id:
+                  type: integer
+                  format: int64
+                  example: 1
+                name:
+                  type: string
+                  example: "Name"
+                logo:
+                  type: string
+                  example: "imaginaryPath/logo.png"
       responses:
         '201':
           description: Instituição criado com sucesso
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Institution'
-        '400':
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                    example: 1
+                  name:
+                    type: string
+                    example: "Name"
+                  logo:
+                    type: string
+                    example: "imaginaryPath/logo.png"
+        '500':
           description: Falha ao adicionar Instituição
   /api/institutions/{id}:
     get:
@@ -687,7 +1665,106 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Institution'
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                    example: 1
+                  name:
+                    type: string
+                    example: "Name"
+                  logo:
+                    type: string
+                    example: "imaginaryPath/logo.png"
+                  participants:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        user_id:
+                          type: integer
+                          example: 1
+                        team_id:
+                          type: integer
+                          example: 2
+                        institution_id:
+                          type: integer
+                          example: 3
+                        modality_id:
+                          type: integer
+                          example: 4
+                        position:
+                          type: string
+                          example: "ST"
+                        team:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            name:
+                              type: string
+                              example: "Team A"
+                            logo:
+                              type: string
+                              example: "imaginaryPath/team_logo.png"
+                        modality:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            name:
+                              type: string
+                              example: "Soccer"
+                            logo:
+                              type: string
+                              example: "imaginaryPath/soccer_logo.png"
+                        institution:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 3
+                              name:
+                                type: string
+                                example: "IFMG"
+                              logo:
+                                type: string
+                                example: "imaginaryPath/IFMG.png"
+                        user:
+                          type: object
+                          properties:
+                            email:
+                              type: string
+                              format: email
+                              example: "user@teste.com"
+                            name:
+                              type: string
+                              example: "Teste"
+                            last_name:
+                              type: string
+                              example: "Teste"
+                            gender:
+                              type: string
+                              example: "male"
+                            birthday:
+                              type: string
+                              format: date
+                              example: "1990-01-01"
+                            photo:
+                              type: string
+                              example: "imaginaryPath/photo.jpg"
+                            interface_language:
+                              type: string
+                              example: "pt-BR"
+                            is_admin:
+                              type: boolean
+                              example: false
+                            role:
+                              type: string
+                              example: "participant"
         '404':
           description: Instituição não encontrada
 
@@ -710,17 +1787,39 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Institution'
+              type: object
+              properties:
+                id:
+                  type: integer
+                  format: int64
+                  example: 1
+                name:
+                  type: string
+                  example: "Name"
+                logo:
+                  type: string
+                  example: "imaginaryPath/logo.png"
       responses:
         '200':
           description: Instituição atualizada com sucesso
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Institution'
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                    example: 1
+                  name:
+                    type: string
+                    example: "Name"
+                  logo:
+                    type: string
+                    example: "imaginaryPath/logo.png"
         '404':
           description: Instituição não encontrada
-        '400':
+        '500':
           description: Falha ao atualizar Instituição
 
     delete:
@@ -764,8 +1863,19 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Modality'
-        '400':
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      format: int64
+                      example: 1
+                    name:
+                      type: string
+                      example: "Name"
+                    logo:
+                      type: string
+                      example: "imaginaryPath/logo.png"
+        '500':
           description: Erro ao buscar modalidade
     post:
       security:
@@ -778,15 +1888,37 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Modality'
+              type: object
+              properties:
+                id:
+                  type: integer
+                  format: int64
+                  example: 1
+                name:
+                  type: string
+                  example: "Name"
+                logo:
+                  type: string
+                  example: "imaginaryPath/logo.png"
       responses:
         '201':
           description: modalidade criada com sucesso
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Modality'
-        '400':
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                    example: 1
+                  name:
+                    type: string
+                    example: "Name"
+                  logo:
+                    type: string
+                    example: "imaginaryPath/logo.png"
+        '500':
           description: Falha ao adicionar modalidade
   /api/modalities/{id}:
     get:
@@ -809,7 +1941,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Modality'
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: "Name"
+                  logo:
+                    type: string
+                    example: "imaginaryPath/logo.png"
         '404':
           description: modalidade não encontrada
 
@@ -832,17 +1971,35 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Modality'
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Name"
+                logo:
+                  type: string
+                  example: "imaginaryPath/logo.png"
       responses:
         '200':
           description: modalidade atualizada com sucesso
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Modality'
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                    example: 1
+                  name:
+                    type: string
+                    example: "Name"
+                  logo:
+                    type: string
+                    example: "imaginaryPath/logo.png"
         '404':
           description: modalidade não encontrado
-        '400':
+        '500':
           description: Falha ao atualizar modalidade
 
     delete:
@@ -886,8 +2043,107 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Team'
-        '400':
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      format: int64
+                      example: 1
+                    name:
+                      type: string
+                      example: "Name"
+                    logo:
+                      type: string
+                      example: "imaginaryPath/logo.png"
+                    participants:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          user_id:
+                            type: integer
+                            example: 1
+                          team_id:
+                            type: integer
+                            example: 2
+                          institution_id:
+                            type: integer
+                            example: 3
+                          modality_id:
+                            type: integer
+                            example: 4
+                          position:
+                            type: string
+                            example: "ST"
+                          team:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 1
+                              name:
+                                type: string
+                                example: "Team A"
+                              logo:
+                                type: string
+                                example: "imaginaryPath/team_logo.png"
+                          modality:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 1
+                              name:
+                                type: string
+                                example: "Soccer"
+                              logo:
+                                type: string
+                                example: "imaginaryPath/soccer_logo.png"
+                          institution:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 3
+                              name:
+                                type: string
+                                example: "IFMG"
+                              logo:
+                                type: string
+                                example: "imaginaryPath/IFMG.png"
+                          user:
+                            type: object
+                            properties:
+                              email:
+                                type: string
+                                format: email
+                                example: "user@teste.com"
+                              name:
+                                type: string
+                                example: "Teste"
+                              last_name:
+                                type: string
+                                example: "Teste"
+                              gender:
+                                type: string
+                                example: "male"
+                              birthday:
+                                type: string
+                                format: date
+                                example: "1990-01-01"
+                              photo:
+                                type: string
+                                example: "imaginaryPath/photo.jpg"
+                              interface_language:
+                                type: string
+                                example: "pt-BR"
+                              is_admin:
+                                type: boolean
+                                example: false
+                              role:
+                                type: string
+                                example: "participant"
+        '500':
           description: Erro ao buscar Equipe
     post:
       security:
@@ -900,15 +2156,33 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Team'
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Name"
+                logo:
+                  type: string
+                  example: "imaginaryPath/logo.png"
       responses:
         '201':
           description: Equipe criada com sucesso
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Team'
-        '400':
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                    example: 1
+                  name:
+                    type: string
+                    example: "Name"
+                  logo:
+                    type: string
+                    example: "imaginaryPath/logo.png"
+        '500':
           description: Falha ao adicionar Equipe
   /api/teams/{id}:
     get:
@@ -931,7 +2205,106 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Team'
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                    example: 1
+                  name:
+                    type: string
+                    example: "Name"
+                  logo:
+                    type: string
+                    example: "imaginaryPath/logo.png"
+                  participants:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        user_id:
+                          type: integer
+                          example: 1
+                        team_id:
+                          type: integer
+                          example: 2
+                        institution_id:
+                          type: integer
+                          example: 3
+                        modality_id:
+                          type: integer
+                          example: 4
+                        position:
+                          type: string
+                          example: "ST"
+                        team:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            name:
+                              type: string
+                              example: "Team A"
+                            logo:
+                              type: string
+                              example: "imaginaryPath/team_logo.png"
+                        modality:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            name:
+                              type: string
+                              example: "Soccer"
+                            logo:
+                              type: string
+                              example: "imaginaryPath/soccer_logo.png"
+                        institution:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 3
+                            name:
+                              type: string
+                              example: "IFMG"
+                            logo:
+                              type: string
+                              example: "imaginaryPath/IFMG.png"
+                        user:
+                          type: object
+                          properties:
+                            email:
+                              type: string
+                              format: email
+                              example: "user@teste.com"
+                            name:
+                              type: string
+                              example: "Teste"
+                            last_name:
+                              type: string
+                              example: "Teste"
+                            gender:
+                              type: string
+                              example: "male"
+                            birthday:
+                              type: string
+                              format: date
+                              example: "1990-01-01"
+                            photo:
+                              type: string
+                              example: "imaginaryPath/photo.jpg"
+                            interface_language:
+                              type: string
+                              example: "pt-BR"
+                            is_admin:
+                              type: boolean
+                              example: false
+                            role:
+                              type: string
+                              example: "participant"
         '404':
           description: Equipe não encontrada
 
@@ -954,17 +2327,35 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Team'
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Name"
+                logo:
+                  type: string
+                  example: "imaginaryPath/logo.png"
       responses:
         '200':
           description: Equipe atualizada com sucesso
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Team'
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                    example: 1
+                  name:
+                    type: string
+                    example: "Name"
+                  logo:
+                    type: string
+                    example: "imaginaryPath/logo.png"
         '404':
           description: Equipe não encontrado
-        '400':
+        '500':
           description: Falha ao atualizar Equipe
 
     delete:
@@ -1008,8 +2399,109 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Participant'
-        '400':
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    user_id:
+                      type: integer
+                      example: 1
+                    team_id:
+                      type: integer
+                      example: 2
+                    institution_id:
+                      type: integer
+                      example: 3
+                    modality_id:
+                      type: integer
+                      example: 4
+                    position:
+                      type: string
+                      example: "ST"
+                    team:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: "Team A"
+                        logo:
+                          type: string
+                          example: "imaginaryPath/team_logo.png"
+                    modality:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: "Soccer"
+                        logo:
+                          type: string
+                          example: "imaginaryPath/soccer_logo.png"
+                    institution:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 3
+                        name:
+                          type: string
+                          example: "IFMG"
+                        logo:
+                          type: string
+                          example: "imaginaryPath/IFMG.png"
+                    user:
+                      type: object
+                      properties:
+                        email:
+                          type: string
+                          format: email
+                          example: "user@teste.com"
+                        name:
+                          type: string
+                          example: "Teste"
+                        last_name:
+                          type: string
+                          example: "Teste"
+                        gender:
+                          type: string
+                          example: "male"
+                        birthday:
+                          type: string
+                          format: date
+                          example: "1990-01-01"
+                        photo:
+                          type: string
+                          example: "imaginaryPath/photo.jpg"
+                        interface_language:
+                          type: string
+                          example: "pt-BR"
+                        is_admin:
+                          type: boolean
+                          example: false
+                        role:
+                          type: string
+                          example: "participant"
+                    achievements:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          participant_id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: "MVP"
+        '500':
           description: Erro ao buscar Participante
     post:
       security:
@@ -1022,15 +2514,50 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Participant'
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                  example: 1
+                team_id:
+                  type: integer
+                  example: 2
+                institution_id:
+                  type: integer
+                  example: 3
+                modality_id:
+                  type: integer
+                  example: 4
+                position:
+                  type: string
+                  example: "ST"
       responses:
         '201':
           description: Participante criado com sucesso
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Participant'
-        '400':
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  user_id:
+                    type: integer
+                    example: 1
+                  team_id:
+                    type: integer
+                    example: 2
+                  institution_id:
+                    type: integer
+                    example: 3
+                  modality_id:
+                    type: integer
+                    example: 4
+                  position:
+                    type: string
+                    example: "ST"
+        '500':
           description: Falha ao adicionar Participante
   /api/participants/{id}:
     get:
@@ -1053,7 +2580,108 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Participant'
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  user_id:
+                    type: integer
+                    example: 1
+                  team_id:
+                    type: integer
+                    example: 2
+                  institution_id:
+                    type: integer
+                    example: 3
+                  modality_id:
+                    type: integer
+                    example: 4
+                  position:
+                    type: string
+                    example: "ST"
+                  team:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: "Team A"
+                      logo:
+                        type: string
+                        example: "imaginaryPath/team_logo.png"
+                  modality:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: "Soccer"
+                      logo:
+                        type: string
+                        example: "imaginaryPath/soccer_logo.png"
+                  institution:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 3
+                      name:
+                        type: string
+                        example: "IFMG"
+                      logo:
+                        type: string
+                        example: "imaginaryPath/IFMG.png"
+                  user:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                        format: email
+                        example: "user@teste.com"
+                      name:
+                        type: string
+                        example: "Teste"
+                      last_name:
+                        type: string
+                        example: "Teste"
+                      gender:
+                        type: string
+                        example: "male"
+                      birthday:
+                        type: string
+                        format: date
+                        example: "1990-01-01"
+                      photo:
+                        type: string
+                        example: "imaginaryPath/photo.jpg"
+                      interface_language:
+                        type: string
+                        example: "pt-BR"
+                      is_admin:
+                        type: boolean
+                        example: false
+                      role:
+                        type: string
+                        example: "participant"
+                  achievements:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        participant_id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: "MVP"
         '404':
           description: Participante não encontrado
 
@@ -1076,17 +2704,52 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Participant'
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                  example: 1
+                team_id:
+                  type: integer
+                  example: 2
+                institution_id:
+                  type: integer
+                  example: 3
+                modality_id:
+                  type: integer
+                  example: 4
+                position:
+                  type: string
+                  example: "ST"
       responses:
         '200':
           description: Participante atualizado com sucesso
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Participant'
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  user_id:
+                    type: integer
+                    example: 1
+                  team_id:
+                    type: integer
+                    example: 2
+                  institution_id:
+                    type: integer
+                    example: 3
+                  modality_id:
+                    type: integer
+                    example: 4
+                  position:
+                    type: string
+                    example: "ST"
         '404':
           description: Participante não encontrado
-        '400':
+        '500':
           description: Falha ao atualizar Participante
 
     delete:
@@ -1130,8 +2793,54 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Criterion'
-        '400':
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    name:
+                      type: string
+                      example: "Técnica"
+                    points:
+                      type: integer
+                      example: null
+                      nullable: true
+                    sub_criterion:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: "Finalização"
+                        points:
+                          type: integer
+                          example: null
+                          nullable: true
+                        items:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 1
+                              name:
+                                type: string
+                                example: "Chutes dentro da área"
+                              aspect:
+                                type: string
+                                enum:
+                                  - measurable
+                                  - quantitative
+                                description: Poderá ser "measurable" ou "quantitative"
+                                example: quantitative
+                              weight:
+                                type: number
+                                format: float
+                                example: 0.02
+        '500':
           description: Erro ao buscar Criterio
     post:
       security:
@@ -1144,15 +2853,34 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Criterion'
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Técnica"
+                points:
+                  type: integer
+                  example: null
+                  nullable: true
       responses:
         '201':
           description: Criterio criado com sucesso
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Criterion'
-        '400':
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: "Técnica"
+                  points:
+                    type: integer
+                    example: null
+                    nullable: true
+        '500':
           description: Falha ao adicionar Criterio
   /api/criteria/{id}:
     get:
@@ -1175,7 +2903,53 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Criterion'
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: "Técnica"
+                  points:
+                    type: integer
+                    example: null
+                    nullable: true
+                  sub_criterion:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: "Finalização"
+                      points:
+                        type: integer
+                        example: null
+                        nullable: true
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            name:
+                              type: string
+                              example: "Chutes dentro da área"
+                            aspect:
+                              type: string
+                              enum:
+                                - measurable
+                                - quantitative
+                              description: Poderá ser "measurable" ou "quantitative"
+                              example: quantitative
+                            weight:
+                              type: number
+                              format: float
+                              example: 0.02
         '404':
           description: Criterio não encontrado
 
@@ -1198,17 +2972,36 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Criterion'
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Técnica"
+                points:
+                  type: integer
+                  example: null
+                  nullable: true
       responses:
         '200':
           description: Criterio atualizado com sucesso
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Criterion'
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: "Técnica"
+                  points:
+                    type: integer
+                    example: null
+                    nullable: true
         '404':
           description: Criterio não encontrado
-        '400':
+        '500':
           description: Falha ao atualizar Criterio
 
     delete:
@@ -1252,8 +3045,54 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/SubCriterion'
-        '400':
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    name:
+                      type: string
+                      example: "Finalização"
+                    points:
+                      type: integer
+                      example: null
+                      nullable: true
+                    criterion:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: "Técnica"
+                        points:
+                          type: integer
+                          example: null
+                          nullable: true
+                    items:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: "Chutes dentro da área"
+                          aspect:
+                            type: string
+                            enum:
+                              - measurable
+                              - quantitative
+                            description: Poderá ser "measurable" ou "quantitative"
+                            example: quantitative
+                          weight:
+                            type: number
+                            format: float
+                            example: 0.02
+        '500':
           description: Erro ao buscar Subcritério
     post:
       security:
@@ -1266,15 +3105,34 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SubCriterion'
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Finalização"
+                points:
+                  type: integer
+                  example: null
+                  nullable: true
       responses:
         '201':
           description: Subcritério criado com sucesso
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SubCriterion'
-        '400':
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: "Finalização"
+                  points:
+                    type: integer
+                    example: null
+                    nullable: true
+        '500':
           description: Falha ao adicionar Subcritério
   /api/subcriteria/{id}:
     get:
@@ -1297,7 +3155,53 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SubCriterion'
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: "Finalização"
+                  points:
+                    type: integer
+                    example: null
+                    nullable: true
+                  criterion:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: "Técnica"
+                      points:
+                        type: integer
+                        example: null
+                        nullable: true
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: "Chutes dentro da área"
+                        aspect:
+                          type: string
+                          enum:
+                            - measurable
+                            - quantitative
+                          description: Poderá ser "measurable" ou "quantitative"
+                          example: quantitative
+                        weight:
+                          type: number
+                          format: float
+                          example: 0.02
         '404':
           description: Subcritério não encontrado
 
@@ -1320,17 +3224,36 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SubCriterion'
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Finalização"
+                points:
+                  type: integer
+                  example: null
+                  nullable: true
       responses:
         '200':
           description: Subcritério atualizado com sucesso
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SubCriterion'
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: "Finalização"
+                  points:
+                    type: integer
+                    example: null
+                    nullable: true
         '404':
           description: Subcritério não encontrado
-        '400':
+        '500':
           description: Falha ao atualizar Subcritério
 
     delete:
@@ -1374,8 +3297,72 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Item'
-        '400':
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    name:
+                      type: string
+                      example: "Finalização"
+                    points:
+                      type: integer
+                      example: null
+                      nullable: true
+                    criterion:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: "Técnica"
+                        points:
+                          type: integer
+                          example: null
+                          nullable: true
+                    sub_criterion:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: "Finalização"
+                        points:
+                          type: integer
+                          example: null
+                          nullable: true
+                    # judgments:
+                    #   type: array
+                    #   items:
+                    #     type: object
+                    #     properties:
+                    #       id:
+                    #         type: integer
+                    #         example: 1
+                    #       evaluation_id:
+                    #         type: integer
+                    #         example: 1
+                    #       item_id:
+                    #         type: integer
+                    #         example: 1
+                    #       attempt:
+                    #         type: integer
+                    #         example: 10
+                    #       correct_attempt:
+                    #         type: integer
+                    #         example: 8
+                    #       fail_attempt:
+                    #         type: integer
+                    #         example: 2
+                    #       score:
+                    #         type: number
+                    #         format: float
+                    #         example: 8.2
+        '500':
           description: Erro ao buscar Item
     post:
       security:
@@ -1388,15 +3375,34 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Item'
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Finalização"
+                points:
+                  type: integer
+                  example: null
+                  nullable: true
       responses:
         '201':
           description: Item criado com sucesso
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Item'
-        '400':
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: "Finalização"
+                  points:
+                    type: integer
+                    example: null
+                    nullable: true
+        '500':
           description: Falha ao adicionar Item
   /api/items/{id}:
     get:
@@ -1419,7 +3425,44 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Item'
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: "Finalização"
+                  points:
+                    type: integer
+                    example: null
+                    nullable: true
+                  criterion:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: "Técnica"
+                      points:
+                        type: integer
+                        example: null
+                        nullable: true
+                  sub_criterion:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: "Finalização"
+                      points:
+                        type: integer
+                        example: null
+                        nullable: true
         '404':
           description: Item não encontrado
 
@@ -1442,17 +3485,36 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Item'
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Finalização"
+                points:
+                  type: integer
+                  example: null
+                  nullable: true
       responses:
-        '200':
+        '201':
           description: Item atualizado com sucesso
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Item'
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: "Finalização"
+                  points:
+                    type: integer
+                    example: null
+                    nullable: true
         '404':
           description: Item não encontrado
-        '400':
+        '500':
           description: Falha ao atualizar Item
 
     delete:
@@ -1496,8 +3558,275 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Judgment'
-        '400':
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    evaluation_id:
+                      type: integer
+                      example: 1
+                    item_id:
+                      type: integer
+                      example: 1
+                    attempt:
+                      type: integer
+                      example: 10
+                    correct_attempt:
+                      type: integer
+                      example: 8
+                    fail_attempt:
+                      type: integer
+                      example: 2
+                    score:
+                      type: number
+                      format: float
+                      example: 8.2
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: "Finalização"
+                        points:
+                          type: integer
+                          example: null
+                          nullable: true
+                        criterion:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            name:
+                              type: string
+                              example: "Técnica"
+                            points:
+                              type: integer
+                              example: null
+                              nullable: true
+                        sub_criterion:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            name:
+                              type: string
+                              example: "Finalização"
+                            points:
+                              type: integer
+                              example: null
+                              nullable: true
+                    evaluation:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          format: int64
+                          description: ID da avaliação
+                          example: 1
+                        event_day_id:
+                          type: integer
+                          format: int64
+                          description: ID do dia do evento da avaliação
+                          nullable: true
+                          example: 1
+                        participant_id:
+                          type: integer
+                          format: int64
+                          description: ID do participante avaliado
+                          example: 1
+                        modality_id:
+                          type: integer
+                          format: int64
+                          description: ID da modalidade da avaliação
+                          example: 1
+                        judge_id:
+                          type: integer
+                          format: int64
+                          description: ID do usuário que irá julgar
+                          example: 2
+                        date:
+                          type: string
+                          format: date
+                          description: Data da avaliação
+                          nullable: true
+                          example: "2024-10-10"
+                        participant:
+                          type: object
+                          properties:
+                            user_id:
+                              type: integer
+                              example: 1
+                            team_id:
+                              type: integer
+                              example: 2
+                            institution_id:
+                              type: integer
+                              example: 3
+                            modality_id:
+                              type: integer
+                              example: 4
+                            position:
+                              type: string
+                              example: "ST"
+                            team:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                  example: 1
+                                name:
+                                  type: string
+                                  example: "Team A"
+                                logo:
+                                  type: string
+                                  example: "imaginaryPath/team_logo.png"
+                            modality:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                  example: 1
+                                name:
+                                  type: string
+                                  example: "Soccer"
+                                logo:
+                                  type: string
+                                  example: "imaginaryPath/soccer_logo.png"
+                            institution:
+                                type: object
+                                properties:
+                                  id:
+                                    type: integer
+                                    example: 3
+                                  name:
+                                    type: string
+                                    example: "IFMG"
+                                  logo:
+                                    type: string
+                                    example: "imaginaryPath/IFMG.png"
+                            user:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                  format: int64
+                                  example: 1
+                                email:
+                                  type: string
+                                  format: email
+                                  example: "user@teste.com"
+                                name:
+                                  type: string
+                                  example: "Teste"
+                                last_name:
+                                  type: string
+                                  example: "Teste"
+                                gender:
+                                  type: string
+                                  example: "male"
+                                birthday:
+                                  type: string
+                                  format: date
+                                  example: "1990-01-01"
+                                photo:
+                                  type: string
+                                  example: "imaginaryPath/photo.jpg"
+                                interface_language:
+                                  type: string
+                                  example: "pt-BR"
+                                is_admin:
+                                  type: boolean
+                                  example: false
+                                role:
+                                  type: string
+                                  example: "participant"
+                        event_day:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              format: int64
+                              example: 1
+                            event_id:
+                              type: integer
+                              format: int64
+                              example: 1
+                            date:
+                              type: string
+                              format: date
+                              example: "2024-05-10"
+                            start_hour:
+                              type: string
+                              format: time
+                              example: "19:00:00"
+                            event:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                  example: 1
+                                name:
+                                  type: string
+                                  example: "Name"
+                                logo:
+                                  type: string
+                                  example: "imaginaryPath/event_logo.png"
+                        modality:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              format: int64
+                              example: 1
+                            name:
+                              type: string
+                              example: "Name"
+                            logo:
+                              type: string
+                              example: "imaginaryPath/logo.png"
+                        judge:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              format: int64
+                              example: 1
+                            email:
+                              type: string
+                              format: email
+                              example: "user@teste.com"
+                            name:
+                              type: string
+                              example: "Teste"
+                            last_name:
+                              type: string
+                              example: "Teste"
+                            gender:
+                              type: string
+                              example: "male"
+                            birthday:
+                              type: string
+                              format: date
+                              example: "1990-01-01"
+                            photo:
+                              type: string
+                              example: "imaginaryPath/photo.jpg"
+                            interface_language:
+                              type: string
+                              example: "pt-BR"
+                            is_admin:
+                              type: boolean
+                              example: false
+                            role:
+                              type: string
+                              example: "participant"
+        '500':
           description: Erro ao buscar Julgamento
     post:
       security:
@@ -1511,15 +3840,62 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Judgment'
+              type: array
+              items:
+                type: object
+                properties:
+                  evaluation_id:
+                    type: integer
+                    example: 1
+                  item_id:
+                    type: integer
+                    example: 1
+                  attempt:
+                    type: integer
+                    example: 10
+                  correct_attempt:
+                    type: integer
+                    example: 8
+                  fail_attempt:
+                    type: integer
+                    example: 2
+                  score:
+                    type: number
+                    format: float
+                    example: 8.2
       responses:
         '201':
           description: Julgamento criado com sucesso
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Judgment'
-        '400':
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    evaluation_id:
+                      type: integer
+                      example: 1
+                    item_id:
+                      type: integer
+                      example: 1
+                    attempt:
+                      type: integer
+                      example: 10
+                    correct_attempt:
+                      type: integer
+                      example: 8
+                    fail_attempt:
+                      type: integer
+                      example: 2
+                    score:
+                      type: number
+                      format: float
+                      example: 8.2
+        '500':
           description: Falha ao adicionar Julgamento
   /api/judgments/{id}:
     get:
@@ -1542,7 +3918,274 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Judgment'
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  evaluation_id:
+                    type: integer
+                    example: 1
+                  item_id:
+                    type: integer
+                    example: 1
+                  attempt:
+                    type: integer
+                    example: 10
+                  correct_attempt:
+                    type: integer
+                    example: 8
+                  fail_attempt:
+                    type: integer
+                    example: 2
+                  score:
+                    type: number
+                    format: float
+                    example: 8.2
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: "Finalização"
+                      points:
+                        type: integer
+                        example: null
+                        nullable: true
+                      criterion:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: "Técnica"
+                          points:
+                            type: integer
+                            example: null
+                            nullable: true
+                      sub_criterion:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: "Finalização"
+                          points:
+                            type: integer
+                            example: null
+                            nullable: true
+                  evaluation:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        format: int64
+                        description: ID da avaliação
+                        example: 1
+                      event_day_id:
+                        type: integer
+                        format: int64
+                        description: ID do dia do evento da avaliação
+                        nullable: true
+                        example: 1
+                      participant_id:
+                        type: integer
+                        format: int64
+                        description: ID do participante avaliado
+                        example: 1
+                      modality_id:
+                        type: integer
+                        format: int64
+                        description: ID da modalidade da avaliação
+                        example: 1
+                      judge_id:
+                        type: integer
+                        format: int64
+                        description: ID do usuário que irá julgar
+                        example: 2
+                      date:
+                        type: string
+                        format: date
+                        description: Data da avaliação
+                        nullable: true
+                        example: "2024-10-10"
+                      participant:
+                        type: object
+                        properties:
+                          user_id:
+                            type: integer
+                            example: 1
+                          team_id:
+                            type: integer
+                            example: 2
+                          institution_id:
+                            type: integer
+                            example: 3
+                          modality_id:
+                            type: integer
+                            example: 4
+                          position:
+                            type: string
+                            example: "ST"
+                          team:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 1
+                              name:
+                                type: string
+                                example: "Team A"
+                              logo:
+                                type: string
+                                example: "imaginaryPath/team_logo.png"
+                          modality:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 1
+                              name:
+                                type: string
+                                example: "Soccer"
+                              logo:
+                                type: string
+                                example: "imaginaryPath/soccer_logo.png"
+                          institution:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                  example: 3
+                                name:
+                                  type: string
+                                  example: "IFMG"
+                                logo:
+                                  type: string
+                                  example: "imaginaryPath/IFMG.png"
+                          user:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                format: int64
+                                example: 1
+                              email:
+                                type: string
+                                format: email
+                                example: "user@teste.com"
+                              name:
+                                type: string
+                                example: "Teste"
+                              last_name:
+                                type: string
+                                example: "Teste"
+                              gender:
+                                type: string
+                                example: "male"
+                              birthday:
+                                type: string
+                                format: date
+                                example: "1990-01-01"
+                              photo:
+                                type: string
+                                example: "imaginaryPath/photo.jpg"
+                              interface_language:
+                                type: string
+                                example: "pt-BR"
+                              is_admin:
+                                type: boolean
+                                example: false
+                              role:
+                                type: string
+                                example: "participant"
+                      event_day:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            format: int64
+                            example: 1
+                          event_id:
+                            type: integer
+                            format: int64
+                            example: 1
+                          date:
+                            type: string
+                            format: date
+                            example: "2024-05-10"
+                          start_hour:
+                            type: string
+                            format: time
+                            example: "19:00:00"
+                          event:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 1
+                              name:
+                                type: string
+                                example: "Name"
+                              logo:
+                                type: string
+                                example: "imaginaryPath/event_logo.png"
+                      modality:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            format: int64
+                            example: 1
+                          name:
+                            type: string
+                            example: "Name"
+                          logo:
+                            type: string
+                            example: "imaginaryPath/logo.png"
+                      judge:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            format: int64
+                            example: 1
+                          email:
+                            type: string
+                            format: email
+                            example: "user@teste.com"
+                          name:
+                            type: string
+                            example: "Teste"
+                          last_name:
+                            type: string
+                            example: "Teste"
+                          gender:
+                            type: string
+                            example: "male"
+                          birthday:
+                            type: string
+                            format: date
+                            example: "1990-01-01"
+                          photo:
+                            type: string
+                            example: "imaginaryPath/photo.jpg"
+                          interface_language:
+                            type: string
+                            example: "pt-BR"
+                          is_admin:
+                            type: boolean
+                            example: false
+                          role:
+                            type: string
+                            example: "participant"
         '404':
           description: Julgamento não encontrado
 
@@ -1565,17 +4208,64 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Judgment'
+              type: array
+              items:
+                type: object
+                properties:
+                  evaluation_id:
+                    type: integer
+                    example: 1
+                  item_id:
+                    type: integer
+                    example: 1
+                  attempt:
+                    type: integer
+                    example: 10
+                  correct_attempt:
+                    type: integer
+                    example: 8
+                  fail_attempt:
+                    type: integer
+                    example: 2
+                  score:
+                    type: number
+                    format: float
+                    example: 8.2
       responses:
         '200':
           description: Julgamento atualizado com sucesso
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Judgment'
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    evaluation_id:
+                      type: integer
+                      example: 1
+                    item_id:
+                      type: integer
+                      example: 1
+                    attempt:
+                      type: integer
+                      example: 10
+                    correct_attempt:
+                      type: integer
+                      example: 8
+                    fail_attempt:
+                      type: integer
+                      example: 2
+                    score:
+                      type: number
+                      format: float
+                      example: 8.2
         '404':
           description: Julgamento não encontrado
-        '400':
+        '500':
           description: Falha ao atualizar Julgamento
 
     delete:
@@ -1619,8 +4309,277 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Evaluation'
-        '400':
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      format: int64
+                      description: ID da avaliação
+                      example: 1
+                    event_day_id:
+                      type: integer
+                      format: int64
+                      description: ID do dia do evento da avaliação
+                      nullable: true
+                      example: 1
+                    participant_id:
+                      type: integer
+                      format: int64
+                      description: ID do participante avaliado
+                      example: 1
+                    modality_id:
+                      type: integer
+                      format: int64
+                      description: ID da modalidade da avaliação
+                      example: 1
+                    judge_id:
+                      type: integer
+                      format: int64
+                      description: ID do usuário que irá julgar
+                      example: 2
+                    date:
+                      type: string
+                      format: date
+                      description: Data da avaliação
+                      nullable: true
+                      example: null
+                    judgments:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          evaluation_id:
+                            type: integer
+                            example: 1
+                          item_id:
+                            type: integer
+                            example: 1
+                          attempt:
+                            type: integer
+                            example: 10
+                          correct_attempt:
+                            type: integer
+                            example: 8
+                          fail_attempt:
+                            type: integer
+                            example: 2
+                          score:
+                            type: number
+                            format: float
+                            example: 8.2
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 1
+                              name:
+                                type: string
+                                example: "Finalização"
+                              points:
+                                type: integer
+                                example: null
+                                nullable: true
+                              criterion:
+                                type: object
+                                properties:
+                                  id:
+                                    type: integer
+                                    example: 1
+                                  name:
+                                    type: string
+                                    example: "Técnica"
+                                  points:
+                                    type: integer
+                                    example: null
+                                    nullable: true
+                              sub_criterion:
+                                type: object
+                                properties:
+                                  id:
+                                    type: integer
+                                    example: 1
+                                  name:
+                                    type: string
+                                    example: "Finalização"
+                                  points:
+                                    type: integer
+                                    example: null
+                                    nullable: true
+                    participant:
+                      type: object
+                      properties:
+                        user_id:
+                          type: integer
+                          example: 1
+                        team_id:
+                          type: integer
+                          example: 2
+                        institution_id:
+                          type: integer
+                          example: 3
+                        modality_id:
+                          type: integer
+                          example: 4
+                        position:
+                          type: string
+                          example: "ST"
+                        team:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            name:
+                              type: string
+                              example: "Team A"
+                            logo:
+                              type: string
+                              example: "imaginaryPath/team_logo.png"
+                        modality:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            name:
+                              type: string
+                              example: "Soccer"
+                            logo:
+                              type: string
+                              example: "imaginaryPath/soccer_logo.png"
+                        institution:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 3
+                              name:
+                                type: string
+                                example: "IFMG"
+                              logo:
+                                type: string
+                                example: "imaginaryPath/IFMG.png"
+                        user:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              format: int64
+                              example: 1
+                            email:
+                              type: string
+                              format: email
+                              example: "user@teste.com"
+                            name:
+                              type: string
+                              example: "Teste"
+                            last_name:
+                              type: string
+                              example: "Teste"
+                            gender:
+                              type: string
+                              example: "male"
+                            birthday:
+                              type: string
+                              format: date
+                              example: "1990-01-01"
+                            photo:
+                              type: string
+                              example: "imaginaryPath/photo.jpg"
+                            interface_language:
+                              type: string
+                              example: "pt-BR"
+                            is_admin:
+                              type: boolean
+                              example: false
+                            role:
+                              type: string
+                              example: "participant"
+                    event_day:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          format: int64
+                          example: 1
+                        event_id:
+                          type: integer
+                          format: int64
+                          example: 1
+                        date:
+                          type: string
+                          format: date
+                          example: "2024-05-10"
+                        start_hour:
+                          type: string
+                          format: time
+                          example: "19:00:00"
+                        event:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            name:
+                              type: string
+                              example: "Name"
+                            logo:
+                              type: string
+                              example: "imaginaryPath/event_logo.png"
+                    modality:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          format: int64
+                          example: 1
+                        name:
+                          type: string
+                          example: "Name"
+                        logo:
+                          type: string
+                          example: "imaginaryPath/logo.png"
+                    judge:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          format: int64
+                          example: 1
+                        email:
+                          type: string
+                          format: email
+                          example: "user@teste.com"
+                        name:
+                          type: string
+                          example: "Teste"
+                        last_name:
+                          type: string
+                          example: "Teste"
+                        gender:
+                          type: string
+                          example: "male"
+                        birthday:
+                          type: string
+                          format: date
+                          example: "1990-01-01"
+                        photo:
+                          type: string
+                          example: "imaginaryPath/photo.jpg"
+                        interface_language:
+                          type: string
+                          example: "pt-BR"
+                        is_admin:
+                          type: boolean
+                          example: false
+                        role:
+                          type: string
+                          example: "participant"
+        '500':
           description: Erro ao buscar Avaliação
     post:
       security:
@@ -1633,15 +4592,76 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Evaluation'
+              type: object
+              properties:
+                event_day_id:
+                  type: integer
+                  format: int64
+                  description: ID do dia do evento da avaliação
+                  nullable: true
+                  example: 1
+                participant_id:
+                  type: integer
+                  format: int64
+                  description: ID do participante avaliado
+                  example: 1
+                modality_id:
+                  type: integer
+                  format: int64
+                  description: ID da modalidade da avaliação
+                  example: 1
+                judge_id:
+                  type: integer
+                  format: int64
+                  description: ID do usuário que irá julgar
+                  example: 2
+                date:
+                  type: string
+                  format: date
+                  description: Data da avaliação
+                  nullable: true
+                  example: null
       responses:
         '201':
           description: Avaliação criada com sucesso
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Evaluation'
-        '400':
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                    description: ID da avaliação
+                    example: 1
+                  event_day_id:
+                    type: integer
+                    format: int64
+                    description: ID do dia do evento da avaliação
+                    nullable: true
+                    example: 1
+                  participant_id:
+                    type: integer
+                    format: int64
+                    description: ID do participante avaliado
+                    example: 1
+                  modality_id:
+                    type: integer
+                    format: int64
+                    description: ID da modalidade da avaliação
+                    example: 1
+                  judge_id:
+                    type: integer
+                    format: int64
+                    description: ID do usuário que irá julgar
+                    example: 2
+                  date:
+                    type: string
+                    format: date
+                    description: Data da avaliação
+                    nullable: true
+                    example: null
+        '500':
           description: Falha ao adicionar Avaliação
   /api/evaluations/{id}:
     get:
@@ -1664,7 +4684,276 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Evaluation'
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                    description: ID da avaliação
+                    example: 1
+                  event_day_id:
+                    type: integer
+                    format: int64
+                    description: ID do dia do evento da avaliação
+                    nullable: true
+                    example: 1
+                  participant_id:
+                    type: integer
+                    format: int64
+                    description: ID do participante avaliado
+                    example: 1
+                  modality_id:
+                    type: integer
+                    format: int64
+                    description: ID da modalidade da avaliação
+                    example: 1
+                  judge_id:
+                    type: integer
+                    format: int64
+                    description: ID do usuário que irá julgar
+                    example: 2
+                  date:
+                    type: string
+                    format: date
+                    description: Data da avaliação
+                    nullable: true
+                    example: null
+                  judgments:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        evaluation_id:
+                          type: integer
+                          example: 1
+                        item_id:
+                          type: integer
+                          example: 1
+                        attempt:
+                          type: integer
+                          example: 10
+                        correct_attempt:
+                          type: integer
+                          example: 8
+                        fail_attempt:
+                          type: integer
+                          example: 2
+                        score:
+                          type: number
+                          format: float
+                          example: 8.2
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            name:
+                              type: string
+                              example: "Finalização"
+                            points:
+                              type: integer
+                              example: null
+                              nullable: true
+                            criterion:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                  example: 1
+                                name:
+                                  type: string
+                                  example: "Técnica"
+                                points:
+                                  type: integer
+                                  example: null
+                                  nullable: true
+                            sub_criterion:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                  example: 1
+                                name:
+                                  type: string
+                                  example: "Finalização"
+                                points:
+                                  type: integer
+                                  example: null
+                                  nullable: true
+                  participant:
+                    type: object
+                    properties:
+                      user_id:
+                        type: integer
+                        example: 1
+                      team_id:
+                        type: integer
+                        example: 2
+                      institution_id:
+                        type: integer
+                        example: 3
+                      modality_id:
+                        type: integer
+                        example: 4
+                      position:
+                        type: string
+                        example: "ST"
+                      team:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: "Team A"
+                          logo:
+                            type: string
+                            example: "imaginaryPath/team_logo.png"
+                      modality:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: "Soccer"
+                          logo:
+                            type: string
+                            example: "imaginaryPath/soccer_logo.png"
+                      institution:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 3
+                            name:
+                              type: string
+                              example: "IFMG"
+                            logo:
+                              type: string
+                              example: "imaginaryPath/IFMG.png"
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            format: int64
+                            example: 1
+                          email:
+                            type: string
+                            format: email
+                            example: "user@teste.com"
+                          name:
+                            type: string
+                            example: "Teste"
+                          last_name:
+                            type: string
+                            example: "Teste"
+                          gender:
+                            type: string
+                            example: "male"
+                          birthday:
+                            type: string
+                            format: date
+                            example: "1990-01-01"
+                          photo:
+                            type: string
+                            example: "imaginaryPath/photo.jpg"
+                          interface_language:
+                            type: string
+                            example: "pt-BR"
+                          is_admin:
+                            type: boolean
+                            example: false
+                          role:
+                            type: string
+                            example: "participant"
+                  event_day:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        format: int64
+                        example: 1
+                      event_id:
+                        type: integer
+                        format: int64
+                        example: 1
+                      date:
+                        type: string
+                        format: date
+                        example: "2024-05-10"
+                      start_hour:
+                        type: string
+                        format: time
+                        example: "19:00:00"
+                      event:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: "Name"
+                          logo:
+                            type: string
+                            example: "imaginaryPath/event_logo.png"
+                  modality:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        format: int64
+                        example: 1
+                      name:
+                        type: string
+                        example: "Name"
+                      logo:
+                        type: string
+                        example: "imaginaryPath/logo.png"
+                  judge:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        format: int64
+                        example: 1
+                      email:
+                        type: string
+                        format: email
+                        example: "user@teste.com"
+                      name:
+                        type: string
+                        example: "Teste"
+                      last_name:
+                        type: string
+                        example: "Teste"
+                      gender:
+                        type: string
+                        example: "male"
+                      birthday:
+                        type: string
+                        format: date
+                        example: "1990-01-01"
+                      photo:
+                        type: string
+                        example: "imaginaryPath/photo.jpg"
+                      interface_language:
+                        type: string
+                        example: "pt-BR"
+                      is_admin:
+                        type: boolean
+                        example: false
+                      role:
+                        type: string
+                        example: "participant"
         '404':
           description: Avaliação não encontrada
 
@@ -1687,17 +4976,78 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Evaluation'
+              type: object
+              properties:
+                event_day_id:
+                  type: integer
+                  format: int64
+                  description: ID do dia do evento da avaliação
+                  nullable: true
+                  example: 1
+                participant_id:
+                  type: integer
+                  format: int64
+                  description: ID do participante avaliado
+                  example: 1
+                modality_id:
+                  type: integer
+                  format: int64
+                  description: ID da modalidade da avaliação
+                  example: 1
+                judge_id:
+                  type: integer
+                  format: int64
+                  description: ID do usuário que irá julgar
+                  example: 2
+                date:
+                  type: string
+                  format: date
+                  description: Data da avaliação
+                  nullable: true
+                  example: null
       responses:
         '200':
           description: Avaliação atualizada com sucesso
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Evaluation'
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                    description: ID da avaliação
+                    example: 1
+                  event_day_id:
+                    type: integer
+                    format: int64
+                    description: ID do dia do evento da avaliação
+                    nullable: true
+                    example: 1
+                  participant_id:
+                    type: integer
+                    format: int64
+                    description: ID do participante avaliado
+                    example: 1
+                  modality_id:
+                    type: integer
+                    format: int64
+                    description: ID da modalidade da avaliação
+                    example: 1
+                  judge_id:
+                    type: integer
+                    format: int64
+                    description: ID do usuário que irá julgar
+                    example: 2
+                  date:
+                    type: string
+                    format: date
+                    description: Data da avaliação
+                    nullable: true
+                    example: null
         '404':
           description: Avaliação não encontrado
-        '400':
+        '500':
           description: Falha ao atualizar Avaliação
 
     delete:
@@ -1751,7 +5101,7 @@ components:
         gender:
           type: string
           description: Gênero do participante
-          example: "Male"
+          example: "male"
         photo:
           type: string
           description: Caminho para foto do usuário
