@@ -29,6 +29,6 @@ class EventDay extends Model{
     }
 
     public function evaluations(){
-        return $this->hasMany(Evaluations::class, 'event_day_id');
+        return $this->hasMany(Evaluation::class, 'event_day_id');
     }
 }

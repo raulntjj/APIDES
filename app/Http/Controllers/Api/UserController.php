@@ -18,7 +18,6 @@ class UserController{
     public function index(Request $request){
         return $this->userService->getUsers($request);
     }
-
     //Função para obter um usuário
     public function show(int $id){
         return $this->userService->getUser($id);

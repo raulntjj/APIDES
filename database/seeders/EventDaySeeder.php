@@ -22,6 +22,13 @@ class EventDaySeeder extends Seeder
         ]);
 
         EventDay::create([
+            "event_id" => "1",
+            "date" => "2024-04-12",
+            "start_hour" => "21:00:00",
+            "index" => "2"
+        ]);
+
+        EventDay::create([
             "event_id" => "2",
             "date" => "2024-05-20",
             "start_hour" => "20:00:00",
@@ -36,6 +43,20 @@ class EventDaySeeder extends Seeder
         ]);
 
         EventDay::create([
+            "event_id" => "3",
+            "date" => "2024-07-09",
+            "start_hour" => "20:00:00",
+            "index" => "2"
+        ]);
+
+        EventDay::create([
+            "event_id" => "3",
+            "date" => "2024-07-13",
+            "start_hour" => "20:00:00",
+            "index" => "3"
+        ]);
+
+        EventDay::create([
             "event_id" => "4",
             "date" => "2024-06-15",
             "start_hour" => "20:00:00",
@@ -44,8 +65,29 @@ class EventDaySeeder extends Seeder
 
         EventDay::create([
             "event_id" => "5",
+            "date" => "2024-10-08",
+            "start_hour" => "08:00:00",
+            "index" => "1"
+        ]);
+
+        EventDay::create([
+            "event_id" => "6",
+            "date" => "2024-10-08",
+            "start_hour" => "15:00:00",
+            "index" => "1"
+        ]);
+
+        EventDay::create([
+            "event_id" => "7",
+            "date" => "2024-08-30",
+            "start_hour" => "16:00:00",
+            "index" => "1"
+        ]);
+
+        EventDay::create([
+            "event_id" => "8",
             "date" => "2024-08-08",
-            "start_hour" => "20:00:00",
+            "start_hour" => "19:00:00",
             "index" => "1"
         ]);
     }

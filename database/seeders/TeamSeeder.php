@@ -13,27 +13,27 @@ class TeamSeeder extends Seeder
      */
     public function run(): void{
         Team::create([
-            "name" => "Cruzeiro do buracão",
+            "name" => "Cruzeiro",
             "logo" => "path/logo.png"
         ]);
 
         Team::create([
-            "name" => "Flamengo da Serra",
+            "name" => "Flamengo",
             "logo" => "path/flamengo_logo.png"
         ]);
 
         Team::create([
-            "name" => "Palmeiras da Praia",
+            "name" => "Palmeiras",
             "logo" => "path/palmeiras_logo.png"
         ]);
 
         Team::create([
-            "name" => "São Paulo da Montanha",
+            "name" => "São Paulo",
             "logo" => "path/sao_paulo_logo.png"
         ]);
 
         Team::create([
-            "name" => "Corinthians do Campo",
+            "name" => "Corinthians",
             "logo" => "path/corinthians_logo.png"
         ]);
     }

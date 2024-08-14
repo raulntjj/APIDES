@@ -13,17 +13,31 @@ class EvaluationSeeder extends Seeder
      */
     public function run(): void{
         Evaluation::create([
-            "participant_id" => 1,
+            "participant_id" => 3,
             "modality_id" => 1,
             "judge_id" => 1,
             "event_day_id" => 1
         ]);
 
         Evaluation::create([
-            "participant_id" => 1,
+            "participant_id" => 3,
             "modality_id" => 1,
             "judge_id" => 1,
-            "date" => "2024-09-10"
+            "event_day_id" => 2
+        ]);
+
+        Evaluation::create([
+            "participant_id" => 4,
+            "modality_id" => 1,
+            "judge_id" => 1,
+            "event_day_id" => 3
+        ]);
+
+        Evaluation::create([
+            "participant_id" => 4,
+            "modality_id" => 1,
+            "judge_id" => 1,
+            "event_day_id" => 4
         ]);
 
         // Evaluation::create([

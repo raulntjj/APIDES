@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
             'birthday' => '2000-01-01',
             'email' => 'admin@teste.com',
             'password' => '12345678',
-            'role' => 'default',
+            'role' => 'admin',
             'is_admin' => true,
             'interface_language' => 'PT-BR'
         ]);
@@ -77,7 +77,7 @@ class UserSeeder extends Seeder
             'birthday' => '2000-01-01',
             'email' => 'pedro@teste.com',
             'password' => '12345678',
-            'role' => 'Default',
+            'role' => 'participant',
             'interface_language' => 'PT-BR'
         ]);
     }

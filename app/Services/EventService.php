@@ -12,7 +12,7 @@ class EventService{
     //Função privada utilizada para encontrar os eventos ao longo do serviço
     private function findEvent(int $id){
         //Busca e retorna o evento
-        return Event::with('days', 'address')->findOrFail($id);
+        return Event::with('days.evaluations.participant.user', 'address')->findOrFail($id);
     }
 
     //Função pública utilizada para retornar todos os evento
@@ -21,12 +21,13 @@ class EventService{
         try{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () use ($request) {
-                $eventQuery = Event::with('days', 'address');
+                $eventQuery = Event::with('days.evaluations.participant.user', 'address');
                 if ($request->has('search')) {
                     $search = $request->search;
 
                     $eventQuery->where(function ($query) use ($search) {
-                        $query->Where('name', 'like', '%' . $search . '%');
+                        $query->where('name', 'like', '%' . $search . '%')
+                        ->orWhere('type', 'like', '%' . $search . '%');
                     });
                 }
                 //Retornando todos eventos e o código de respostas

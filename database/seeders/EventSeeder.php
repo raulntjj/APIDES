@@ -15,28 +15,51 @@ class EventSeeder extends Seeder
      */
     public function run(): void{
         Event::create([
-            "name" => "Campeonato Brasileiro de Botão",
+            "name" => "Campeonato de futsal de Caratinga",
             "logo" => "path/logo.png",
+            "type" => "tournament"
         ]);
 
         Event::create([
-            "name" => "Torneio Internacional de Xadrez",
-            "logo" => "path/chess_logo.png",
+            "name" => "Super Copa Perna de Pau",
+            "logo" => "path/logo.png",
+            "type" => "tournament"
         ]);
 
         Event::create([
-            "name" => "Conferência de Tecnologia",
-            "logo" => "path/tech_conference_logo.png",
+            "name" => "Jogos Escolares de Minas Gerais",
+            "logo" => "path/logo.png",
+            "type" => "tournament"
         ]);
 
         Event::create([
-            "name" => "Exposição de Arte Contemporânea",
-            "logo" => "path/art_exhibition_logo.png",
+            "name" => "Copa Caratinguense",
+            "logo" => "path/logo.png",
+            "type" => "tournament"
         ]);
 
         Event::create([
-            "name" => "Concerto de Música Clássica",
-            "logo" => "path/classical_music_concert_logo.png",
+            "name" => "JEMG II",
+            "logo" => "path/logo.png",
+            "type" => "tournament"
+        ]);
+
+        Event::create([
+            "name" => "Treinamento de futsal Escola Flamengo de Caratinga",
+            "logo" => "path/logo.png",
+            "type" => "training"
+        ]);
+
+        Event::create([
+            "name" => "Treinamento de futebol Escola Flamengo de Caratinga",
+            "logo" => "path/logo.png",
+            "type" => "training"
+        ]);
+
+        Event::create([
+            "name" => "Treinamento de fut7 Escola Flamengo de Caratinga",
+            "logo" => "path/logo.png",
+            "type" => "training"
         ]);
     }
 }

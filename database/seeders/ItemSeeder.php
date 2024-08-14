@@ -15,29 +15,28 @@ class ItemSeeder extends Seeder
         Item::create([
             "sub_criterion_id" => 1,
             "name" => "Chutes dentro da área",
-            "aspect" => "quantitative",
+            "aspect" => "measurable",
             "weight" => 0.02,
         ]);
 
         Item::create([
             "sub_criterion_id" => 1,
             "name" => "Chutes fora da área",
-            "aspect" => "quantitative",
+            "aspect" => "measurable",
             "weight" => 0.02,
-
         ]);
 
         Item::create([
             "sub_criterion_id" => 1,
             "name" => "Pênalti",
-            "aspect" => "quantitative",
+            "aspect" => "measurable",
             "weight" => 0.02,
         ]);
 
         Item::create([
             "sub_criterion_id" => 1,
             "name" => "Cabeçeio",
-            "aspect" => "measurable"
+            "aspect" => "subjective"
         ]);
     }
 }

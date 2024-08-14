@@ -13,19 +13,19 @@ class ModalitySeeder extends Seeder
      */
     public function run(): void{
         Modality::create([
+            "name" => "Futebol"
+        ]);
+
+        Modality::create([
             "name" => "Futsal"
         ]);
 
         Modality::create([
-            "name" => "Natação"
+            "name" => "Fut7"
         ]);
 
         Modality::create([
-            "name" => "Vôlei"
-        ]);
-
-        Modality::create([
-            "name" => "Judô"
+            "name" => "Fut5"
         ]);
 
         Modality::create([

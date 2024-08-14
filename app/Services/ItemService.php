@@ -71,6 +71,7 @@ class ItemService{
                 $item = Item::create($request->only(
                     //Foi deixado o request->only() no lugar do request->all()
                     //Para deixar mais explícito e descritivo em relação as variavéis que estão sendo utilizadas etc..
+                    'sub_criterion_id',
                     'name',
                     'aspect',
                     'weight',
@@ -98,6 +99,7 @@ class ItemService{
                 //Atualizando dados do itens e salvando utilizando o método fill
                 $item->fill($request->only(
                     //Explicitando váriaveis
+                    'sub_criterion_id',
                     'name',
                     'aspect',
                     'weight',
@@ -123,7 +125,6 @@ class ItemService{
                 $item = $this->findItem($id);
                 //Deletando itens
                 $item->delete();
-
                 //retornando resposta json
                 return response()->json(['Success' => 'Item deleted'], 204);
             });

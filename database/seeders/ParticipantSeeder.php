@@ -43,7 +43,8 @@ class ParticipantSeeder extends Seeder{
                 "user_id" => $i,
                 "team_id" => $i,
                 "institution_id" => $i,
-                "modality_id" => $i,
+                "modality_id" => 1,
+                "position" => $position
             ]);
 
             Achievement::create([
