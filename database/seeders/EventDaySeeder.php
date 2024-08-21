@@ -22,13 +22,6 @@ class EventDaySeeder extends Seeder
         ]);
 
         EventDay::create([
-            "event_id" => "1",
-            "date" => "2024-04-12",
-            "start_hour" => "21:00:00",
-            "index" => "2"
-        ]);
-
-        EventDay::create([
             "event_id" => "2",
             "date" => "2024-05-20",
             "start_hour" => "20:00:00",
@@ -40,20 +33,6 @@ class EventDaySeeder extends Seeder
             "date" => "2024-07-05",
             "start_hour" => "20:00:00",
             "index" => "1"
-        ]);
-
-        EventDay::create([
-            "event_id" => "3",
-            "date" => "2024-07-09",
-            "start_hour" => "20:00:00",
-            "index" => "2"
-        ]);
-
-        EventDay::create([
-            "event_id" => "3",
-            "date" => "2024-07-13",
-            "start_hour" => "20:00:00",
-            "index" => "3"
         ]);
 
         EventDay::create([

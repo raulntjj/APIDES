@@ -8,12 +8,67 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class UserSeeder extends Seeder
-{
+class UserSeeder extends Seeder{
     /**
      * Run the database seeds.
      */
     public function run(): void{
+        User::create([
+            'name' => 'Participante 1',
+            'last_name' => 'Sobrenome 1',
+            'gender' => 'male',
+            'birthday' => '2000-01-01',
+            'email' => 'participante1@teste.com',
+            'password' => '12345678',
+            'role' => 'participant',
+            'interface_language' => 'PT-BR'
+        ]);
+
+        User::create([
+            'name' => 'Participante 2',
+            'last_name' => 'Sobrenome 2',
+            'gender' => 'male',
+            'birthday' => '2000-01-01',
+            'email' => 'participante2@teste.com',
+            'password' => '12345678',
+            'role' => 'participant',
+            'interface_language' => 'PT-BR'
+        ]);
+
+        User::create([
+            'name' => 'Participante 3',
+            'last_name' => 'Sobrenome 3',
+            'gender' => 'male',
+            'birthday' => '2000-01-01',
+            'email' => 'participante3@teste.com',
+            'password' => '12345678',
+            'role' => 'participant',
+            'interface_language' => 'PT-BR'
+        ]);
+
+        User::create([
+            'name' => 'Participante 4',
+            'last_name' => 'Sobrenome 4',
+            'gender' => 'male',
+            'birthday' => '2000-01-01',
+            'email' => 'participante4@teste.com',
+            'password' => '12345678',
+            'role' => 'participant',
+            'interface_language' => 'PT-BR'
+        ]);
+
+        User::create([
+            'name' => 'Participante 5',
+            'last_name' => 'Sobrenome 5',
+            'gender' => 'male',
+            'birthday' => '2000-01-01',
+            'email' => 'participante5@teste.com',
+            'password' => '12345678',
+            'role' => 'participant',
+            'interface_language' => 'PT-BR'
+        ]);
+
+
         User::create([
             'name' => 'Admin',
             'last_name' => 'Admin',
@@ -27,57 +82,35 @@ class UserSeeder extends Seeder
         ]);
 
         User::create([
-            'name' => 'avaliador',
-            'last_name' => 'avaliador',
+            'name' => 'avaliador1',
+            'last_name' => 'avaliador1',
             'gender' => 'male',
             'birthday' => '2000-01-01',
-            'email' => 'avaliador@teste.com',
+            'email' => 'avaliador1@teste.com',
             'password' => '12345678',
             'role' => 'judge',
             'interface_language' => 'PT-BR'
         ]);
 
         User::create([
-            'name' => 'participant',
-            'last_name' => 'participant',
-            'gender' => 'female',
-            'birthday' => '2000-01-01',
-            'email' => 'participante@teste.com',
-            'password' => '12345678',
-            'role' => 'participant',
-            'interface_language' => 'PT-BR'
-        ]);
-
-        User::create([
-            'name' => 'Ricardo',
-            'last_name' => 'Silva',
-            'gender' => 'other',
-            'birthday' => '2000-01-01',
-            'email' => 'ricardo@teste.com',
-            'password' => '12345678',
-            'role' => 'participant',
-            'interface_language' => 'PT-BR'
-        ]);
-
-        User::create([
-            'name' => 'Camila',
-            'last_name' => 'Silva',
-            'gender' => 'female',
-            'birthday' => '2000-01-01',
-            'email' => 'camila@teste.com',
-            'password' => '12345678',
-            'role' => 'participant',
-            'interface_language' => 'PT-BR'
-        ]);
-
-        User::create([
-            'name' => 'Pedro',
-            'last_name' => 'Silva',
+            'name' => 'avaliador2',
+            'last_name' => 'avaliador2',
             'gender' => 'male',
             'birthday' => '2000-01-01',
-            'email' => 'pedro@teste.com',
+            'email' => 'avaliador2@teste.com',
             'password' => '12345678',
-            'role' => 'participant',
+            'role' => 'judge',
+            'interface_language' => 'PT-BR'
+        ]);
+
+        User::create([
+            'name' => 'avaliador3',
+            'last_name' => 'avaliador3',
+            'gender' => 'male',
+            'birthday' => '2000-01-01',
+            'email' => 'avaliador3@teste.com',
+            'password' => '12345678',
+            'role' => 'judge',
             'interface_language' => 'PT-BR'
         ]);
     }

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('attempt')->nullable();
             $table->integer('correct_attempt')->nullable();
             $table->integer('fail_attempt')->nullable();
-            $table->decimal('score', 4, 2)->nullable(); // Permitindo valores de 0.00 a 10.00
+            $table->string('score')->nullable();
             $table->timestamps();
         });
     }

@@ -41,16 +41,16 @@ class ParticipantSeeder extends Seeder{
 
             Participant::create([
                 "user_id" => $i,
-                "team_id" => $i,
-                "institution_id" => $i,
+                "team_id" => 1,
+                // "institution_id" => $i,
                 "modality_id" => 1,
                 "position" => $position
             ]);
 
-            Achievement::create([
-                "participant_id" => $i,
-                "name" => "MVP"
-            ]);
+            // Achievement::create([
+            //     "participant_id" => $i,
+            //     "name" => "MVP"
+            // ]);
         }
     }
 }

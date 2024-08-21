@@ -27,9 +27,5 @@ class ModalitySeeder extends Seeder
         Modality::create([
             "name" => "Fut5"
         ]);
-
-        Modality::create([
-            "name" => "Atletismo"
-        ]);
     }
 }

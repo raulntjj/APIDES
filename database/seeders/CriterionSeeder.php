@@ -13,23 +13,11 @@ class CriterionSeeder extends Seeder
      */
     public function run(): void{
         Criterion::create([
-            "name" => "Técnica",
-            "points" => 100
-        ]);
-
-        Criterion::create([
-            "name" => "Psicológica",
-            "points" => 100
-        ]);
-
-        Criterion::create([
             "name" => "Física",
-            "points" => 100
         ]);
 
         Criterion::create([
-            "name" => "Tática",
-            "points" => 100
+            "name" => "Técnica",
         ]);
     }
 }

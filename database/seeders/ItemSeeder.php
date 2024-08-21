@@ -14,29 +14,62 @@ class ItemSeeder extends Seeder
     public function run(): void{
         Item::create([
             "sub_criterion_id" => 1,
-            "name" => "Chutes dentro da área",
+            "name" => "Salto Vertical",
             "aspect" => "measurable",
-            "weight" => 0.02,
         ]);
 
         Item::create([
             "sub_criterion_id" => 1,
-            "name" => "Chutes fora da área",
+            "name" => "Altura",
             "aspect" => "measurable",
-            "weight" => 0.02,
         ]);
 
         Item::create([
             "sub_criterion_id" => 1,
-            "name" => "Pênalti",
+            "name" => "Peso",
             "aspect" => "measurable",
-            "weight" => 0.02,
         ]);
 
         Item::create([
             "sub_criterion_id" => 1,
-            "name" => "Cabeçeio",
-            "aspect" => "subjective"
+            "name" => "Teste de 1000 metros",
+            "aspect" => "measurable",
+        ]);
+
+        Item::create([
+            "sub_criterion_id" => 1,
+            "name" => "Peso",
+            "aspect" => "measurable",
+        ]);
+
+        Item::create([
+            "sub_criterion_id" => 2,
+            "name" => "Illinois Agility C/B",
+            "aspect" => "measurable",
+        ]);
+
+        Item::create([
+            "sub_criterion_id" => 2,
+            "name" => "Illinois Agility S/B",
+            "aspect" => "measurable",
+        ]);
+
+        Item::create([
+            "sub_criterion_id" => 2,
+            "name" => "Embaixadinhas",
+            "aspect" => "measurable",
+        ]);
+
+        Item::create([
+            "sub_criterion_id" => 2,
+            "name" => "Passe D",
+            "aspect" => "quantitative",
+        ]);
+
+        Item::create([
+            "sub_criterion_id" => 2,
+            "name" => "Passe E",
+            "aspect" => "quantitative",
         ]);
     }
 }

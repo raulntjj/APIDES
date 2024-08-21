@@ -16,25 +16,5 @@ class TeamSeeder extends Seeder
             "name" => "Cruzeiro",
             "logo" => "path/logo.png"
         ]);
-
-        Team::create([
-            "name" => "Flamengo",
-            "logo" => "path/flamengo_logo.png"
-        ]);
-
-        Team::create([
-            "name" => "Palmeiras",
-            "logo" => "path/palmeiras_logo.png"
-        ]);
-
-        Team::create([
-            "name" => "São Paulo",
-            "logo" => "path/sao_paulo_logo.png"
-        ]);
-
-        Team::create([
-            "name" => "Corinthians",
-            "logo" => "path/corinthians_logo.png"
-        ]);
     }
 }

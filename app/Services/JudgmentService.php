@@ -95,8 +95,19 @@ class JudgmentService{
         try{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () use ($request){
-                $item = Item::where('id', $request->item_id)->first()->toArray();
-                if($item['aspect'] === 'measurable'){
+                if(! $item = Item::where('id', $request->item_id)->first()){
+                    return response()->json([
+                        'error' => 'Não foi possível armazenar julgamento',
+                        'details' => 'Item não existente'
+                    ]);
+                }
+                if($item['aspect'] === 'quantitative'){
+                    if($request->score != null){
+                        return response()->json([
+                            'error' => 'Não foi possível armazenar julgamento',
+                            'details' => 'Julgamentos em items quantitativos deve ter uma quantidade de erros e acertos.'
+                        ]);
+                    }
                     //Lógica para cálculo de score
                     $attempt = $request->correct_attempt + $request->fail_attempt;
                     $score = (($request->correct_attempt - ($request->fail_attempt * $item['weight'])) / $attempt) * 10;
@@ -106,18 +117,14 @@ class JudgmentService{
                 }
 
                 //Criando julgamento
-                $Judgment = Judgment::create(
-                    array_merge(
-                        $request->only(
-                            'item_id',
-                            'evaluation_id',
-                            'correct_attempt',
-                            'fail_attempt',
-                        ),
-                        ['attempt' => $attempt],
-                        ['score' => $score],
-                    )
-                );
+                $Judgment = Judgment::create([
+                    'item_id' => $request->item_id,
+                    'evaluation_id' => $request->evaluation_id,
+                    'correct_attempt' => $request->correct_attempt,
+                    'fail_attempt' => $request->fail_attempt,
+                    'attempt' => $attempt,
+                    'score' => $score,
+                ]);
 
                 //Retornando julgamento criado com suas informações de endereço e o código de respostas
                 return response()->json($Judgment, 201);
