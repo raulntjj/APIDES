@@ -66,5 +66,38 @@ class EventAddressSeeder extends Seeder
             "country" => "Brasil",
             "cep" => "01310-100",
         ]);
+
+        EventAddress::create([
+            "event_id" => "6",
+            "address" => "Avenida Paulista",
+            "number" => "1000",
+            "neighborhood" => "Bela Vista",
+            "city" => "São Paulo",
+            "state" => "São Paulo",
+            "country" => "Brasil",
+            "cep" => "01310-100",
+        ]);
+
+        EventAddress::create([
+            "event_id" => "7",
+            "address" => "Avenida Paulista",
+            "number" => "1000",
+            "neighborhood" => "Bela Vista",
+            "city" => "São Paulo",
+            "state" => "São Paulo",
+            "country" => "Brasil",
+            "cep" => "01310-100",
+        ]);
+
+        EventAddress::create([
+            "event_id" => "8",
+            "address" => "Avenida Paulista",
+            "number" => "1000",
+            "neighborhood" => "Bela Vista",
+            "city" => "São Paulo",
+            "state" => "São Paulo",
+            "country" => "Brasil",
+            "cep" => "01310-100",
+        ]);
     }
 }

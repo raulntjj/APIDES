@@ -94,7 +94,7 @@ class EvaluationService{
                     //Foi deixado o request->only() no lugar do request->all()
                     //Para deixar mais explícito e descritivo em relação as variavéis que estão sendo utilizadas etc..
                     'participant_id',
-                    'eventay_id',
+                    'event_day_id',
                     'modality_id',
                     'judge_id',
                     'date',
@@ -123,7 +123,7 @@ class EvaluationService{
                 $evaluation->fill($request->only(
                     //Explicitando váriaveis
                     'participant_id',
-                    'eventay_id',
+                    'event_day_id',
                     'modality_id',
                     'judge_id',
                     'date',

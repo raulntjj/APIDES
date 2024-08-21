@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\EventRequest;
+use App\Http\Requests\StoreEventRequest;
+use App\Http\Requests\UpdateEventRequest;
 use App\Services\EventService;
 use Illuminate\Http\Request;
 
@@ -24,12 +25,12 @@ class EventController{
     }
 
     //Função para criar um evento
-    public function store(EventRequest $request){
+    public function store(StoreEventRequest $request){
         return $this->eventService->addEvent($request);
     }
 
     //Função para editar um evento
-    public function update(EventRequest $request, int $id){
+    public function update(UpdateEventRequest $request, int $id){
         return $this->eventService->updateEvent($request, $id);
     }
 

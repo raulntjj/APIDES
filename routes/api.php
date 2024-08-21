@@ -67,7 +67,7 @@ Route::post('password/forgot', [PasswordController::class, 'forgotPassword']);
         Route::apiResource('participants', ParticipantController::class)->only(['store', 'update', 'destroy']);
         Route::apiResource('teams', TeamController::class)->only(['store', 'update', 'destroy']);
         Route::apiResource('criteria', CriterionController::class)->only(['store', 'update', 'destroy']);
-        Route::apiResource('subcriteria', SubCriterionController::class)->only(['store', 'update', 'destroy']);
+        Route::apiResource('subcriteria', SubcriterionController::class)->only(['store', 'update', 'destroy']);
         Route::apiResource('items', ItemController::class)->only(['store', 'update', 'destroy']);
         Route::apiResource('evaluations', EvaluationController::class)->only(['store', 'update', 'destroy']);
         Route::apiResource('achievements', AchievementController::class)->only(['store', 'update', 'destroy']);

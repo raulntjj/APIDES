@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Http\Requests\JudgmentRequest;
 use App\Models\Judgment;
-use App\Services\ItemService;
 use App\Models\Item;
 use Illuminate\Http\Request;
 use Exception;
@@ -97,7 +96,7 @@ class JudgmentService{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () use ($request){
                 $item = Item::where('id', $request->item_id)->first()->toArray();
-                if($item['aspect'] === 'quantitative'){
+                if($item['aspect'] === 'measurable'){
                     //Lógica para cálculo de score
                     $attempt = $request->correct_attempt + $request->fail_attempt;
                     $score = (($request->correct_attempt - ($request->fail_attempt * $item['weight'])) / $attempt) * 10;
@@ -137,20 +136,19 @@ class JudgmentService{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () use ($request, $id){
                 //Buscando o julgamento
-                $Judgment = $this->findJudgment($id);
-
-                $item = $this->itemService->getItem($item_id);
-                if($item['aspect'] === 'quantitative'){
+                $judgment = $this->findJudgment($id);
+                $item = Item::where('id', $request->item_id)->first()->toArray();
+                if($item['aspect'] === 'measurable'){
                     //Lógica para cálculo de score
                     $attempt = $request->correct_attempt + $request->fail_attempt;
-                    $score = (($correct_attempt - ($request->correct_attempt + ($request->fail_attempt * $item['weight']))) / $attempt) * 10;
+                    $score = (($request->correct_attempt - ($request->fail_attempt * $item['weight'])) / $attempt) * 10;
                 } else{
                     $score = $request->score;
                     $attempt = null;
                 }
 
                 //Atualizando dados do julgamento e salvando utilizando o método fill
-                $Judgment->fill(
+                $judgment->fill(
                     array_merge(
                         $request->only(
                             'item_id',
@@ -164,7 +162,7 @@ class JudgmentService{
                 )->save();
 
                 //Retornando julgamento atualizado com suas informações de endereço e o código de respostas
-                return response()->json($Judgment, 201);
+                return response()->json($judgment, 201);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){

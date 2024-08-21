@@ -66,7 +66,6 @@ class AchievementService{
     public function addAchievement(AchievementRequest $request){
         //Tratativa de erros
         try{
-            dd($request->all());
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () use ($request){
                 $achivement = Achievement::create($request->only(

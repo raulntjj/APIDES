@@ -33,7 +33,7 @@ class UserSeeder extends Seeder
             'birthday' => '2000-01-01',
             'email' => 'avaliador@teste.com',
             'password' => '12345678',
-            'role' => 'evaluator',
+            'role' => 'judge',
             'interface_language' => 'PT-BR'
         ]);
 

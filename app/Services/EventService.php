@@ -2,7 +2,8 @@
 
 namespace App\Services;
 
-use App\Http\Requests\EventRequest;
+use App\Http\Requests\StoreEventRequest;
+use App\Http\Requests\UpdateEventRequest;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use Exception;
@@ -12,7 +13,7 @@ class EventService{
     //Função privada utilizada para encontrar os eventos ao longo do serviço
     private function findEvent(int $id){
         //Busca e retorna o evento
-        return Event::with('days.evaluations.participant.user', 'address')->findOrFail($id);
+        return Event::with('days.evaluations.participant.user', 'days.event', 'address')->findOrFail($id);
     }
 
     //Função pública utilizada para retornar todos os evento
@@ -21,7 +22,7 @@ class EventService{
         try{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () use ($request) {
-                $eventQuery = Event::with('days.evaluations.participant.user', 'address');
+                $eventQuery = Event::with('days.evaluations.participant.user', 'days.event', 'address');
                 if ($request->has('search')) {
                     $search = $request->search;
 
@@ -57,7 +58,7 @@ class EventService{
     }
 
     //Função pública utilizada para atualizar e retornar um evento
-    public function addEvent(EventRequest $request){
+    public function addEvent(StoreEventRequest $request){
         //Tratativa de erros
         try{
             //DB transaction para lidar com transações de dados com o banco de dados
@@ -67,6 +68,7 @@ class EventService{
                     //Foi deixado o request->only() no lugar do request->all()
                     //Para deixar mais explícito e descritivo em relação as variavéis que estão sendo utilizadas etc..
                     'name',
+                    'type',
                     'logo',
                 ));
 
@@ -99,20 +101,19 @@ class EventService{
         }
 
     //Função pública utilizada para atualizar e retornar um evento
-    public function updateEvent(EventRequest $request, int $id){
+    public function updateEvent(UpdateEventRequest $request, int $id){
         //Tratativa de erros
         try{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () use ($request, $id){
                 //Buscando o evento
                 $event = $this->findEvent($id);
-
                 //Atualizando dados do evento e salvando utilizando o método fill
                 $event->fill($request->only(
                     //Explicitando váriaveis
                     'name',
-                    'dateTime',
-                    'eventLogo'
+                    'type',
+                    'logo'
                 ))->save();
 
                 //Atualizando dados de endereço

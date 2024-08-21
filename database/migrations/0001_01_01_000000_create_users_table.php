@@ -21,7 +21,7 @@ return new class extends Migration {
             $table->string('photo', 256)->nullable();
             $table->string('interface_language', 16)->default('pt-BR');
             $table->boolean('is_admin')->default(false);
-            $table->enum('role', ['admin', 'participant', 'evaluator'])->default('participant');
+            $table->enum('role', ['admin', 'participant', 'judge'])->default('participant');
             $table->rememberToken();
             $table->timestamps();
         });

@@ -12,7 +12,7 @@ class ItemService{
     //Função privada utilizada para encontrar os itenss ao longo do serviço
     private function findItem(int $id){
         //Busca e retorna o itens
-        return Item::with('subcriterion.criterion')->findOrFail($id)->toArray();
+        return Item::with('subcriterion.criterion')->findOrFail($id);
     }
 
     //Função pública utilizada para retornar todos os itenss

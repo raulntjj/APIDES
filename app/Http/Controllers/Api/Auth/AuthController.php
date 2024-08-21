@@ -39,7 +39,7 @@ class AuthController {
         }
 
         $user = $user->load('participant');
-        return response()->json(compact('user'));
+        return response()->json($user);
     }
 
     // Método para deslogar o usuário

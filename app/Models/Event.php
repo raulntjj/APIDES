@@ -10,7 +10,8 @@ class Event extends Model{
     protected $table = 'events';
     protected $fillable = [
         'name', //Nome do evento
-        'logo' //Logo do evento
+        'logo', //Logo do evento
+        'type'
     ];
 
     /*
