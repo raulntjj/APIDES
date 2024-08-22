@@ -21,9 +21,7 @@ class ParticipantService{
         // Tratativa de erros
         try {
             // Inicia a consulta com os relacionamentos necessários
-            $participants = Participant::with('team', 'institution', 'modality', 'user', 'achievements')
-                                        ->join('users', 'participants.user_id', '=', 'users.id')
-                                        ->select('participants.*');
+            $participants = Participant::with('team', 'institution', 'modality', 'user', 'achievements')->join('users', 'participants.user_id', '=', 'users.id');
 
             // Filtro de busca
             if ($request->has('search')) {
@@ -49,35 +47,25 @@ class ParticipantService{
                 $participants->where('position', $request->position);
             }
 
-            // Obter resultados ordenados por nome
-            $participants = $participants->orderBy('user_id')->get();
-
             // Atribuição de categoria com base na idade
-            foreach($participants as $participant){
-                $age = -now()->diffInYears(\Carbon\Carbon::parse($participant->user->birthday)->format('d-m-Y'));
+            // $participants->select('participants.*')
+            // ->selectRaw("
+            //     CASE
+            //         WHEN TIMESTAMPDIFF(YEAR, users.birthday, CURDATE()) <= 7 THEN 'Sub-7'
+            //         WHEN TIMESTAMPDIFF(YEAR, users.birthday, CURDATE()) <= 9 THEN 'Sub-9'
+            //         WHEN TIMESTAMPDIFF(YEAR, users.birthday, CURDATE()) <= 11 THEN 'Sub-11'
+            //         WHEN TIMESTAMPDIFF(YEAR, users.birthday, CURDATE()) <= 13 THEN 'Sub-13'
+            //         WHEN TIMESTAMPDIFF(YEAR, users.birthday, CURDATE()) <= 15 THEN 'Sub-15'
+            //         WHEN TIMESTAMPDIFF(YEAR, users.birthday, CURDATE()) <= 17 THEN 'Sub-17'
+            //         WHEN TIMESTAMPDIFF(YEAR, users.birthday, CURDATE()) <= 19 THEN 'Sub-19'
+            //         WHEN TIMESTAMPDIFF(YEAR, users.birthday, CURDATE()) <= 21 THEN 'Sub-21'
+            //         WHEN TIMESTAMPDIFF(YEAR, users.birthday, CURDATE()) <= 23 THEN 'Sub-23'
+            //         ELSE 'Undefined'
+            //     END as age_category
+            // ");
 
-                if ($age <= 7) {
-                    $participant->category = 'Sub-7';
-                } elseif ($age <= 9) {
-                    $participant->category = 'Sub-9';
-                } elseif ($age <= 11) {
-                    $participant->category = 'Sub-11';
-                } elseif ($age <= 13) {
-                    $participant->category = 'Sub-13';
-                } elseif ($age <= 15) {
-                    $participant->category = 'Sub-15';
-                } elseif ($age <= 17) {
-                    $participant->category = 'Sub-17';
-                } elseif ($age <= 19) {
-                    $participant->category = 'Sub-19';
-                } elseif ($age <= 21) {
-                    $participant->category = 'Sub-21';
-                } elseif ($age <= 23) {
-                    $participant->category = 'Sub-23';
-                } else {
-                    $participant->category = 'Undefined';
-                }
-            }
+            // Agregando os resultados
+            $participants = $participants->orderBy('birthday', 'DESC')->get()->groupBy('category');
 
             // Retorna o resultado em formato JSON
             return response()->json($participants, 200);
