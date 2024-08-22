@@ -68,6 +68,7 @@ class UserService{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () use ($request){
                 //Criando usuário
+                $is_admin = $request->role === 'admin';
                 $passwordHashed = Hash::make($request->password);
                 $user = User::create([
                     'name' => $request->name,
@@ -78,7 +79,8 @@ class UserService{
                     'role' => $request->role,
                     'interface_language' => $request->interface_language,
                     'photo' => $request->photo,
-                    'password' => $passwordHashed
+                    'password' => $passwordHashed,
+                    'is_admin' => $is_admin
                 ]);
                 //Retornando usuário criado com suas informações de endereço e o código de respostas
                 return response()->json($user, 201);

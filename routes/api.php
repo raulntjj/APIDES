@@ -59,7 +59,7 @@ Route::post('password/forgot', [PasswordController::class, 'forgotPassword']);
 
     // Apenas administradores podem criar, editar e excluir algumas entidades
     // Route::middleware(CheckIsAdmin::class)->group(function(){
-        Route::apiResource('users', UserController::class)->except(['create', 'edit']);
+        Route::apiResource('users', UserController::class)->only(['index', 'store', 'update', 'destroy']);
         Route::apiResource('events', EventController::class)->only(['store', 'update', 'destroy']);
         Route::apiResource('days', EventDayController::class)->only(['store', 'update', 'destroy']);
         Route::apiResource('institutions', InstitutionController::class)->only(['store', 'update', 'destroy']);
