@@ -21,6 +21,7 @@ class Participant extends Model{
         'category'
     ];
     /*
+
     Descomente caso queria retirar as datas de criação e edição do retorno dos dados em Json
     protected $hidden = [
         //'created_at',
