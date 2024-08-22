@@ -12,7 +12,7 @@ class TeamService{
     //Função privada utilizada para encontrar os times ao longo do serviço
     private function findTeam(int $id){
         //Busca e retorna o time
-        return Team::with('participants', 'participants.team', 'participants.modality', 'participants.institution', 'participants.user')->findOrFail($id);
+        return Team::with('participants', 'participants.team', 'participants.modality', 'participants.institution', 'participants.user')->orderBy('name')->findOrFail($id);
     }
 
     //Função pública utilizada para retornar todos os times
@@ -21,7 +21,7 @@ class TeamService{
         try{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () use ($request) {
-                $teamQuery = Team::with('participants', 'participants.team', 'participants.modality', 'participants.institution', 'participants.user');
+                $teamQuery = Team::with('participants', 'participants.team', 'participants.modality', 'participants.institution', 'participants.user')->orderBy('name');
                 if ($request->has('search')) {
                     $search = $request->search;
 

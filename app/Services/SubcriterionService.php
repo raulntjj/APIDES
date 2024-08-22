@@ -12,7 +12,7 @@ class SubcriterionService{
     //Função privada utilizada para encontrar os criterios ao longo do serviço
     private function findSubcriterion(int $id){
         //Busca e retorna o criterio
-        return Subcriterion::with('criterion', 'items')->findOrFail($id);
+        return Subcriterion::with('criterion', 'items')->orderBy('name')->findOrFail($id);
     }
 
     //Função pública utilizada para retornar todos os criterios
@@ -22,7 +22,7 @@ class SubcriterionService{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function ()  use ($request) {
                 //Retornando todos criterios e o código de respostas
-                $subcriterionQuery = Subcriterion::with('criterion', 'items');
+                $subcriterionQuery = Subcriterion::with('criterion', 'items')->orderBy('name');
                 if ($request->has('search')) {
                     $search = $request->search;
 

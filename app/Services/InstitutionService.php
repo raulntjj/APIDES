@@ -12,7 +12,7 @@ class InstitutionService{
     //Função privada utilizada para encontrar as instituições ao longo do serviço
     private function findInstitution(int $id){
         //Busca e retorna a instituição
-        return Institution::with('participants', 'participants.team', 'participants.modality', 'participants.institution', 'participants.user')->findOrFail($id);
+        return Institution::with('participants', 'participants.team', 'participants.modality', 'participants.institution', 'participants.user')->orderBy('name')->findOrFail($id);
     }
 
     //Função pública utilizada para retornar todas as instituições
@@ -21,7 +21,7 @@ class InstitutionService{
         try{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () use ($request) {
-                $institutionQuery = Institution::with('participants', 'participants.team', 'participants.modality', 'participants.institution', 'participants.user');
+                $institutionQuery = Institution::with('participants', 'participants.team', 'participants.modality', 'participants.institution', 'participants.user')->orderBy('name');
                 if ($request->has('search')) {
                     $search = $request->search;
 

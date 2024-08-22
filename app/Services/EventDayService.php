@@ -13,7 +13,7 @@ class EventDayService{
     //Função privada utilizada para encontrar os dias de eventos ao longo do serviço
     private function findDayEvent(int $id){
         //Busca e retorna o dia de evento
-        return EventDay::findOrFail($id);
+        return EventDay::orderBy('index')->findOrFail($id);
     }
 
     //Função pública utilizada para retornar todos os dia de evento
@@ -22,7 +22,7 @@ class EventDayService{
         try{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () use($request) {
-                $eventDayQuery = EventDay::with('event');
+                $eventDayQuery = EventDay::with('event')->orderBy('index');
                 if ($request->has('search')) {
                     $search = $request->search;
 

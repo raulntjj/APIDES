@@ -14,7 +14,7 @@ class UserService{
     //Função privada utilizada para encontrar os usuários ao longo do serviço
     private function findUser(int $id){
         //Busca e retorna o usuário
-        return User::with('participant', 'participant.team', 'participant.modality', 'participant.institution')->findOrFail($id);
+        return User::with('participant', 'participant.team', 'participant.modality', 'participant.institution')->orderBy('name')->findOrFail($id);
     }
 
     //Função pública utilizada para retornar todos os usuários
@@ -23,7 +23,7 @@ class UserService{
         try{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () use ($request) {
-                $userQuery = User::with('participant', 'participant.team', 'participant.modality', 'participant.institution');
+                $userQuery = User::with('participant', 'participant.team', 'participant.modality', 'participant.institution')->orderBy('name');
                 if ($request->has('search')) {
                     $search = $request->search;
 
@@ -69,21 +69,17 @@ class UserService{
             return DB::transaction(function () use ($request){
                 //Criando usuário
                 $passwordHashed = Hash::make($request->password);
-                $user = User::create(
-                    array_merge(
-                        $request->only(
-                            'name',
-                            'last_name',
-                            'birthday',
-                            'gender',
-                            'email',
-                            'group',
-                            'interface_language',
-                            'photo'
-                        ),
-                        ['password' => $passwordHashed]
-                    )
-                );
+                $user = User::create([
+                    'name' => $request->name,
+                    'last_name' => $request->last_name,
+                    'birthday' => $request->birthday,
+                    'gender' => $request->gender,
+                    'email' => $request->email,
+                    'role' => $request->role,
+                    'interface_language' => $request->interface_language,
+                    'photo' => $request->photo,
+                    'password' => $passwordHashed
+                ]);
                 //Retornando usuário criado com suas informações de endereço e o código de respostas
                 return response()->json($user, 201);
             });
@@ -110,8 +106,6 @@ class UserService{
                     'birthday',
                     'gender',
                     'email',
-                    'group',
-                    'interface_language',
                     'photo'
                 ))->save();
 

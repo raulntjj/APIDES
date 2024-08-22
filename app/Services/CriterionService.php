@@ -12,7 +12,7 @@ class CriterionService{
     //Função privada utilizada para encontrar os criterios ao longo do serviço
     private function findCriterion(int $id){
         //Busca e retorna o criterio
-        return Criterion::with('subcriteria.items')->findOrFail($id);
+        return Criterion::with('subcriteria.items')->orderBy('name')->findOrFail($id);
     }
 
     //Função pública utilizada para retornar todos os criterios
@@ -22,9 +22,9 @@ class CriterionService{
             return DB::transaction(function () use ($request){
                 //Retornando todos criterios e o código de respostas
                 if($request->has('search')){
-                    $criteria = Criterion::with('subcriteria.items')->where('name', 'like', '%' . $request->search . '%')->get();
+                    $criteria = Criterion::with('subcriteria.items')->orderBy('name')->where('name', 'like', '%' . $request->search . '%')->get();
                 } else {
-                    $criteria = Criterion::with('subcriteria.items')->get();
+                    $criteria = Criterion::with('subcriteria.items')->orderBy('name')->get();
                 }
 
                 //Retornando todos Achievementes e o código de respostas

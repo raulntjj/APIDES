@@ -12,7 +12,8 @@ class EvaluationService{
     //Função privada utilizada para encontrar as avaliações ao longo do serviço
     private function findEvaluation(int $id){
         //Busca e retorna a avaliação
-        return Evaluation::with('judgments.item.subcriterion.criterion', 'participant.user', 'participant.team', 'participant.institution', 'participant.modality', 'modality', 'eventday.event', 'judge')->findOrFail($id);
+        return Evaluation::with('judgments.item.subcriterion.criterion', 'participant.user', 'participant.team',
+                                'participant.institution', 'participant.modality', 'modality', 'eventday.event', 'judge')->orderBy('participant_id')->findOrFail($id);
     }
 
     //Função pública utilizada para retornar todos as avaliação
@@ -23,7 +24,7 @@ class EvaluationService{
             return DB::transaction(function () use ($request) {
                 //Retornando todas avaliações e o código de respostas
                 $evaluationQuery = Evaluation::with('judgments.item.subcriterion.criterion', 'participant.user', 'participant.team', 'participant.institution',
-                'participant.modality', 'modality', 'eventday.event', 'judge');
+                                                    'participant.modality', 'modality', 'eventday.event', 'judge')->orderBy('participant_id');
 
                 // Filtro de busca
                 if ($request->has('search')) {

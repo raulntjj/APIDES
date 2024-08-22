@@ -27,9 +27,9 @@ class ModalityService{
 
                     return response()->json(Modality::where(function ($query) use ($search) {
                         $query->Where('name', 'like', '%' . $search . '%');
-                    })->get(), 200);
+                    })->orderBy('name')->get(), 200);
                 } else {
-                    return response()->json(Modality::all(), 200);
+                    return response()->json(Modality::orderBy('name')->get(), 200);
                 }
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo

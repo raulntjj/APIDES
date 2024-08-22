@@ -12,7 +12,7 @@ class ItemService{
     //Função privada utilizada para encontrar os itenss ao longo do serviço
     private function findItem(int $id){
         //Busca e retorna o itens
-        return Item::with('subcriterion.criterion')->findOrFail($id);
+        return Item::with('subcriterion.criterion')->orderBy('name')->findOrFail($id);
     }
 
     //Função pública utilizada para retornar todos os itenss
@@ -21,7 +21,7 @@ class ItemService{
         try{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () use ($request) {
-                $itemQuery = Item::with('subcriterion.criterion');
+                $itemQuery = Item::with('subcriterion.criterion')->orderBy('name');
                 if ($request->has('search')) {
                     $search = $request->search;
 

@@ -13,7 +13,7 @@ class ParticipantService{
     //Função privada utilizada para encontrar os participantes ao longo do serviço
     private function findParticipant(int $id){
         //Busca e retorna o participante
-        return Participant::findOrFail($id);
+        return Participant::orderBy('user_id')->findOrFail($id);
     }
 
     //Função pública utilizada para retornar todos os participantes
@@ -23,8 +23,8 @@ class ParticipantService{
             // Inicia a consulta com os relacionamentos necessários
             $participants = Participant::with('team', 'institution', 'modality', 'user', 'achievements')
                                     ->join('users', 'participants.user_id', '=', 'users.id')
-                                    ->select('participants.*');
-
+                                    ->select('participants.*')
+                                    ->orderBy('user_id');
             // Filtro de busca
             if ($request->has('search')) {
                 $participants->where(function ($query) use ($request) {
@@ -50,7 +50,7 @@ class ParticipantService{
             }
 
             // Obter resultados ordenados por nome
-            $result = $participants->orderBy('name')->get();
+            $result = $participants->orderBy('user_id')->get();
 
             // Retorna o resultado em formato JSON
             return response()->json($result, 200);
