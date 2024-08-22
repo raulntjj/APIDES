@@ -22,16 +22,16 @@ class ParticipantService{
         try {
             // Inicia a consulta com os relacionamentos necessários
             $participants = Participant::with('team', 'institution', 'modality', 'user', 'achievements')
-                                    ->join('users', 'participants.user_id', '=', 'users.id')
-                                    ->select('participants.*')
-                                    ->orderBy('user_id');
+                                        ->join('users', 'participants.user_id', '=', 'users.id')
+                                        ->select('participants.*');
+
             // Filtro de busca
             if ($request->has('search')) {
                 $participants->where(function ($query) use ($request) {
                     $query->where('users.name', 'like', '%' . $request->search . '%')
-                        ->orWhere('users.last_name', 'like', '%' . $request->search . '%')
-                        ->orWhere('users.gender', 'like', '%' . $request->search . '%')
-                        ->orWhere('users.birthday', 'like', '%' . $request->search . '%');
+                          ->orWhere('users.last_name', 'like', '%' . $request->search . '%')
+                          ->orWhere('users.gender', 'like', '%' . $request->search . '%')
+                          ->orWhere('users.birthday', 'like', '%' . $request->search . '%');
                 });
             }
 
@@ -50,17 +50,43 @@ class ParticipantService{
             }
 
             // Obter resultados ordenados por nome
-            $result = $participants->orderBy('user_id')->get();
+            $participants = $participants->orderBy('user_id')->get();
+
+            // Atribuição de categoria com base na idade
+            foreach($participants as $participant){
+                $age = -now()->diffInYears(\Carbon\Carbon::parse($participant->user->birthday)->format('d-m-Y'));
+
+                if ($age <= 7) {
+                    $participant->category = 'Sub-7';
+                } elseif ($age <= 9) {
+                    $participant->category = 'Sub-9';
+                } elseif ($age <= 11) {
+                    $participant->category = 'Sub-11';
+                } elseif ($age <= 13) {
+                    $participant->category = 'Sub-13';
+                } elseif ($age <= 15) {
+                    $participant->category = 'Sub-15';
+                } elseif ($age <= 17) {
+                    $participant->category = 'Sub-17';
+                } elseif ($age <= 19) {
+                    $participant->category = 'Sub-19';
+                } elseif ($age <= 21) {
+                    $participant->category = 'Sub-21';
+                } elseif ($age <= 23) {
+                    $participant->category = 'Sub-23';
+                } else {
+                    $participant->category = 'Undefined';
+                }
+            }
 
             // Retorna o resultado em formato JSON
-            return response()->json($result, 200);
-        }
-        // Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
-        catch (Exception $e) {
-            // Retorna mensagem de erro com flag e mensagem captada pelo exception
-            return response()->json(['Error' => 'Failed to get all Participants', 'Details' => $e->getMessage()], 400);
+            return response()->json($participants, 200);
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
 
     //Função pública utilizada para retornar um participante
     public function getParticipant(int $id){
