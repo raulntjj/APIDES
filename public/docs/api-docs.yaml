@@ -33,7 +33,7 @@ info:
 servers:
   - description: API
     # url: http://127.0.0.1:8001
-    url: https://cabc-45-70-34-167.ngrok-free.app/
+    url: https://7233-45-70-34-167.ngrok-free.app/
 tags:
   # - name: Sessão de Clientes da API
   #   description: Por ordens superiores, por enquanto, não será necessário lidar com sessões para consumidores.
