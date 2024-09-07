@@ -1,14 +1,13 @@
 {
     "name": "laravel/laravel",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
+    "description": "API DES.",
     "keywords": ["laravel", "framework"],
     "license": "MIT",
     "require": {
         "php": "^8.2",
         "darkaonline/l5-swagger": "^8.6",
         "laravel/framework": "^11.0",
-        "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "tymon/jwt-auth": "^2.1"
     },
