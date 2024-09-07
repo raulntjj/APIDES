@@ -12,8 +12,52 @@ use Illuminate\Support\Facades\DB;
 class ParticipantService{
     //Função privada utilizada para encontrar os participantes ao longo do serviço
     private function findParticipant(int $id){
-        //Busca e retorna o participante
+        //Busca e retorna o participante}
         return Participant::orderBy('user_id')->findOrFail($id);
+    }
+
+    public function getAllParticipants(Request $request){
+        // Tratativa de erros
+        try {
+            // Inicia a consulta com os relacionamentos necessários
+            $participants = Participant::with('team', 'institution', 'modality', 'user', 'achievements');
+
+            // Filtro de busca
+            if ($request->has('search')) {
+                $participants->where(function ($query) use ($request) {
+                    $query->whereHas('user', function($q) use ($request){
+                        $q->where('name', 'like', '%' . $request->search . '%')
+                        ->orwhere('birthday', 'like', '%' . $request->search . '%')
+                        ->orWhere('last_name', 'like', '%' . $request->search . '%')
+                        ->orWhere('gender', 'like', '%' . $request->search . '%')
+                        ->orWhere('birthday', 'like', '%' . $request->search . '%');
+                    });
+                });
+            }
+
+            // Filtros adicionais
+            if ($request->has('team_id')) {
+                $participants->where('team_id', $request->team_id);
+            }
+            if ($request->has('institution_id')) {
+                $participants->where('institution_id', $request->institution_id);
+            }
+            if ($request->has('modality_id')) {
+                $participants->where('modality_id', $request->modality_id);
+            }
+            if ($request->has('position')) {
+                $participants->where('position', $request->position);
+            }
+
+            // Agregando os resultados
+            $participants = $participants->get();
+
+            // Retorna o resultado em formato JSON
+            return response()->json($participants, 200);
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
     //Função pública utilizada para retornar todos os participantes

@@ -25,6 +25,7 @@ Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::post('password/change', [PasswordController::class, 'changePassword']);
 Route::post('password/forgot', [PasswordController::class, 'forgotPassword']);
 
+Route::get('participants/all', [ParticipantController::class, 'getAllParticipants']);
 // Route::group(['middleware' => ['jwt.auth']], function() {
     //Rotas de sessão
     Route::get('user', [AuthController::class, 'getAuthenticatedUser']);
