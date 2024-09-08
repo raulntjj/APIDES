@@ -45,19 +45,19 @@ class EventSeeder extends Seeder
         ]);
 
         Event::create([
-            "name" => "Treinamento de futsal Escola Flamengo de Caratinga",
+            "name" => "Avaliação de Outubro",
             "logo" => "path/logo.png",
             "type" => "training"
         ]);
 
         Event::create([
-            "name" => "Treinamento de futebol Escola Flamengo de Caratinga",
+            "name" => "Avaliação de Outubro",
             "logo" => "path/logo.png",
             "type" => "training"
         ]);
 
         Event::create([
-            "name" => "Treinamento de fut7 Escola Flamengo de Caratinga",
+            "name" => "Avaliação de Novembro",
             "logo" => "path/logo.png",
             "type" => "training"
         ]);

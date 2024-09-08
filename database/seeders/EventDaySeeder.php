@@ -51,21 +51,21 @@ class EventDaySeeder extends Seeder
 
         EventDay::create([
             "event_id" => "6",
-            "date" => "2024-10-08",
-            "start_hour" => "15:00:00",
+            "date" => "2024-09-20",
+            "start_hour" => "18:00:00",
             "index" => "1"
         ]);
 
         EventDay::create([
             "event_id" => "7",
-            "date" => "2024-08-30",
+            "date" => "2024-10-20",
             "start_hour" => "16:00:00",
             "index" => "1"
         ]);
 
         EventDay::create([
             "event_id" => "8",
-            "date" => "2024-08-08",
+            "date" => "2024-11-20",
             "start_hour" => "19:00:00",
             "index" => "1"
         ]);
