@@ -23,14 +23,14 @@ class EvaluationService{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () use ($request) {
                 //Retornando todas avaliações e o código de respostas
-                $evaluationQuery = Evaluation::with('judgments.item.subcriterion.criterion', 'participant.user', 'participant.team', 'participant.institution',
+                $evaluations = Evaluation::with('judgments.item.subcriterion.criterion', 'participant.user', 'participant.team', 'participant.institution',
                                                     'participant.modality', 'modality', 'eventday.event', 'judge')->orderBy('participant_id');
 
                 // Filtro de busca
                 if ($request->has('search')) {
                     $search = $request->search;
 
-                    $evaluationQuery->where(function ($query) use ($search) {
+                    $evaluations->where(function ($query) use ($search) {
                         $query->WhereHas('participant.user', function ($q) use ($search) {
                             $q->where('name', 'like', '%' . $search . '%')
                             ->orWhere('last_name', 'like', '%' . $search . '%');
@@ -56,7 +56,10 @@ class EvaluationService{
                     });
                 }
 
-                return response()->json($evaluationQuery->get(), 200);
+                $page = $request->get('page', 1);
+                $perPage = $request->get('perPage', 10);
+                return $evaluations->paginate($perPage, ['*'], 'page', $page);
+                // return response()->json($evaluations->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){

@@ -14,9 +14,6 @@ class ParticipantController{
         $this->participantService = $participantService;
     }
 
-    public function getAllParticipants(Request $request){
-        return $this->participantService->getAllParticipants($request);
-    }
     //Função para obter todos participantes
     public function index(Request $request){
         return $this->participantService->getParticipants($request);

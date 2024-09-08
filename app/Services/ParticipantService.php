@@ -6,6 +6,8 @@ use App\Http\Requests\StoreParticipantRequest;
 use App\Http\Requests\UpdateParticipantRequest;
 use App\Models\Participant;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
@@ -16,8 +18,7 @@ class ParticipantService{
         return Participant::orderBy('user_id')->findOrFail($id);
     }
 
-    public function getAllParticipants(Request $request){
-        // Tratativa de erros
+    public function getParticipants(Request $request) {
         try {
             // Inicia a consulta com os relacionamentos necessários
             $participants = Participant::with('team', 'institution', 'modality', 'user', 'achievements');
@@ -25,12 +26,11 @@ class ParticipantService{
             // Filtro de busca
             if ($request->has('search')) {
                 $participants->where(function ($query) use ($request) {
-                    $query->whereHas('user', function($q) use ($request){
+                    $query->whereHas('user', function($q) use ($request) {
                         $q->where('name', 'like', '%' . $request->search . '%')
-                        ->orwhere('birthday', 'like', '%' . $request->search . '%')
-                        ->orWhere('last_name', 'like', '%' . $request->search . '%')
-                        ->orWhere('gender', 'like', '%' . $request->search . '%')
-                        ->orWhere('birthday', 'like', '%' . $request->search . '%');
+                            ->orWhere('birthday', 'like', '%' . $request->search . '%')
+                            ->orWhere('last_name', 'like', '%' . $request->search . '%')
+                            ->orWhere('gender', 'like', '%' . $request->search . '%');
                     });
                 });
             }
@@ -49,19 +49,87 @@ class ParticipantService{
                 $participants->where('position', $request->position);
             }
 
-            // Agregando os resultados
-            $participants = $participants->get();
+            // Definindo o número de itens por página
+            $perPage = $request->get('perPage', 10);
+            $page = $request->get('page', 1);
+            $path = $request->url(); // URL base da requisição
 
-            // Retorna o resultado em formato JSON
-            return response()->json($participants, 200);
+            // Se 'groupBySub' for ativado, faz a paginação por categoria (ex: sub-17)
+            if ($request->get('groupBySub', false)) {
+                // Busca os participantes e os agrupa por 'category'
+                $participantsGrouped = $participants->get()->groupBy('category');
 
+                // Se um subgrupo específico for solicitado
+                $subCategory = $request->get('sub', 'all');
+
+                if ($subCategory === 'all') {
+                    return $participantsGrouped;
+                } else {
+                    // Paginando o subgrupo selecionado
+                    $selectedSubCategory = $participantsGrouped->get($subCategory);
+
+                    if ($selectedSubCategory) {
+                        // Pagina o subgrupo selecionado
+                        $total = $selectedSubCategory->count();
+                        $paginatedSubCategory = $selectedSubCategory->forPage($page, $perPage);
+
+                        // Calcula URLs para paginação
+                        $first_page_url = $path . '?' . http_build_query(array_merge($request->except('page'), ['page' => 1]));
+                        $last_page = ceil($total / $perPage);
+                        $last_page_url = $path . '?' . http_build_query(array_merge($request->except('page'), ['page' => $last_page]));
+                        $next_page_url = $page < $last_page ? $path . '?' . http_build_query(array_merge($request->except('page'), ['page' => $page + 1])) : null;
+                        $prev_page_url = $page > 1 ? $path . '?' . http_build_query(array_merge($request->except('page'), ['page' => $page - 1])) : null;
+
+                        // Geração dos links para paginação
+                        $links = [
+                            [
+                                'url' => $prev_page_url,
+                                'label' => '&laquo; Previous',
+                                'active' => false,
+                            ],
+                            [
+                                'url' => $path . '?' . http_build_query(array_merge($request->except('page'), ['page' => $page])),
+                                'label' => (string) $page,
+                                'active' => true,
+                            ],
+                            [
+                                'url' => $next_page_url,
+                                'label' => 'Next &raquo;',
+                                'active' => false,
+                            ]
+                        ];
+
+                        // Retorna o resultado paginado com os metadados de paginação
+                        return response()->json([
+                            'data' => $paginatedSubCategory->values(),
+                            'current_page' => $page,
+                            'per_page' => $perPage,
+                            'total' => $total,
+                            'first_page_url' => $first_page_url,
+                            'from' => ($page - 1) * $perPage + 1,
+                            'last_page' => $last_page,
+                            'last_page_url' => $last_page_url,
+                            'links' => $links,
+                            'next_page_url' => $next_page_url,
+                            'path' => $path,
+                            'prev_page_url' => $prev_page_url,
+                            'to' => min($page * $perPage, $total),
+                        ]);
+                    } else {
+                        return response()->json(['error' => 'Subcategory not found'], 404);
+                    }
+                }
+            } else {
+                // Paginação normal sem agrupamento
+                return $participants->paginate($perPage, ['*'], 'page', $page);
+            }
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 
     //Função pública utilizada para retornar todos os participantes
-    public function getParticipants(Request $request){
+    public function getParticipantsBySub(Request $request){
         // Tratativa de erros
         try {
             // Inicia a consulta com os relacionamentos necessários
@@ -96,9 +164,6 @@ class ParticipantService{
 
             // Agregando os resultados
             $participants = $participants->get()->groupBy('category');
-
-            // Retorna o resultado em formato JSON
-            return response()->json($participants, 200);
 
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);

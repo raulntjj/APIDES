@@ -23,11 +23,11 @@ class UserService{
         try{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () use ($request) {
-                $userQuery = User::with('participant', 'participant.team', 'participant.modality', 'participant.institution')->orderBy('name');
+                $users = User::with('participant', 'participant.team', 'participant.modality', 'participant.institution')->orderBy('name');
                 if ($request->has('search')) {
                     $search = $request->search;
 
-                    $userQuery->where(function ($query) use ($search) {
+                    $users->where(function ($query) use ($search) {
                         $query->Where('name', 'like', '%' . $search . '%')
                         ->orWhere('last_name', 'like', '%' . $search . '%')
                         ->orWhere('gender', 'like', '%' . $search . '%')
@@ -35,8 +35,12 @@ class UserService{
                         ->orWhere('role', 'like', '%' . $search . '%');
                     });
                 }
+
+                $page = $request->get('page', 1);
+                $perPage = $request->get('perPage', 10);
+                return $users->paginate($perPage, ['*'], 'page', $page);
                 //Retornando todos times e o código de respostas
-                return response()->json($userQuery->get(), 200);
+                // return response()->json($users->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){

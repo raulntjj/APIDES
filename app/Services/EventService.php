@@ -22,19 +22,23 @@ class EventService{
         try{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () use ($request) {
-                $eventQuery = Event::with('days.evaluations.participant.user', 'days.event', 'address');
+                $events = Event::with('days.evaluations.participant.user', 'days.event', 'address');
                 if ($request->has('search')) {
                     $search = $request->search;
 
-                    $eventQuery->where(function ($query) use ($search) {
+                    $events->where(function ($query) use ($search) {
                         $query->where('name', 'like', '%' . $search . '%')
                         ->orWhere('type', 'like', '%' . $search . '%');
                     });
                 }
-                $eventQuery->join('event_days', 'events.id', '=', 'event_days.event_id')
+                $events->join('event_days', 'events.id', '=', 'event_days.event_id')
                     ->orderBy('date');
+
                 //Retornando todos eventos e o código de respostas
-                return response()->json($eventQuery->get(), 200);
+                $page = $request->get('page', 1);
+                $perPage = $request->get('perPage', 10);
+                return $events->paginate($perPage, ['*'], 'page', $page);
+                // return response()->json($events->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){

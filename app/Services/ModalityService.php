@@ -21,16 +21,21 @@ class ModalityService{
         try{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () use ($request) {
+                $modalities = Modality::orderBy('name');
+
                 //Retornando todas modalidades e o código de respostas
                 if ($request->has('search')) {
                     $search = $request->search;
 
-                    return response()->json(Modality::where(function ($query) use ($search) {
+                    $modalities->where(function ($query) use ($search) {
                         $query->Where('name', 'like', '%' . $search . '%');
-                    })->orderBy('name')->get(), 200);
-                } else {
-                    return response()->json(Modality::orderBy('name')->get(), 200);
+                    });
                 }
+
+                $page = $request->get('page', 1);
+                $perPage = $request->get('perPage', 10);
+                return $modalities->paginate($perPage, ['*'], 'page', $page);
+                // return response()->json($modalities->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){

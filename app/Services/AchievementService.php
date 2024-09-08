@@ -34,7 +34,10 @@ class AchievementService{
                     });
                 }
                 //Retornando todos Achievementes e o código de respostas
-                return response()->json($achievements->get(), 200);
+                $page = $request->get('page', 1);
+                $perPage = $request->get('perPage', 10);
+                return $achievements->paginate(10, ['*'], 'page', $page);
+                // return response()->json($achievements->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){

@@ -21,11 +21,11 @@ class ItemService{
         try{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () use ($request) {
-                $itemQuery = Item::with('subcriterion.criterion')->orderBy('name');
+                $items = Item::with('subcriterion.criterion')->orderBy('name');
                 if ($request->has('search')) {
                     $search = $request->search;
 
-                    $itemQuery->where(function ($query) use ($search) {
+                    $items->where(function ($query) use ($search) {
                         $query->whereHas('subcriterion.criterion', function ($q) use ($search) {
                             $q->where('name', 'like', '%' . $search . '%');
                         })
@@ -35,8 +35,12 @@ class ItemService{
                         ->orWhere('aspect', 'like', '%' . $search . '%');
                     });
                 }
+
+                $page = $request->get('page', 1);
+                $perPage = $request->get('perPage', 10);
+                return $items->paginate($perPage, ['*'], 'page', $page);
                 //Retornando todos itenss e o código de respostas
-                return response()->json($itemQuery->get(), 200);
+                // return response()->json($items->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){

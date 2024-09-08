@@ -24,13 +24,13 @@ class JudgmentService{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () use ($request) {
                 //Retornando todos julgamentos e o código de respostas
-                $judgmentQuery = Judgment::with('item.subcriterion.criterion', 'evaluation.modality', 'evaluation.eventday.event', 'evaluation.participant.user',
+                $judgemnts = Judgment::with('item.subcriterion.criterion', 'evaluation.modality', 'evaluation.eventday.event', 'evaluation.participant.user',
                 'evaluation.participant.team', 'evaluation.participant.modality', 'evaluation.participant.institution', 'evaluation.judge');
 
                 if ($request->has('search')) {
                     $search = $request->search;
 
-                    $judgmentQuery->where(function ($query) use ($search) {
+                    $judgemnts->where(function ($query) use ($search) {
                         $query->whereHas('item.subcriterion.criterion', function ($q) use ($search) {
                             $q->where('name', 'like', '%' . $search . '%');
                         })
@@ -64,7 +64,10 @@ class JudgmentService{
                     });
                 }
 
-                return response()->json($judgmentQuery->get(), 200);
+                $page = $request->get('page', 1);
+                $perPage = $request->get('perPage', 10);
+                return $judgemnts->paginate($perPage, ['*'], 'page', $page);
+                // return response()->json($judgemnts->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){

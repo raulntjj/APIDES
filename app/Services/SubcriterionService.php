@@ -22,11 +22,11 @@ class SubcriterionService{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function ()  use ($request) {
                 //Retornando todos criterios e o código de respostas
-                $subcriterionQuery = Subcriterion::with('criterion', 'items')->orderBy('name');
+                $subcriteria = Subcriterion::with('criterion', 'items')->orderBy('name');
                 if ($request->has('search')) {
                     $search = $request->search;
 
-                    $subcriterionQuery->where(function ($query) use ($search) {
+                    $subcriteria->where(function ($query) use ($search) {
                         $query->whereHas('criterion', function ($q) use ($search) {
                             $q->where('name', 'like', '%' . $search . '%');
                         })
@@ -36,8 +36,12 @@ class SubcriterionService{
                         ->orWhere('name', 'like', '%' . $search . '%');
                     });
                 }
+
+                $page = $request->get('page', 1);
+                $perPage = $request->get('perPage', 10);
+                return $subcriteria->paginate($perPage, ['*'], 'page', $page);
                 //Retornando todos itenss e o código de respostas
-                return response()->json($subcriterionQuery->get(), 200);
+                // return response()->json($subcriteria->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){

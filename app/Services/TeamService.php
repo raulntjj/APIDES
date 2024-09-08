@@ -21,16 +21,19 @@ class TeamService{
         try{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () use ($request) {
-                $teamQuery = Team::with('participants', 'participants.team', 'participants.modality', 'participants.institution', 'participants.user')->orderBy('name');
+                $teams = Team::with('participants', 'participants.team', 'participants.modality', 'participants.institution', 'participants.user')->orderBy('name');
                 if ($request->has('search')) {
                     $search = $request->search;
 
-                    $teamQuery->where(function ($query) use ($search) {
+                    $teams->where(function ($query) use ($search) {
                         $query->Where('name', 'like', '%' . $search . '%');
                     });
                 }
                 //Retornando todos times e o código de respostas
-                return response()->json($teamQuery->get(), 200);
+                $page = $request->get('page', 1);
+                $perPage = $request->get('perPage', 10);
+                return $teams->paginate($perPage, ['*'], 'page', $page);
+                // return response()->json($teams->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){

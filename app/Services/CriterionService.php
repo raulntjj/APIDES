@@ -22,13 +22,16 @@ class CriterionService{
             return DB::transaction(function () use ($request){
                 //Retornando todos criterios e o código de respostas
                 if($request->has('search')){
-                    $criteria = Criterion::with('subcriteria.items')->orderBy('name')->where('name', 'like', '%' . $request->search . '%')->get();
+                    $criteria = Criterion::with('subcriteria.items')->orderBy('name')->where('name', 'like', '%' . $request->search . '%');
                 } else {
-                    $criteria = Criterion::with('subcriteria.items')->orderBy('name')->get();
+                    $criteria = Criterion::with('subcriteria.items')->orderBy('name');
                 }
 
                 //Retornando todos Achievementes e o código de respostas
-                return response()->json($criteria, 200);
+                $page = $request->get('page', 1);
+                $perPage = $request->get('perPage', 10);
+                return $criteria->paginate($perPage, ['*'], 'page', $page);
+                // return response()->json($criteria->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){

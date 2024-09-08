@@ -22,18 +22,22 @@ class EventDayService{
         try{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () use($request) {
-                $eventDayQuery = EventDay::with('event')->orderBy('index');
+                $days = EventDay::with('event')->orderBy('index');
                 if ($request->has('search')) {
                     $search = $request->search;
 
-                    $eventDayQuery->where(function ($query) use ($search) {
+                    $days->where(function ($query) use ($search) {
                         $query->whereHas('event', function ($q) use ($search) {
                             $q->where('name', 'like', '%' . $search . '%');
                         });
                         $query->orWhere('date', 'like', '%' . $search . '%');
                     });
                 }
-                return response()->json($eventDayQuery->get(), 200);
+
+                $page = $request->get('page', 1);
+                $perPage = $request->get('perPage', 10);
+                return $days->paginate($perPage, ['*'], 'page', $page);
+                // return response()->json($days->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){
