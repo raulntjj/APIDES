@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class EventDay extends Model{
     use HasFactory;
+    protected $table = 'event_days';
     protected $fillable = [
         'event_id', //índice do event
         'date', //'date' faz referência a data do evento

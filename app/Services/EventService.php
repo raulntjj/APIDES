@@ -22,7 +22,7 @@ class EventService{
         try{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () use ($request) {
-                $eventQuery = Event::with('days.evaluations.participant.user', 'days.event', 'address')->orderBy('name');
+                $eventQuery = Event::with('days.evaluations.participant.user', 'days.event', 'address');
                 if ($request->has('search')) {
                     $search = $request->search;
 
@@ -31,6 +31,8 @@ class EventService{
                         ->orWhere('type', 'like', '%' . $search . '%');
                     });
                 }
+                $eventQuery->join('event_days', 'events.id', '=', 'event_days.event_id')
+                    ->orderBy('date');
                 //Retornando todos eventos e o código de respostas
                 return response()->json($eventQuery->get(), 200);
             });
