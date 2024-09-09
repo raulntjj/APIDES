@@ -21,20 +21,23 @@ class InstitutionService{
         try{
             //DB transaction para lidar com transações de dados com o banco de dados
             return DB::transaction(function () use ($request) {
-                $institution = Institution::with('participants', 'participants.team', 'participants.modality', 'participants.institution', 'participants.user')->orderBy('name');
+                $institutions = Institution::with('participants', 'participants.team', 'participants.modality', 'participants.institution', 'participants.user')->orderBy('name');
                 if ($request->has('search')) {
                     $search = $request->search;
 
-                    $institution->where(function ($query) use ($search) {
+                    $institutions->where(function ($query) use ($search) {
                         $query->Where('name', 'like', '%' . $search . '%');
                     });
                 }
 
-                $page = $request->get('page', 1);
-                $perPage = $request->get('perPage', 10);
-                return $institution->paginate($perPage, ['*'], 'page', $page);
+                // if($request->get('getAll', false)){
+                //     return $institutions->get();
+                // }
+                // $page = $request->get('page', 1);
+                // $perPage = $request->get('perPage', 10);
+                // return $institutions->paginate($perPage, ['*'], 'page', $page);
                 //Retornando todas instituições e o código de respostas
-                // return response()->json($institution->get(), 200);
+                return response()->json($institutions->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){

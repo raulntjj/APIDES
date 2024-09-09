@@ -37,11 +37,14 @@ class SubcriterionService{
                     });
                 }
 
-                $page = $request->get('page', 1);
-                $perPage = $request->get('perPage', 10);
-                return $subcriteria->paginate($perPage, ['*'], 'page', $page);
+                // if($request->get('getAll', false)){
+                //     return $subcriteria->get();
+                // }
+                // $page = $request->get('page', 1);
+                // $perPage = $request->get('perPage', 10);
+                // return $subcriteria->paginate($perPage, ['*'], 'page', $page);
                 //Retornando todos itenss e o código de respostas
-                // return response()->json($subcriteria->get(), 200);
+                return response()->json($subcriteria->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){

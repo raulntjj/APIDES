@@ -34,11 +34,14 @@ class EventService{
                 $events->join('event_days', 'events.id', '=', 'event_days.event_id')
                     ->orderBy('date');
 
-                //Retornando todos eventos e o código de respostas
-                $page = $request->get('page', 1);
-                $perPage = $request->get('perPage', 10);
-                return $events->paginate($perPage, ['*'], 'page', $page);
-                // return response()->json($events->get(), 200);
+                // if($request->get('getAll', false)){
+                //     return $events->get();
+                // }
+                // //Retornando todos eventos e o código de respostas
+                // $page = $request->get('page', 1);
+                // $perPage = $request->get('perPage', 10);
+                // return $events->paginate($perPage, ['*'], 'page', $page);
+                return response()->json($events->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){

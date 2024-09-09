@@ -36,11 +36,14 @@ class UserService{
                     });
                 }
 
-                $page = $request->get('page', 1);
-                $perPage = $request->get('perPage', 10);
-                return $users->paginate($perPage, ['*'], 'page', $page);
+                // if($request->get('getAll', false)){
+                //     return $users->get();
+                // }
+                // $page = $request->get('page', 1);
+                // $perPage = $request->get('perPage', 10);
+                // return $users->paginate($perPage, ['*'], 'page', $page);
                 //Retornando todos times e o código de respostas
-                // return response()->json($users->get(), 200);
+                return response()->json($users->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){

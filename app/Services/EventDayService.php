@@ -34,10 +34,13 @@ class EventDayService{
                     });
                 }
 
-                $page = $request->get('page', 1);
-                $perPage = $request->get('perPage', 10);
-                return $days->paginate($perPage, ['*'], 'page', $page);
-                // return response()->json($days->get(), 200);
+                // if($request->get('getAll', false)){
+                //     return $days->get();
+                // }
+                // $page = $request->get('page', 1);
+                // $perPage = $request->get('perPage', 10);
+                // return $days->paginate($perPage, ['*'], 'page', $page);
+                return response()->json($days->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){

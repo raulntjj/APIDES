@@ -64,10 +64,13 @@ class JudgmentService{
                     });
                 }
 
-                $page = $request->get('page', 1);
-                $perPage = $request->get('perPage', 10);
-                return $judgemnts->paginate($perPage, ['*'], 'page', $page);
-                // return response()->json($judgemnts->get(), 200);
+                // if($request->get('getAll', false)){
+                //     return $judgemnts->get();
+                // }
+                // $page = $request->get('page', 1);
+                // $perPage = $request->get('perPage', 10);
+                // return $judgemnts->paginate($perPage, ['*'], 'page', $page);
+                return response()->json($judgemnts->get(), 200);
             });
         //Não foi utilizado o ModelNotFoundException pois a Exception genérica exibe um detalhamento de erro resumido e acertivo
         } catch(Exception $e){

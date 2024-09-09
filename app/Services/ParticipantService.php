@@ -49,6 +49,12 @@ class ParticipantService{
                 $participants->where('position', $request->position);
             }
 
+            if($request->get('getAll', false)){
+                return $participants->get();
+            }
+
+            return $participants->get();
+
             // Definindo o número de itens por página
             $perPage = $request->get('perPage', 10);
             $page = $request->get('page', 1);
