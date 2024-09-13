@@ -1,62 +1,45 @@
-version: "3.7"
+version: '3.8'
+
+name: cfa
 
 services:
-    app:
-        build:
-            context: .
-            dockerfile: Dockerfile
-        restart: always
-        working_dir: /var/www/
-        volumes:
-            - ./:/var/www
-        # depends_on:
-        #     - redis
-        networks:
-            - laravel-11
+  composer:
+    container_name: composer-gui
+    build:
+      context: .
+      target: builder
+      dockerfile: ./infrastructure/Dockerfile
+    volumes:
+      - .:/var/www
+    entrypoint: "composer install --no-interaction --no-ansi --no-scripts --classmap-authoritative"
+    networks:
+        - proxy
 
-    webserver:
-        image: nginx:alpine
-        restart: always
-        ports:
-            - "8989:80"
-        volumes:
-            - ./:/var/www
-            - ./docker/nginx/:/etc/nginx/conf.d/
-        networks:
-            - laravel-11
-
-    db:
-        image: mysql
-        restart: always
-        environment:
-            MYSQL_DATABASE: ${DB_DATABASE}
-            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-        volumes:
-            - ./.docker/dbdata:/var/lib/mysql
-        ports:
-            - "3307:3307"
-        networks:
-            - laravel-11
-
-    queue:
-        build:
-            context: .
-            dockerfile: Dockerfile
-        restart: always
-        command: "php artisan queue:work"
-        volumes:
-            - ./:/var/www
-        depends_on:
-            # - redis
-            - app
-        networks:
-            - laravel-11
-
-    # redis:
-    #     image: redis:latest
-    #     networks:
-    #         - laravel-11
+  gui:
+    container_name: gui
+    build:
+      context: .
+      target: prod
+      dockerfile: ./infrastructure/Dockerfile
+    image: gui:latest
+    ports:
+      - "8002:80"
+    depends_on:
+      - composer
+    volumes:
+      - .:/var/www
+    working_dir: /var/www
+    entrypoint: "/etc/entrypoint.sh"
+    healthcheck:
+          test: curl --fail http://gui:8002/ || exit 1
+          interval: 40s
+          timeout: 30s
+          retries: 3
+          start_period: 60s
+    networks:
+        - proxy
 
 networks:
-    laravel-11:
-        driver: bridge
+    proxy:
+        name: proxy
+        external: true
